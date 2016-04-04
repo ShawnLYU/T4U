@@ -11,5 +11,5 @@ package com.ss.model;
  * @author mengxualv2
  */
 public class T4uCinema {
-    
+     
 }
