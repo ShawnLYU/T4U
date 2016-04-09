@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.ss.model;
+package com.ss.Model;
 
 import com.ss.app.T4uSeatPlan;
 

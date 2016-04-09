@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 
-package com.ss.app;
+package com.ss.Utility;
 
 /**
  *
- * @author mengxualv2
+ * @author Steven Mao
+ * 
+ * 2016040901    SM
  */
-public class T4uMovieSlot {
+public class JDBC {
     
 }
