@@ -78,7 +78,7 @@ public class T4uSetLocaleServlet extends HttpServlet {
         String path = request.getRequestURI();
         String locale = (String) request.getParameter("locale");
         System.out.println(path);
-        System.out.println(locale);
+        System.out.println(request.getAttribute("javax.servlet.forward.request_uri"));
         RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/login.jsp");
         request.setAttribute("locale",locale);
         dispatcher.forward(request, response);

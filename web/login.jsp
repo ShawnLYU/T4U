@@ -10,9 +10,9 @@
 <jsp:include page="header.jsp" />
 
 <div align='right'>  
-    <form action="setLocale.do" method="post"><input  type="hidden" name="locale" value="en_US"/><input type="submit" value="En"/></form>  
-    <form action="setLocale.do" method="post"><input  type="hidden" name="locale" value="zh_CN"/><input type="submit" value="简"/></form> 
-    <form action="setLocale.do" method="post"><input  type="hidden" name="locale" value="zh_HK"/><input type="submit" value="繁"/></form>  
+    <form action="setLocale.do" style="width:2%;" method="post"><input  type="hidden" name="locale" value="en_US"/><input type="submit" value="En"/></form>  
+    <form action="setLocale.do" style="width:2%;" method="post"><input  type="hidden" name="locale" value="zh_CN"/><input type="submit" value="简"/></form> 
+    <form action="setLocale.do" style="width:2%;" method="post"><input  type="hidden" name="locale" value="zh_HK"/><input type="submit" value="繁"/></form>  
 </div>  
 <fmt:bundle basename="${lan}">
         
