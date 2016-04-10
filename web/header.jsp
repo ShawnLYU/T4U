@@ -25,8 +25,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cinema</title>
         <!-- ########## JS ########## -->
-        <script src="../resources/js/jquery-1.12.2.min.js"></script>
-        <script src="../resources/bootstrap-3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="resources/js/jquery-1.12.2.min.js"></script>
+        <script src="resources/bootstrap-3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- ########## CSS ########## -->
 <!--
         <link href="../resources/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>

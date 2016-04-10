@@ -18,13 +18,13 @@
         
     
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<link rel="stylesheet" href="../resources/css/style_login.css" type="text/css" media="all" />
+<link rel="stylesheet" href="resources/css/style_login.css" type="text/css" media="all" />
 <div class="container">
 <h1><fmt:message key="login.label.loginform"/></h1>
 	<div class="signin">
      	<form>
 	      	<input type="text" class="user" value="<fmt:message key="login.label.username"/>" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '<fmt:message key="login.label.username"/>';}" />
-	      	<input type="password" class="pass" value="<fmt:message key="login.label.password"/>" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '<fmt:message key="login.label.password"/>';}" />
+	      	<input type="password" class="pass" />
           	<input type="submit" value="<fmt:message key="login.label.submit"/>" />
 	 	</form>
 	</div>
