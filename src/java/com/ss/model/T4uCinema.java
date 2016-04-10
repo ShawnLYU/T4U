@@ -14,6 +14,8 @@ import org.json.JSONObject;
 /**
  *
  * @author mengxualv2
+ * 
+ * 2016040901    SM    Add cinemaInfo field
  */
 public class T4uCinema {
     private int cinemaId;

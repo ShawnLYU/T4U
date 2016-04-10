@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/H:/CS4280/project/T4U/web/jsp/header.jsp</file>
-            <file>file:/H:/CS4280/project/T4U/web/index.jsp</file>
-            <file>file:/H:/CS4280/project/T4U/web/jsp/login.jsp</file>
+            <file>file:/Users/Steven/Documents/大学资料/1516SemB/CS4280/Project/src/java/com/ss/Utility/T4uJson2Map.java</file>
+            <file>file:/Users/Steven/Documents/大学资料/1516SemB/CS4280/Project/src/java/com/ss/Utility/T4uJDBC.java</file>
+            <file>file:/Users/Steven/Documents/大学资料/1516SemB/CS4280/Project/src/java/com/ss/DAO/T4uUserDAO.java</file>
+            <file>file:/Users/Steven/Documents/大学资料/1516SemB/CS4280/Project/src/java/com/ss/Model/T4uUser.java</file>
+            <file>file:/Users/Steven/Documents/大学资料/1516SemB/CS4280/Project/src/java/com/ss/Model/T4uCinema.java</file>
         </group>
     </open-files>
 </project-private>

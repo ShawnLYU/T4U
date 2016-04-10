@@ -7,17 +7,50 @@
 package com.ss.Model;
 
 import com.ss.app.T4uUserGroup;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
  * @author mengxualv2
+ * 
+ * 2016041001    SM    Refactor codes
  */
 public class T4uUser {
     private int userId;
+    private String userAccount;
+    private String userPassword;
     private String userName;
-    private String gender;
+    private String userGender;
+    private Date userBirthdate;
+    private String userPhone;
+    private String userEmail;
+    private int userCredit;
+    private T4uUserGroup userGroup;
 
+    public int getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+    
+    public String getUserAccount() {
+        return this.userAccount;
+    }
+    
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
+    }
+    
+    public String getUserPassword() {
+        return this.userPassword;
+    }
+    
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+    
     public String getUserName() {
         return userName;
     }
@@ -25,13 +58,21 @@ public class T4uUser {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
-    public String getUserEmail() {
-        return userEmail;
+    
+    public String getUserGender() {
+        return this.userGender;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setUserGender(String userGender) {
+        this.userGender = userGender;
+    }
+    
+    public Date getUserBirthdate() {
+        return this.userBirthdate;
+    }
+
+    public void setUserBirthdate(Date userBirthdate) {
+        this.userBirthdate = userBirthdate;
     }
 
     public String getUserPhone() {
@@ -41,73 +82,29 @@ public class T4uUser {
     public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
     }
-    private Date birthDate;
-    private String userEmail;
-    private String userPhone;
-    private int credit;
-    private T4uUserGroup t4uUserGroup;
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getName() {
-        return userName;
-    }
-
-    public void setName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getEmail() {
+    
+    
+    public String getUserEmail() {
         return userEmail;
     }
 
-    public void setEmail(String userEmail) {
+    public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
-
-    public String getPhone() {
-        return userPhone;
+    
+    public int getUserCredit() {
+        return this.userCredit;
     }
 
-    public void setPhone(String phone) {
-        this.userPhone = userPhone;
+    public void setUserCredit(int userCredit) {
+        this.userCredit = userCredit;
     }
 
-    public int getCredit() {
-        return credit;
+    public T4uUserGroup getUserGroup() {
+        return this.userGroup;
     }
 
-    public void setCredit(int credit) {
-        this.credit = credit;
-    }
-
-    public T4uUserGroup getT4uUserGroup() {
-        return t4uUserGroup;
-    }
-
-    public void setT4uUserGroup(T4uUserGroup t4uUserGroup) {
-        this.t4uUserGroup = t4uUserGroup;
+    public void setUserGroup(T4uUserGroup userGroup) {
+        this.userGroup = userGroup;
     }
 }
