@@ -30,7 +30,7 @@ public class T4uUserDAO {
         String userAccount = user.getUserAccount();
         try {
             T4uJDBC db = new T4uJDBC();
-            String sql = "SELECT [UserId] FROM [T4U_user] WHERE [UserAccount]=" + userAccount;
+            String sql = "SELECT [UserId] FROM [T4U_user] WHERE [UserAccount]='" + userAccount + "'";
             ResultSet rs = db.query(sql);
             if (rs.next())
                 userId = rs.getInt(1);
@@ -56,7 +56,7 @@ public class T4uUserDAO {
         if (userInputPassword != null && !userInputPassword.equals("")) {
             try {
                 T4uJDBC db = new T4uJDBC();
-                String sql = "SELECT [UserPassword] FROM [T4U_user] WHERE [UserId]=" + userId;
+                String sql = "SELECT [UserPassword] FROM [T4U_user] WHERE [UserId]='" + userId + "'";
                 ResultSet rs = db.query(sql);
                 if (rs != null && rs.next())
                     userStoredPassword = rs.getString(1);

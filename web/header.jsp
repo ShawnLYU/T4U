@@ -27,9 +27,15 @@
         <!-- ########## JS ########## -->
         <script src="resources/js/jquery-1.12.2.min.js"></script>
         <script src="resources/bootstrap-3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="resources/js/md5.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            function hashPassword(form){
+                form.userPassword.value=md5(form.userPassword.value);
+            }
+        </script>
         <!-- ########## CSS ########## -->
-<!--
+        <!--
         <link href="../resources/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-        --> 
+        -->
     </head>
     <body>
