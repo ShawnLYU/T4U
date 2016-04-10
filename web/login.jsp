@@ -10,9 +10,9 @@
 <jsp:include page="header.jsp" />
 
 <div align='right'>  
-    <input  type="button" value="En" class="btn btn-default btn-sm" onclick="setLocalEN();"/>  
-    <input  type="button" value="简" class="btn btn-default btn-sm" onclick="setLocalCN();"/>  
-    <input  type="button" value="繁" class="btn btn-default btn-sm" onclick="setLocalHK();"/>  
+    <form action="setLocale.do" method="post"><input  type="hidden" name="locale" value="en_US"/><input type="submit" value="En"/></form>  
+    <form action="setLocale.do" method="post"><input  type="hidden" name="locale" value="zh_CN"/><input type="submit" value="简"/></form> 
+    <form action="setLocale.do" method="post"><input  type="hidden" name="locale" value="zh_HK"/><input type="submit" value="繁"/></form>  
 </div>  
 <fmt:bundle basename="${lan}">
         
@@ -23,8 +23,8 @@
 <h1><fmt:message key="login.label.loginform"/></h1>
 	<div class="signin">
      	<form>
-	      	<input type="text" class="user" value="<fmt:message key="login.label.username"/>" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '<fmt:message key="login.label.username"/>';}" />
-	      	<input type="password" class="pass" />
+	      	<input type="text" name="userAccout" class="user" value="<fmt:message key="login.label.username"/>" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '<fmt:message key="login.label.username"/>';}" />
+	      	<input type="password" name="pwd" class="pass" />
           	<input type="submit" value="<fmt:message key="login.label.submit"/>" />
 	 	</form>
 	</div>

@@ -8,10 +8,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="lan" value="com.ss.i18n.T4uUI" scope="session" />
-
+<fmt:setLocale value="en_US" />
 <!DOCTYPE html>
 <html>
-    <%  String varLocal = request.getParameter("local");  
+    <%  String varLocal = request.getParameter("locale");  
         if (varLocal == null || varLocal.equals("")) { 
         } 
         else if ("zh_CN".equalsIgnoreCase(varLocal)) {%>  
@@ -30,17 +30,6 @@
         <!-- ########## CSS ########## -->
 <!--
         <link href="../resources/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-        -->
-        <script type="text/javascript">
-                function setLocalEN(){  
-                    window.location = "login.jsp?local=en_US";  
-                }  
-                function setLocalCN(){  
-                    window.location = "login.jsp?local=zh_CN";  
-                }
-                function setLocalHK(){  
-                    window.location = "login.jsp?local=zh_HK";  
-                } 
-        </script>  
+        --> 
     </head>
     <body>
