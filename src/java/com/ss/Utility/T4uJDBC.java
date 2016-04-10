@@ -44,7 +44,7 @@ public class T4uJDBC {
     public ResultSet query(String sql) {   
         ResultSet rs = null;
         try {
-            if (conn == null || conn.isClosed() || !conn.isValid(0))
+            if (conn == null || conn.isClosed())
                 conn = DriverManager.getConnection(DBURL, DBUSER, DBPWD);
             stmt = conn.createStatement(java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE, java.sql.ResultSet.CONCUR_READ_ONLY);
             rs = stmt.executeQuery(sql);
@@ -59,7 +59,7 @@ public class T4uJDBC {
     public int alert(String sql) {
         int rows = 0;
         try {
-            if (conn == null || conn.isClosed() || !conn.isValid(0))
+            if (conn == null || conn.isClosed())
                 conn = DriverManager.getConnection(DBURL, DBUSER, DBPWD);
             stmt = conn.createStatement();
             rows = stmt.executeUpdate(sql);
