@@ -33,7 +33,6 @@
         </form>
     </div>
 </div>
-<div class="footer">
-    <p>Copyright &copy; 2016 All Rights Reserved</p>
-</div>
+
 </fmt:bundle>
+<jsp:include page="footer.jsp" />
