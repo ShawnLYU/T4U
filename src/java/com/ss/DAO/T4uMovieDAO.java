@@ -10,6 +10,6 @@ package com.ss.DAO;
  *
  * @author mengxualv2
  */
-public class T4uMovieDao {
+public class T4uMovieDAO {
     
 }
