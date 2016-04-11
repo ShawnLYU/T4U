@@ -5,5 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+        <div class="footer">
+            <p>Copyright &copy; 2016 All Rights Reserved</p>
+        </div>
     </body>
 </html>

@@ -8,7 +8,6 @@ package com.ss.Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author mengxualv2
  */
-public class T4uSetLocaleServlet extends HttpServlet {
+public class T4uRegisterServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +37,10 @@ public class T4uSetLocaleServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet T4uSetLocaleServlet</title>");            
+            out.println("<title>Servlet T4uRegisterServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet T4uSetLocaleServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet T4uRegisterServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         } finally {
@@ -75,13 +74,7 @@ public class T4uSetLocaleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String path = request.getRequestURI();
-        String locale = (String) request.getParameter("locale");
-        System.out.println(path);
-        System.out.println(locale);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
-        request.setAttribute("locale",locale);
-        dispatcher.forward(request, response);
+        processRequest(request, response);
     }
 
     /**
