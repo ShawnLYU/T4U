@@ -8,13 +8,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="header.jsp" />
-
-<div align='right'>  
-    <form action="setLocale.do" style="width:2%;" method="post"><input  type="hidden" name="locale" value="en_US"/><input type="submit" value="En"/></form>  
-    <form action="setLocale.do" style="width:2%;" method="post"><input  type="hidden" name="locale" value="zh_CN"/><input type="submit" value="简"/></form> 
-    <form action="setLocale.do" style="width:2%;" method="post"><input  type="hidden" name="locale" value="zh_HK"/><input type="submit" value="繁"/></form>  
-</div>  
 <fmt:bundle basename="${lan}">
+    <link rel="stylesheet" href="resources/css/style_login.css" type="text/css" media="all" />
+<div align='right'>  
+    <input type="button" value="En" style="width:2%;" onclick="setLocaleEN();"/>
+    <input type="button" value="简" style="width:2%;" onclick="setLocaleCN();"/>
+    <input type="button" value="繁" style="width:2%;" onclick="setLocaleHK();"/>
+</div> 
+
 
 <script type="application/x-javascript">
     addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
@@ -22,7 +23,6 @@
         window.scrollTo(0,1);
     }
 </script>
-<link rel="stylesheet" href="resources/css/style_login.css" type="text/css" media="all" />
 <div class="container">
 <h1><fmt:message key="login.label.loginform"/></h1>
     <div class="signin">

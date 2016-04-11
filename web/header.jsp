@@ -17,9 +17,9 @@
         else if ("zh_CN".equalsIgnoreCase(varLocal)) {%>  
         <fmt:setLocale value="zh_CN" scope="application" />  
     <%    } else if ("en_US".equalsIgnoreCase(varLocal)){%>  
-    <fmt:setLocale value="en_US" scope="application" />  
+        <fmt:setLocale value="en_US" scope="application" />  
     <%    } else {%>  
-    <fmt:setLocale value="zh_HK" scope="application" />  
+        <fmt:setLocale value="zh_HK" scope="application" />  
     <%    } %>  
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -32,6 +32,18 @@
             function hashPassword(form){
                 form.userPassword.value=md5(form.userPassword.value);
             }
+            function setLocaleEN(){  
+                var url = window.location.pathname.split('?')[0];
+                window.location = url+"?locale=en_US";  
+            }  
+            function setLocaleCN(){  
+                var url = window.location.pathname.split('?')[0];
+                window.location = url+"?locale=zh_CN";  
+            }
+            function setLocaleHK(){  
+                var url = window.location.pathname.split('?')[0];
+                window.location = url+"?locale=zh_HK";  
+            } 
         </script>
         <!-- ########## CSS ########## -->
         <!--
