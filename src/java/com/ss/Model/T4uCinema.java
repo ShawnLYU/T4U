@@ -8,7 +8,7 @@ package com.ss.Model;
 
 import com.ss.app.T4uCinemaLocation;
 import com.ss.Utility.T4uJson2Map;
-import java.util.HashMap;
+import java.util.Map;
 import org.json.JSONObject;
 
 /**
@@ -16,13 +16,14 @@ import org.json.JSONObject;
  * @author mengxualv2
  * 
  * 2016040901    SM    Add cinemaInfo field
+ * 2016041201    SM    Use generic Map type as default variable type
  */
 public class T4uCinema {
     private int cinemaId;
     private String cinemaName;
     private T4uCinemaLocation cinemaLocation;
     private String cinemaPhone;
-    private HashMap<String, String> cinemaInfo;
+    private Map<String, String> cinemaInfo;
 
     public int getCinemaId() {
         return cinemaId;
@@ -56,7 +57,7 @@ public class T4uCinema {
         this.cinemaPhone = cinemaPhone;
     }
     
-    public HashMap<String, String> getCinemaInfo() {
+    public Map<String, String> getCinemaInfo() {
         return this.cinemaInfo;
     }
     
