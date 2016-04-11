@@ -6,48 +6,61 @@
 
 package com.ss.Model;
 
-import com.ss.app.T4uMovieType;
+import com.ss.Utility.T4uJson2Map;
+import java.util.HashMap;
+import org.json.JSONObject;
 
 /**
  *
  * @author mengxualv2
+ * 
+ * 2016040901    SM    Refactor codes
  */
 public class T4uMovie {
     private int movieId;
     private String movieName;
-    private T4uMovieType t4uMovieType;
-    private int basicMoviePrice;
-
-    public int getBasicMoviePrice() {
-        return basicMoviePrice;
-    }
-
-    public void setBasicMoviePrice(int basicMoviePrice) {
-        this.basicMoviePrice = basicMoviePrice;
-    }
-
+    private String movieType;
+    private int movieBasePrice;
+    private HashMap<String, String> movieDescription;
+    
     public int getMovieId() {
-        return movieId;
+        return this.movieId;
     }
 
     public void setMovieId(int movieId) {
         this.movieId = movieId;
     }
-
+    
     public String getMovieName() {
-        return movieName;
+        return this.movieName;
     }
 
     public void setMovieName(String movieName) {
         this.movieName = movieName;
     }
-
-    public T4uMovieType getT4uMovieType() {
-        return t4uMovieType;
+    
+    public String getMovieType() {
+        return this.movieType;
     }
 
-    public void setT4uMovieType(T4uMovieType t4uMovieType) {
-        this.t4uMovieType = t4uMovieType;
+    public void setMovieType(String movieType) {
+        this.movieType = movieType;
     }
     
+    public int getMovieBasePrice() {
+        return this.movieBasePrice;
+    }
+
+    public void setMovieBasePrice(int movieBasePrice) {
+        this.movieBasePrice = movieBasePrice;
+    }
+    
+    public HashMap<String, String> getMovieDescription() {
+        return this.movieDescription;
+    }
+    
+    public void setMovieDescription(String strMovieDescription) {
+        this.movieDescription=T4uJson2Map.jsonToMap(new JSONObject(strMovieDescription));
+    }
+
 }

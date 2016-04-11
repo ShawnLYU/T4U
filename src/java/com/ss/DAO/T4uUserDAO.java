@@ -69,6 +69,12 @@ public class T4uUserDAO {
             return false;
     }
     
+    /**
+    * Create an account.
+    *
+    * @param  user User Model.
+    * @return      Return userId if the account is successfully created, or 0 if not.
+    */
     public int createAccount(T4uUser user) {
         int userId = 0;
         String userAccount = user.getUserAccount().replace("'", "''");
@@ -89,26 +95,8 @@ public class T4uUserDAO {
                 && (userEmail != null && !userEmail.equals(""))) {
             try {
                 T4uJDBC db = new T4uJDBC();
-                String sql = "INSERT INTO [T4U_user] ("
-                        + "[UserAccount], "
-                        + "[UserPassword], "
-                        + "[UserName], "
-                        + "[UserGender], "
-                        + "[UserBirthdate], "
-                        + "[UserPhone], "
-                        + "[UserEmail], "
-                        + "[UserCredit], "
-                        + "[UserGroup]"
-                        + ") VALUES ("
-                        + userAccount + ", " 
-                        + userPassword + ", "
-                        + userName + ", "
-                        + userGender + ", "
-                        + userBirthdate + ", "
-                        + userPhone + ", "
-                        + userEmail + ", "
-                        + userCredit + ", "
-                        + userGroup + ")";
+                String sql = "INSERT INTO [T4U_user] ([UserAccount], [UserPassword], [UserName], [UserGender], [UserBirthdate], [UserPhone], [UserEmail], [UserCredit], [UserGroup])"
+                        + " VALUES ('" + userAccount + "', '" + userPassword + "', '" + userName + "', '" + userGender + "', '" + userBirthdate + "', '" + userPhone + "', '" + userEmail + "', " + userCredit + ", '" + userGroup + "')";
                 int rows = db.alert(sql);
                 if (rows > 0) {
                     ResultSet rs = db.query("SELECT @@IDENTITY AS [@@IDENTITY]");
