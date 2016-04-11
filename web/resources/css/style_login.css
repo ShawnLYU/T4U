@@ -141,6 +141,26 @@ input[type="submit"]:hover {
     -o-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
 }
+input[type="button"] {
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 20px;
+    outline: none;
+    border: 1px solid #7B7474;
+    font-family: Oswald-Regular;
+    font-size: 17px;
+    color: #FFFFFF;
+    background-color: rgba(23, 24, 25, 0.24);
+    border-radius: 5px;
+    cursor: pointer;
+}
+input[type="button"]:hover {
+	background-color: rgba(16, 89, 134, 0.52);
+	-webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
 
 .footer {
     text-align: center;
