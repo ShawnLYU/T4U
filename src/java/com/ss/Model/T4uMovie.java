@@ -7,7 +7,7 @@
 package com.ss.Model;
 
 import com.ss.Utility.T4uJson2Map;
-import java.util.HashMap;
+import java.util.*;
 import org.json.JSONObject;
 
 /**
@@ -15,13 +15,14 @@ import org.json.JSONObject;
  * @author mengxualv2
  * 
  * 2016040901    SM    Refactor codes
+ * 2016041201    SM    Rebuild Movie and Version Model
  */
 public class T4uMovie {
     private int movieId;
     private String movieName;
-    private String movieType;
-    private int movieBasePrice;
-    private HashMap<String, String> movieDescription;
+    private String movieDescription;
+    private Map<String, String> movieInfo;
+    private List<T4uVersion> allVersions;
     
     public int getMovieId() {
         return this.movieId;
@@ -39,28 +40,28 @@ public class T4uMovie {
         this.movieName = movieName;
     }
     
-    public String getMovieType() {
-        return this.movieType;
-    }
-
-    public void setMovieType(String movieType) {
-        this.movieType = movieType;
-    }
-    
-    public int getMovieBasePrice() {
-        return this.movieBasePrice;
-    }
-
-    public void setMovieBasePrice(int movieBasePrice) {
-        this.movieBasePrice = movieBasePrice;
-    }
-    
-    public HashMap<String, String> getMovieDescription() {
+    public String getMovieDescription() {
         return this.movieDescription;
     }
+
+    public void setMovieDescription(String movieDescription) {
+        this.movieDescription = movieDescription;
+    }
     
-    public void setMovieDescription(String strMovieDescription) {
-        this.movieDescription=T4uJson2Map.jsonToMap(new JSONObject(strMovieDescription));
+    public Map<String, String> getMovieInfo() {
+        return this.movieInfo;
+    }
+    
+    public void setMovieInfo(String strMovieInfo) {
+        this.movieInfo=T4uJson2Map.jsonToMap(new JSONObject(strMovieInfo));
+    }
+
+    public List<T4uVersion> getAllVersions() {
+        return this.allVersions;
+    }
+
+    public void setAllVersions(List<T4uVersion> allVersions) {
+        this.allVersions = allVersions;
     }
 
 }
