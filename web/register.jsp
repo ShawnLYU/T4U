@@ -48,7 +48,7 @@
                         <a href="index.html"><img src="resources/images/logo.png" alt=""/></a>
                     </div>
                     <div class="col-sm-3 col-sm-offset-6 nav">
-                        <div  class="btn-group" role="group" aria-label="...">
+                        <div  class="btn-group" role="group">
                             <button type="button" class="btn btn-default" onclick="setLocaleEN();">En</button>
                             <button type="button" class="btn btn-default" onclick="setLocaleCN();">简</button>
                             <button type="button" class="btn btn-default" onclick="setLocaleHK();">繁</button>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="content">
                     <div class="register">
-                        <form id="form1" method="POST"> 
+                        <form id="form1" action="/user/register" method="POST"> 
                             <div class="register-top-grid">
                                 <h3><fmt:message key="register.label.titlePersonal"  /></h3>
                                 <div>
@@ -70,6 +70,10 @@
                                 <div>
                                     <span><fmt:message key="register.label.lastName"  /><label>*</label></span>
                                     <input type="text" name="lastName"> 
+                                </div>
+                                <div>
+                                    <span><fmt:message key="register.label.account"  /><label>*</label></span>
+                                    <input type="text" name="userAccount"> 
                                 </div>
                                 <div>
                                     <span><fmt:message key="register.label.email"  /><label>*</label></span>
@@ -121,6 +125,10 @@
                 }
                 if($("input[name='lastName']").val()==''){
                         showErrorMessage("You must provide your last name here");
+                        return false;
+                }
+                if($("input[name='account']").val()==''){
+                        showErrorMessage("You must provide your account here");
                         return false;
                 }
                 if($("input[name='password1']").val()==''){
