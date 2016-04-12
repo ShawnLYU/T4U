@@ -8,10 +8,12 @@ package com.ss.Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -28,6 +30,7 @@ public class T4uRegisterServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private static Logger logger = Logger.getLogger(T4uRegisterServlet.class);  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -74,7 +77,20 @@ public class T4uRegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        logger.debug("Enter register servlet with POST");
+        
+        logger.debug(request.getParameter("firstName"));
+        logger.debug(request.getParameter("lastName"));
+        logger.debug(request.getParameter("phone"));
+        logger.debug(request.getParameter("gender"));
+        logger.debug(request.getParameter("birthdate"));
+        logger.debug(request.getParameter("userAccount"));
+        logger.debug(request.getParameter("email"));
+        logger.debug(request.getParameter("password1"));
+        
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+        dispatcher.forward(request, response);
+        //processRequest(request, response);
     }
 
     /**
