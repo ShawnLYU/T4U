@@ -27,8 +27,6 @@
         <title>Cinema</title>
         <!-- start plugins -->
         <script src="resources/js/jquery-1.11.1.min.js"></script>
-        <script src="resources/js/jquery.validate.min.js"></script>
-        <script src="resources/js/additional-methods.js"></script>
         <script src="resources/js/notify.min.js"></script>
         <script src="resources/js/common.js"></script>
         <script type="text/javascript" src="resources/js/bootstrap-switch.min.js"></script>
@@ -65,7 +63,7 @@
                 </div>
                 <div class="content">
                     <div class="register">
-                        <form id="form1" action="/user/register" method="POST"> 
+                        <form id="form1" action="/T4U/user/register" method="POST"> 
                             <div class="register-top-grid">
                                 <h3><fmt:message key="register.label.titlePersonal"  /></h3>
                                 <div>
@@ -83,7 +81,7 @@
                                  <div>
                                     <span><fmt:message key="register.label.gender"  /><label>*</label></span>
                                     
-                                    <input type="checkbox" checked />
+                                    <input type="checkbox" name="gender" checked />
                                  </div>
                                 
                                 <div class="clearfix"> </div>
@@ -97,7 +95,7 @@
                                 <div class="form-group" >
                                     <span><fmt:message key="register.label.birthdate"  /><label>*</label></span>
                                     <div class="input-group" id="datetimepicker1">
-                                        <input type='text' class="form-control" id="date1"/>
+                                        <input type='text' name="birthdate" class="form-control" id="date1"/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar">
                                             </span>
@@ -117,15 +115,15 @@
                                     </div>
                                     <div>
                                         <span><fmt:message key="register.label.pwd"  /><label>*</label></span>
-                                        <input type="text" name="password1">
+                                        <input type="password" name="password1">
                                     </div>
                                     <div>
                                         <span><fmt:message key="register.label.confirmPwd"  /><label>*</label></span>
-                                        <input type="text" name="password2">
+                                        <input type="password" name="password2">
                                     </div>
                                     <div class="clearfix"> </div>
                             </div>
-                            <input type="submit" value="<fmt:message key="login.label.submit"  />">
+                            <input type="button" name="ign" class="btn btn-default" value="<fmt:message key="register.label.submit"  />">
                             <div class="clearfix"> </div>
                         </form>
                     </div>
@@ -151,57 +149,52 @@
 
 
         });
-            jQuery.validator.setDefaults({
-              debug: true,
-              success: "valid"
-            });
-            $( "#form1" ).validate({
-              rules: {
-                email: {
-                  required: true,
-                  email: true
-                }
-              }
-            });
-            $('#form1').submit(function() {
+            $('input[type="button"]').click(function() {
                 if($("input[name='firstName']").val()==''){
                         showErrorMessage("You must provide your first name here");
-                        return false;
+                        
                 }
-                if($("input[name='lastName']").val()==''){
+                else if($("input[name='lastName']").val()==''){
                         showErrorMessage("You must provide your last name here");
-                        return false;
+                        
                 }
-                if($("input[name='phone']")='').val()){
+                else if($("input[name='phone']").val()==''){
                         showErrorMessage("You must provide your phone number here");
-                        return false;
+                        
                 }
-                if($('#date1').val()=''){
+                else if($('#date1').val()==''){
                         showErrorMessage("You must provide your birth date here");
-                        return false;
+                        
                 }
-                if($("input[name='account']").val()==''){
+                else if($("input[name='account']").val()==''){
                         showErrorMessage("You must provide your account here");
-                        return false;
+                        
                 }
-                if($("input[name='password1']").val()==''){
+                else if($("input[name='password1']").val()==''){
                         showErrorMessage("You must provide your password");
-                        return false;
+                        
                 }
-                if($("input[name='password2']").val()==''){
+                else if($("input[name='password2']").val()==''){
                         showErrorMessage("You need to confirm your password");
-                        return false;
+                        
                 }
-                if($("input[name='password1']").val()!= $("input[name='password2']").val()){
+                else if($("input[name='password1']").val()!= $("input[name='password2']").val()){
                         showErrorMessage("Passwords are not consistent");
-                        return false;
+                        
                 }
-                if($("input[name='password1']").val()!= $("input[name='password2']").val()){
+                else if($("input[name='password1']").val()!= $("input[name='password2']").val()){
                         showErrorMessage("Passwords are not consistent");
-                        return false;
+                        
                 }
-
-                return true; // return false to cancel form action
+                else if($("input[name='email']").val()!= $("input[name='password2']").val()){
+                        showErrorMessage("You need to provide your email address");
+                        
+                }
+                else{
+                     $( "#form1" ).submit();
+                }
+                
+                
             });
             function showErrorMessage(msg){
                 $.notify(msg, {
