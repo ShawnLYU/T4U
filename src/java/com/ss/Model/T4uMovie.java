@@ -6,48 +6,62 @@
 
 package com.ss.Model;
 
-import com.ss.app.T4uMovieType;
+import com.ss.Utility.T4uJson2Map;
+import java.util.*;
+import org.json.JSONObject;
 
 /**
  *
  * @author mengxualv2
+ * 
+ * 2016040901    SM    Refactor codes
+ * 2016041201    SM    Rebuild Movie and Version Model
  */
 public class T4uMovie {
     private int movieId;
     private String movieName;
-    private T4uMovieType t4uMovieType;
-    private int basicMoviePrice;
-
-    public int getBasicMoviePrice() {
-        return basicMoviePrice;
-    }
-
-    public void setBasicMoviePrice(int basicMoviePrice) {
-        this.basicMoviePrice = basicMoviePrice;
-    }
-
+    private String movieDescription;
+    private Map<String, String> movieInfo;
+    private List<T4uVersion> allVersions;
+    
     public int getMovieId() {
-        return movieId;
+        return this.movieId;
     }
 
     public void setMovieId(int movieId) {
         this.movieId = movieId;
     }
-
+    
     public String getMovieName() {
-        return movieName;
+        return this.movieName;
     }
 
     public void setMovieName(String movieName) {
         this.movieName = movieName;
     }
-
-    public T4uMovieType getT4uMovieType() {
-        return t4uMovieType;
+    
+    public String getMovieDescription() {
+        return this.movieDescription;
     }
 
-    public void setT4uMovieType(T4uMovieType t4uMovieType) {
-        this.t4uMovieType = t4uMovieType;
+    public void setMovieDescription(String movieDescription) {
+        this.movieDescription = movieDescription;
     }
     
+    public Map<String, String> getMovieInfo() {
+        return this.movieInfo;
+    }
+    
+    public void setMovieInfo(String strMovieInfo) {
+        this.movieInfo=T4uJson2Map.jsonToMap(new JSONObject(strMovieInfo));
+    }
+
+    public List<T4uVersion> getAllVersions() {
+        return this.allVersions;
+    }
+
+    public void setAllVersions(List<T4uVersion> allVersions) {
+        this.allVersions = allVersions;
+    }
+
 }
