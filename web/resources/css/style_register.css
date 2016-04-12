@@ -1328,7 +1328,6 @@ p.cart {
 .register-top-grid div, .register-bottom-grid div {
 	width: 48%;
 	float: left;
-	margin: 10px 0;
 }
 .register-top-grid span, .register-bottom-grid span {
 	color:#999;
@@ -1337,7 +1336,8 @@ p.cart {
 	
 	font-size:1em;
 }
-.register-top-grid input[type="text"], .register-bottom-grid input[type="text"] {
+.register-top-grid input[type="text"], .register-bottom-grid input[type="text"], 
+.register-bottom-grid input[type="password"]   {
 	border: 1px solid #EEE;
 	outline-color:#FF5B36;
 	width: 96%;

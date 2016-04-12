@@ -31,12 +31,17 @@
         <script src="resources/js/additional-methods.js"></script>
         <script src="resources/js/notify.min.js"></script>
         <script src="resources/js/common.js"></script>
-
+        <script type="text/javascript" src="resources/js/bootstrap-switch.min.js"></script>
+        <script type="text/javascript" src="resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+        <script src="resources/js/moment.js" type="text/javascript"></script>
+        <script src="resources/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 
         <link href="resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
         <link href="resources/css/style_register.css" rel="stylesheet" type="text/css" media="all" />
         <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:100,200,300,400,500,600,700,800,900' rel='stylesheet' type='text/css'>
         <link href="resources/css/common.css" rel="stylesheet" type='text/css' />
+        <link href="resources/css/bootstrap-switch.min.css" rel='stylesheet' type='text/css' />
+        <link href="resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
     </head>
     
     <body> 
@@ -72,13 +77,15 @@
                                     <input type="text" name="lastName"> 
                                 </div>
                                 <div>
-                                    <span><fmt:message key="register.label.account"  /><label>*</label></span>
-                                    <input type="text" name="userAccount"> 
-                                </div>
-                                <div>
-                                    <span><fmt:message key="register.label.email"  /><label>*</label></span>
-                                    <input type="text" name="email"> 
-                                </div>
+                                    <span><fmt:message key="register.label.phone"  /><label>*</label></span>
+                                    <input type="text" name="phone"> 
+                                 </div>
+                                 <div>
+                                    <span><fmt:message key="register.label.gender"  /><label>*</label></span>
+                                    
+                                    <input type="checkbox" checked />
+                                 </div>
+                                
                                 <div class="clearfix"> </div>
                                 <a class="news-letter" href="#">
                                 <!--
@@ -86,8 +93,28 @@
                                       -->
                                 </a>
                              </div>
+                             <div class="col-xs-12" style="padding-left:0px;">
+                                <div class="form-group" >
+                                    <span><fmt:message key="register.label.birthdate"  /><label>*</label></span>
+                                    <div class="input-group" id="datetimepicker1">
+                                        <input type='text' class="form-control" id="date1"/>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar">
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                             </div>
                             <div class="register-bottom-grid">
                                 <h3><fmt:message key="register.label.titleLogin"  /></h3>
+                                    <div>
+                                        <span><fmt:message key="register.label.account"  /><label>*</label></span>
+                                        <input type="text" name="userAccount"> 
+                                    </div>
+                                    <div>
+                                        <span><fmt:message key="register.label.email"  /><label>*</label></span>
+                                        <input type="text" name="email"> 
+                                    </div>
                                     <div>
                                         <span><fmt:message key="register.label.pwd"  /><label>*</label></span>
                                         <input type="text" name="password1">
@@ -98,7 +125,7 @@
                                     </div>
                                     <div class="clearfix"> </div>
                             </div>
-                            <input type="submit" value="submit">
+                            <input type="submit" value="<fmt:message key="login.label.submit"  />">
                             <div class="clearfix"> </div>
                         </form>
                     </div>
@@ -106,6 +133,24 @@
             </div>
         </div>
         <script>
+        $(document).ready(function(){
+            $('input[type="checkbox"]').bootstrapSwitch('onText',"M",'M');
+            $('input[type="checkbox"]').bootstrapSwitch('offText',"F",'F');
+            $('input[type="checkbox"]').bootstrapSwitch('offColor',"warning",'warning');
+            $('#datetimepicker1').datetimepicker({
+                viewMode: 'years',
+                format: 'DD/MM/YYYY'
+             });
+            //$('#date1').val()
+        });
+        $('input[type="checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+          console.log(this); // DOM element
+          console.log(event); // jQuery event
+          console.log(state); // true | false
+          //$('input[type="checkbox"]').bootstrapSwitch('state')
+
+
+        });
             jQuery.validator.setDefaults({
               debug: true,
               success: "valid"
@@ -127,6 +172,14 @@
                         showErrorMessage("You must provide your last name here");
                         return false;
                 }
+                if($("input[name='phone']")='').val()){
+                        showErrorMessage("You must provide your phone number here");
+                        return false;
+                }
+                if($('#date1').val()=''){
+                        showErrorMessage("You must provide your birth date here");
+                        return false;
+                }
                 if($("input[name='account']").val()==''){
                         showErrorMessage("You must provide your account here");
                         return false;
@@ -137,6 +190,10 @@
                 }
                 if($("input[name='password2']").val()==''){
                         showErrorMessage("You need to confirm your password");
+                        return false;
+                }
+                if($("input[name='password1']").val()!= $("input[name='password2']").val()){
+                        showErrorMessage("Passwords are not consistent");
                         return false;
                 }
                 if($("input[name='password1']").val()!= $("input[name='password2']").val()){
