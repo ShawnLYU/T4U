@@ -48,7 +48,7 @@
             <div class="container_wrap">
                 <div class="header_top">
                     <div class="col-sm-3 logo">
-                        <a href="index.html"><img src="resources/images/logo.png" alt=""/></a>
+                        <a href="index.jsp"><img src="resources/images/logo.png" alt=""/></a>
                     </div>
                     <div class="col-sm-3 col-sm-offset-6 nav">
                         <div  class="btn-group" role="group">
@@ -123,7 +123,16 @@
                                     </div>
                                     <div class="clearfix"> </div>
                             </div>
-                            <input type="button" name="ign" class="btn btn-default" value="<fmt:message key="register.label.submit"  />">
+                            <div class="register-bottom-grid">
+                                    <div>
+                                        <input type="button" name="ign" class="btn btn-default" value="<fmt:message key="register.label.submit"  />">
+                                    </div>
+                                    <div>
+                                        <input type="button" id="login" class="btn btn-default" value="<fmt:message key="login.label.submit"  />">
+                                    </div>
+                                    
+                                    <div class="clearfix"> </div>
+                            </div>
                             <div class="clearfix"> </div>
                         </form>
                     </div>
@@ -149,6 +158,9 @@
 
 
         });
+         $('#login').click(function(){
+           window.location.href = '/T4U/login.jsp'; //relative to domain
+       }) ;
             $('input[type="button"]').click(function() {
                 if($("input[name='firstName']").val()==''){
                         showErrorMessage("You must provide your first name here");
@@ -186,12 +198,17 @@
                         showErrorMessage("Passwords are not consistent");
                         
                 }
-                else if($("input[name='email']").val()!= $("input[name='password2']").val()){
+                else if($("input[name='email']").val()==''){
                         showErrorMessage("You need to provide your email address");
                         
                 }
                 else{
-                     $( "#form1" ).submit();
+//                    var input = $("<input>")
+//                                    .attr("type", "hidden")
+//                                    .attr("name", "gender").val($('input[type="checkbox"]').bootstrapSwitch('state'));
+//                    $('#form1').append($(input));
+                    $("input[name='gender']").val($('input[type="checkbox"]').bootstrapSwitch('state'));
+                    $( "#form1" ).submit();
                 }
                 
                 
