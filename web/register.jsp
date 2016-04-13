@@ -186,12 +186,17 @@
                         showErrorMessage("Passwords are not consistent");
                         
                 }
-                else if($("input[name='email']").val()!= $("input[name='password2']").val()){
+                else if($("input[name='email']").val()==''){
                         showErrorMessage("You need to provide your email address");
                         
                 }
                 else{
-                     $( "#form1" ).submit();
+//                    var input = $("<input>")
+//                                    .attr("type", "hidden")
+//                                    .attr("name", "gender").val($('input[type="checkbox"]').bootstrapSwitch('state'));
+//                    $('#form1').append($(input));
+                    $("input[name='gender']").val($('input[type="checkbox"]').bootstrapSwitch('state'));
+                    $( "#form1" ).submit();
                 }
                 
                 

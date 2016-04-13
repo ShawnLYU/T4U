@@ -79,14 +79,14 @@ public class T4uRegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         logger.debug("Enter register servlet with POST");
         
-        logger.debug(request.getParameter("firstName"));
-        logger.debug(request.getParameter("lastName"));
-        logger.debug(request.getParameter("phone"));
-        logger.debug(request.getParameter("gender"));
-        logger.debug(request.getParameter("birthdate"));
-        logger.debug(request.getParameter("userAccount"));
-        logger.debug(request.getParameter("email"));
-        logger.debug(request.getParameter("password1"));
+        logger.debug("firstName: "+request.getParameter("firstName"));
+        logger.debug("lastName: "+request.getParameter("lastName"));
+        logger.debug("phone: "+request.getParameter("phone"));
+        logger.debug("gender: "+request.getParameter("gender"));
+        logger.debug("birthdate: "+request.getParameter("birthdate"));
+        logger.debug("userAccount: "+request.getParameter("userAccount"));
+        logger.debug("email: "+request.getParameter("email"));
+        logger.debug("password1: "+request.getParameter("password1"));
         
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
