@@ -33,6 +33,7 @@ public class T4uUserLoginServlet extends HttpServlet {
     private static Logger logger = Logger.getLogger(T4uUserLoginServlet.class);  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        logger.debug("Enter User Login servlet");
         String userAccount = request.getParameter("userAccount");
         String userPassword = request.getParameter("userPassword");
         T4uUser user = new T4uUser();
@@ -44,7 +45,7 @@ public class T4uUserLoginServlet extends HttpServlet {
             result = "Yes";
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-          
+        logger.debug("User authentication successfull or not: "+result);
         try {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
