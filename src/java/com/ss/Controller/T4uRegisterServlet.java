@@ -6,13 +6,24 @@
 
 package com.ss.Controller;
 
+import com.ss.DAO.T4uUserDAO;
+import com.ss.Model.T4uUser;
+import com.ss.app.T4uConstants;
+import com.ss.app.T4uUserGroup;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 /**
@@ -79,17 +90,64 @@ public class T4uRegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         logger.debug("Enter register servlet with POST");
         
-        logger.debug("firstName: "+request.getParameter("firstName"));
-        logger.debug("lastName: "+request.getParameter("lastName"));
-        logger.debug("phone: "+request.getParameter("phone"));
-        logger.debug("gender: "+request.getParameter("gender"));
-        logger.debug("birthdate: "+request.getParameter("birthdate"));
-        logger.debug("userAccount: "+request.getParameter("userAccount"));
-        logger.debug("email: "+request.getParameter("email"));
-        logger.debug("password1: "+request.getParameter("password1"));
+//        logger.debug("firstName: "+request.getParameter("firstName"));
+//        logger.debug("lastName: "+request.getParameter("lastName"));
+//        logger.debug("phone: "+request.getParameter("phone"));
+//        logger.debug("gender: "+request.getParameter("gender"));
+//        logger.debug("birthdate: "+request.getParameter("birthdate"));
+//        logger.debug("userAccount: "+request.getParameter("userAccount"));
+//        logger.debug("email: "+request.getParameter("email"));
+//        logger.debug("password1: "+request.getParameter("password1"));
+        T4uUser t4uUser = new T4uUser();
+        t4uUser.setUserAccount(request.getParameter("userAccount"));
+        t4uUser.setUserPassword(request.getParameter("password1"));
+        t4uUser.setUserName(request.getParameter("lastName")+" "+request.getParameter("firstName"));
+        String gender;
+        if(request.getParameter("UserGender")=="true")
+            gender = "M";
+        else
+            gender = "F";
+        t4uUser.setUserGender(gender);
         
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-        dispatcher.forward(request, response);
+        SimpleDateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date birthdate = null;
+        java.sql.Date sqlDate = null;
+        try {
+            birthdate = sourceFormat.parse(request.getParameter("birthdate"));
+            sqlDate = new java.sql.Date(birthdate.getTime());
+        } catch (ParseException ex) {
+            java.util.logging.Logger.getLogger(T4uRegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        t4uUser.setUserBirthdate(sqlDate);
+        
+        t4uUser.setUserPhone(request.getParameter("phone"));
+        t4uUser.setUserEmail(request.getParameter("email"));
+        t4uUser.setUserCredit(0);
+        T4uUserGroup t4uUserGroup = new T4uUserGroup();
+        t4uUserGroup.setGroupName("user;");
+        t4uUser.setUserGroup(t4uUserGroup);
+        HttpSession session = null;
+        session = request.getSession(true);
+        if(T4uUserDAO.checkAccountExist(t4uUser) > 0){
+            logger.debug("Registration Error: "+T4uConstants.ExUserRegisterAccountExisted);
+            session.setAttribute("error",T4uConstants.ExUserRegisterAccountExisted);
+            response.sendRedirect(request.getContextPath()+"/error.jsp");
+        }else{
+            try {
+                if(T4uUserDAO.createAccount(t4uUser)){
+                    logger.debug("Registration Successfully: "+t4uUser.getUserAccount());
+                    session.setAttribute(T4uConstants.T4uUser, t4uUser);
+                    response.sendRedirect(request.getContextPath()+"/index.jsp");
+                    
+                }else{
+                    session.setAttribute("error",T4uConstants.ExUserAccountNotExisted);
+                    response.sendRedirect(request.getContextPath()+"/error.jsp");
+                }  
+            } catch (SQLException ex) {
+                java.util.logging.Logger.getLogger(T4uRegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         //processRequest(request, response);
     }
 

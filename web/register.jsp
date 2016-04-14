@@ -26,20 +26,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Cinema</title>
         <!-- start plugins -->
-        <script src="resources/js/jquery-1.11.1.min.js"></script>
-        <script src="resources/js/notify.min.js"></script>
-        <script src="resources/js/common.js"></script>
-        <script type="text/javascript" src="resources/js/bootstrap-switch.min.js"></script>
-        <script type="text/javascript" src="resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-        <script src="resources/js/moment.js" type="text/javascript"></script>
-        <script src="resources/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+        <script src="/T4U/resources/js/jquery-1.11.1.min.js"></script>
+        <script src="/T4U/resources/js/notify.min.js"></script>
+        <script src="/T4U/resources/js/common.js"></script>
+        <script type="text/javascript" src="/T4U/resources/js/bootstrap-switch.min.js"></script>
+        <script type="text/javascript" src="/T4U/resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+        <script src="/T4U/resources/js/moment.js" type="text/javascript"></script>
+        <script src="/T4U/resources/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+        <script src="resources/js/md5.js" type="text/javascript"></script>
 
-        <link href="resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
-        <link href="resources/css/style_register.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+        <link href="/T4U/resources/css/style_register.css" rel="stylesheet" type="text/css" media="all" />
         <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:100,200,300,400,500,600,700,800,900' rel='stylesheet' type='text/css'>
-        <link href="resources/css/common.css" rel="stylesheet" type='text/css' />
-        <link href="resources/css/bootstrap-switch.min.css" rel='stylesheet' type='text/css' />
-        <link href="resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+        <link href="/T4U/resources/css/common.css" rel="stylesheet" type='text/css' />
+        <link href="/T4U/resources/css/bootstrap-switch.min.css" rel='stylesheet' type='text/css' />
+        <link href="/T4U/resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
     </head>
     
     <body> 
@@ -48,7 +49,7 @@
             <div class="container_wrap">
                 <div class="header_top">
                     <div class="col-sm-3 logo">
-                        <a href="index.jsp"><img src="resources/images/logo.png" alt=""/></a>
+                        <a href="index.jsp"><img src="/T4U/resources/images/logo.png" alt=""/></a>
                     </div>
                     <div class="col-sm-3 col-sm-offset-6 nav">
                         <div  class="btn-group" role="group">
@@ -208,6 +209,8 @@
 //                                    .attr("name", "gender").val($('input[type="checkbox"]').bootstrapSwitch('state'));
 //                    $('#form1').append($(input));
                     $("input[name='gender']").val($('input[type="checkbox"]').bootstrapSwitch('state'));
+                    $("input[name='password1']").val(md5($("input[name='password1']").val()));
+                    
                     $( "#form1" ).submit();
                 }
                 

@@ -8,9 +8,13 @@
         <servlet-name>T4uRegisterServlet</servlet-name>
         <servlet-class>com.ss.Controller.T4uRegisterServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>T4uUserLogOutServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uUserLogOutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
-        <url-pattern>/login.do</url-pattern>
+        <url-pattern>/user/login.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>T4uRegisterServlet</servlet-name>
@@ -24,7 +28,10 @@
             <param-value>/WEB-INF/classes/log4j.properties</param-value>
         </init-param>
     </servlet>
-
+    <servlet-mapping>
+        <servlet-name>T4uUserLogOutServlet</servlet-name>
+        <url-pattern>/user/logout.do</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
