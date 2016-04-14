@@ -117,7 +117,6 @@
                                 </c:choose>
                                 <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                    
                                         <c:choose>
                                             <c:when test="${sessionScope.t4uUser != null}">
                                                <li><a href="#"><fmt:message key="index.label.profile"/></a></li>
@@ -126,7 +125,6 @@
                                                <li><a href="/T4U/login.jsp"><fmt:message key="index.label.login"/></a></li>
                                             </c:otherwise>
                                         </c:choose>
-                                    
                                     <li><a href="/T4U/register.jsp"><fmt:message key="index.label.register"/></a></li>
                                     <li class="divider"></li>
                                     <li><a href="/T4U/user/logout.do"><fmt:message key="index.label.logout"/></a></li>
