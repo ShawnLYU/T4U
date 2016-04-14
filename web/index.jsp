@@ -26,13 +26,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Cinema</title>
         <!-- start plugins -->
-        <script src="resources/js/jquery-1.11.1.min.js"></script>
-        <script src="resources/js/common.js"></script>
-        <script type="text/javascript" src="resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="resources/js/jquery.flexisel.js"></script>	
+        <script src="/T4U/resources/js/jquery-1.11.1.min.js"></script>
+        <script src="/T4U/resources/js/common.js"></script>
+        <script type="text/javascript" src="/T4U/resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/T4U/resources/js/jquery.flexisel.js"></script>	
         
-        <link href="resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
-        <link href="resources/css/style_index.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+        <link href="/T4U/resources/css/style_index.css" rel="stylesheet" type="text/css" media="all" />
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
         <script type="text/javascript">
             $(document).ready(function(){
@@ -98,15 +98,41 @@
                             <a href="index.jsp"><img src="resources/images/logo.png" alt="" /></a>
                             <p>Movie Theater</p>
                         </div>
-                        <div class="search">
-                            <div  class="btn-group" role="group">
+                        <div class="search" style="width:30%">
+                            <div  class="btn-group col-sm-6" role="group">
                                 <button type="button" class="btn btn-default col-sm-4" onclick="setLocaleEN();">En</button>
                                 <button type="button" class="btn btn-default col-sm-4 col-sm-offset-4" onclick="setLocaleCN();">简</button>
                                 <button type="button" class="btn btn-default col-sm-4 col-sm-offset-4" onclick="setLocaleHK();">繁</button>
-                            </div>    
+                                
+                            </div>  
+                            <div class="dropdown col-sm-6" style="padding: 0;">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                <c:choose>
+                                    <c:when test="${sessionScope.t4uUser != null}">
+                                       <c:out value="${sessionScope.t4uUser.userName}"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <fmt:message key="index.label.account"/>
+                                    </c:otherwise>
+                                </c:choose>
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                        <c:choose>
+                                            <c:when test="${sessionScope.t4uUser != null}">
+                                               <li><a href="#"><fmt:message key="index.label.profile"/></a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                               <li><a href="/T4U/login.jsp"><fmt:message key="index.label.login"/></a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    <li><a href="/T4U/register.jsp"><fmt:message key="index.label.register"/></a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="/T4U/user/logout.do"><fmt:message key="index.label.logout"/></a></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="clearfix">
-
+                            
                         </div>
                     </div>
                     <div class="header-info">

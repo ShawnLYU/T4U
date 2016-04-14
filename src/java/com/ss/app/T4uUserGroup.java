@@ -11,5 +11,18 @@ package com.ss.app;
  * @author mengxualv2
  */
 public class T4uUserGroup {
+    private String groupName;
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+    @Override
+    public String toString(){
+        return this.groupName;
+    }
     
 }
