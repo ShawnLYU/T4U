@@ -119,7 +119,7 @@
                                 <ul class="dropdown-menu">
                                         <c:choose>
                                             <c:when test="${sessionScope.t4uUser != null}">
-                                               <li><a href="#"><fmt:message key="index.label.profile"/></a></li>
+                                               <li><a href="/T4U/user/profile"><fmt:message key="index.label.profile"/></a></li>
                                             </c:when>
                                             <c:otherwise>
                                                <li><a href="/T4U/login.jsp"><fmt:message key="index.label.login"/></a></li>

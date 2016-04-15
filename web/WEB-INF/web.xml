@@ -12,6 +12,10 @@
         <servlet-name>T4uUserLogOutServlet</servlet-name>
         <servlet-class>com.ss.Controller.T4uUserLogOutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>T4uUserProfileServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uUserProfileServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
         <url-pattern>/user/login.do</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>T4uUserLogOutServlet</servlet-name>
         <url-pattern>/user/logout.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>T4uUserProfileServlet</servlet-name>
+        <url-pattern>/user/profile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
