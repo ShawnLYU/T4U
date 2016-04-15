@@ -33,7 +33,7 @@
         <script type="text/javascript" src="/T4U/resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
         <script src="/T4U/resources/js/moment.js" type="text/javascript"></script>
         <script src="/T4U/resources/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-        <script src="resources/js/md5.js" type="text/javascript"></script>
+        <script src="/T4U/resources/js/md5.js" type="text/javascript"></script>
 
         <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
         <link href="/T4U/resources/css/style_register.css" rel="stylesheet" type="text/css" media="all" />
@@ -68,12 +68,8 @@
                             <div class="register-top-grid">
                                 <h3><fmt:message key="register.label.titlePersonal"  /></h3>
                                 <div>
-                                    <span><fmt:message key="register.label.firstName"  /><label>*</label></span>
-                                    <input type="text" name="firstName"> 
-                                </div>
-                                <div>
-                                    <span><fmt:message key="register.label.lastName"  /><label>*</label></span>
-                                    <input type="text" name="lastName"> 
+                                    <span><fmt:message key="register.label.name"  /><label>*</label></span>
+                                    <input type="text" name="name"> 
                                 </div>
                                 <div>
                                     <span><fmt:message key="register.label.phone"  /><label>*</label></span>
