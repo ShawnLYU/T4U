@@ -1327,9 +1327,12 @@ font-weight: 700;
 		width: 95%;
 	}
 	.search {
-		padding: 6px 8px;
+/*		padding: 6px 8px;
 		width: 19%;
-		margin-top: 3px;
+                width: 36%;
+		margin-top: 3px;*/
+
+                display:none;
 	}
 	.logo p {
 		font-size: 1.3em;
@@ -1500,8 +1503,9 @@ font-weight: 700;
 		width: 44%;
 	}
 	.search input[type="submit"] {
-		top: -2px;
+/*		top: -2px;
 		right: 1px;
+                width: 44%;*/
 	}
 	.logo img {
 		width: 85%;
@@ -1525,9 +1529,11 @@ font-weight: 700;
 		padding: 0.45em 2em 0.5em 1em;
 	}
 	.search {
-		padding: 3px 8px;
+/*		padding: 3px 8px;
 		width: 22%;
-		margin-top: 5px;
+		margin-top: 5px;*/
+                display: none;
+                
 	}
 	.span_top {
 		padding: 1em 1em;
@@ -1687,14 +1693,15 @@ font-weight: 700;
 	.menu {
 		top: 45px;
 	}
-	.search {
+/*	.search {
 		padding: 0px 8px;
-		width: 23%;
+		width: 53%;
 		margin-top: 4px;
-	}
+	}*/
 	.search input[type="submit"] {
-		top: -7px;
-		right: 0px;
+/*		top: -7px;
+		right: 0px;*/
+                display: none;
 	}
 	.right-content-heading-left {
 		padding: 0 0 11px 0;
@@ -1759,6 +1766,7 @@ font-weight: 700;
 @media screen and (max-width: 768px) {
         div.search{
             display: none;
+            /*width: 60%;*/
         }
 	.header {
 		min-height: 345px;
@@ -1947,6 +1955,7 @@ font-weight: 700;
 @media screen and (max-width: 480px) {
         div.search{
             display: none;
+            /*width: 65%;*/
         }
 	.header-info {
 		display: none;
@@ -1963,9 +1972,9 @@ font-weight: 700;
 	.news-left-grid p {
 		font-size: 1.15em;
 	}
-	.search {
+/*	.search {
 		width: 35%;
-	}
+	}*/
 	.logo a {
 		width: 52%;
 	}
@@ -2159,6 +2168,7 @@ font-weight: 700;
 	}
 	.search {
 		display:none;
+                /*width: 60%;*/
 	}
 	.news-right-grid p {
 		margin-top:0;
