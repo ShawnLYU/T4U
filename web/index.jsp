@@ -142,8 +142,8 @@
                         <p class="review reviewgo">Genre	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp; Animation, Action, Comedy</p>
                         <p class="review">Release &nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp; 7 November 2014</p>
                         <p class="special">The special bond that develops between plus-sized inflatable robot Baymax, and prodigy Hiro Hamada, who team up with a group of friends to form a band of high-tech heroes.</p>
-                        <a class="video" href="#"><i class="video1"></i>WATCH TRAILER</a>
-                        <a class="book" href="#"><i class="book1"></i>BOOK TICKET</a>
+                        <a class="video" href="#"><i class="video1"></i><fmt:message key="index.label.watchTrailer"/></a>
+                        <a class="book" href="#"><i class="book1"></i><fmt:message key="index.label.bookTicket"/></a>
                     </div>
                 </div>
                 <div class="review-slider">
@@ -163,11 +163,11 @@
                 </div>
                 <div class="news">
                     <div class="col-md-6 news-left-grid">
-                        <h3>Don’t be late,</h3>
-                        <h2>Book your ticket now!</h2>
-                        <h4>Easy, simple & fast.</h4>
-                        <a href="#"><i class="book"></i>BOOK TICKET</a>
-                        <p>Get Discount up to <strong>10%</strong> if you are a member!</p>
+                        <h3><fmt:message key="index.label.ad1"/></h3>
+                        <h2><fmt:message key="index.label.ad2"/></h2>
+                        <h4><fmt:message key="index.label.ad3"/></h4>
+                        <a href="#"><i class="book"></i><fmt:message key="index.label.bookTicket"/></a>
+                        <p><fmt:message key="index.label.ad4"/> <strong>10%</strong> <fmt:message key="index.label.ad5"/></p>
                     </div>
                     <div class="col-md-6 news-right-grid">
                         <h3>News</h3>
