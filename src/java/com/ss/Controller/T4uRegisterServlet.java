@@ -9,7 +9,6 @@ package com.ss.Controller;
 import com.ss.DAO.T4uUserDAO;
 import com.ss.Model.T4uUser;
 import com.ss.app.T4uConstants;
-import com.ss.app.T4uUserGroup;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -123,9 +122,7 @@ public class T4uRegisterServlet extends HttpServlet {
         t4uUser.setUserPhone(request.getParameter("phone"));
         t4uUser.setUserEmail(request.getParameter("email"));
         t4uUser.setUserCredit(0);
-        T4uUserGroup t4uUserGroup = new T4uUserGroup();
-        t4uUserGroup.setGroupName("user;");
-        t4uUser.setUserGroup(t4uUserGroup);
+        t4uUser.setUserGroup("user");
         HttpSession session = null;
         session = request.getSession(true);
         if(T4uUserDAO.checkAccountExist(t4uUser) > 0){
