@@ -6,7 +6,6 @@
 
 package com.ss.Model;
 
-import com.ss.app.T4uUserGroup;
 import java.sql.Date;
 
 /**
@@ -25,7 +24,7 @@ public class T4uUser {
     private String userPhone;
     private String userEmail;
     private int userCredit;
-    private T4uUserGroup userGroup;
+    private String userGroup;
 
     public int getUserId() {
         return this.userId;
@@ -100,11 +99,11 @@ public class T4uUser {
         this.userCredit = userCredit;
     }
 
-    public T4uUserGroup getUserGroup() {
+    public String getUserGroup() {
         return this.userGroup;
     }
 
-    public void setUserGroup(T4uUserGroup userGroup) {
+    public void setUserGroup(String userGroup) {
         this.userGroup = userGroup;
     }
 }

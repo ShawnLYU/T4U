@@ -8,7 +8,6 @@ package com.ss.DAO;
 
 import com.ss.Model.T4uUser;
 import com.ss.Utility.T4uJDBC;
-import com.ss.app.T4uUserGroup;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,7 +88,7 @@ public class T4uUserDAO {
         statement.setString(6, user.getUserPhone());
         statement.setString(7, user.getUserEmail());
         statement.setInt(8, user.getUserCredit());
-        statement.setString(9, user.getUserGroup().toString());
+        statement.setString(9, user.getUserGroup());
         
         int rows = statement.executeUpdate();
         if(rows>0){
@@ -110,7 +109,7 @@ public class T4uUserDAO {
         statement.setInt(1, t4uUser.getUserId());
         ResultSet rs = statement.executeQuery();
         if (rs != null && rs.next()){
-            t4uUser.setUserAccount(rs.getString("UserAccont"));
+            t4uUser.setUserAccount(rs.getString("UserAccount"));
             t4uUser.setUserPassword(rs.getString("UserPassword"));
             t4uUser.setUserName(rs.getString("UserName"));
             t4uUser.setUserGender(rs.getString("UserGender"));
@@ -120,9 +119,7 @@ public class T4uUserDAO {
             t4uUser.setUserPhone(rs.getString("UserPhone"));
             t4uUser.setUserEmail(rs.getString("UserEmail"));
             t4uUser.setUserCredit(rs.getInt("UserCredit"));
-            T4uUserGroup t4uUserGroup = new T4uUserGroup();
-            t4uUserGroup.setGroupName(rs.getString("UserGroup"));
-            t4uUser.setUserGroup(t4uUserGroup);
+            t4uUser.setUserGroup(rs.getString("UserGroup"));
         }
         T4uJDBC.close(rs, statement, conn);
         
