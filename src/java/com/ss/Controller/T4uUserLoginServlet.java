@@ -7,12 +7,17 @@ package com.ss.Controller;
 
 import com.ss.DAO.T4uUserDAO;
 import com.ss.Model.T4uUser;
+import com.ss.app.T4uConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 /**
@@ -32,35 +37,38 @@ public class T4uUserLoginServlet extends HttpServlet {
      */
     private static Logger logger = Logger.getLogger(T4uUserLoginServlet.class);  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
+        logger.debug("Enter User Login servlet");
+        HttpSession session = request.getSession(true);
         String userAccount = request.getParameter("userAccount");
         String userPassword = request.getParameter("userPassword");
-        T4uUser user = new T4uUser();
-        user.setUserAccount(userAccount);
-        user.setUserPassword(userPassword);
-        T4uUserDAO ud = new T4uUserDAO();
-        String result = "No";
-        if (ud.checkAccountExist(user) > 0 && ud.checkPassword(user))
-            result = "Yes";
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-          
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet T4uUserLoginServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet T4uUserLoginServlet at " + request.getContextPath() + "</h1>");
-            out.println("<p>" + userAccount + "</p>");
-            out.println("<p>" + userPassword + "</p>");
-            out.println("<p>" + result + "</p>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+        T4uUser t4uUser = new T4uUser();
+        t4uUser.setUserAccount(userAccount);
+        t4uUser.setUserPassword(userPassword);
+        boolean isUserValid = false;
+//        if (ud.checkAccountExist(user) > 0 && ud.checkPassword(user))
+//            result = true;
+        if(T4uUserDAO.checkAccountExist(t4uUser) > 0){
+            if(T4uUserDAO.checkPassword(t4uUser)){
+                isUserValid = true;
+            }else{
+                session.setAttribute("error",T4uConstants.ExUserPasswordNotCorrect);
+            }
+        }else{
+            session.setAttribute("error",T4uConstants.ExUserAccountNotExisted);
+        }
+        
+        logger.debug("User authentication successfull or not: "+isUserValid);
+        
+        if(isUserValid){
+            T4uUserDAO.injectT4uUser(t4uUser);
+            session.setAttribute(T4uConstants.T4uUser, t4uUser);
+            logger.debug("User Account: "+t4uUser.getUserAccount());
+            response.sendRedirect("/");
+        }else{
+            logger.debug("Error: "+ session.getAttribute("error"));
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
@@ -76,7 +84,11 @@ public class T4uUserLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(T4uUserLoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -90,7 +102,11 @@ public class T4uUserLoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(T4uUserLoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

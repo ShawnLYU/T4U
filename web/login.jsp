@@ -26,13 +26,21 @@
 <div class="container">
 <h1><fmt:message key="login.label.loginform"/></h1>
     <div class="signin">
-        <form action="login.do" method="POST" onsubmit="return hashPassword(this);">
+        <form action="user/login.do" method="POST" onsubmit="return hashPassword(this);">
             <input type="text" name="userAccount" class="user" value="<fmt:message key="login.label.username"/>" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '<fmt:message key="login.label.username"/>';}" />
             <input type="password" name="userPassword" class="pass" />
             <input type="submit" value="<fmt:message key="login.label.submit"/>" />
+            <input id="signup" type="button" value="<fmt:message key="register.label.signup"/>" />
         </form>
     </div>
 </div>
-
+<script>
+    $(document).ready(function(){
+      
+    });
+    $('#signup').click(function(){
+        window.location.href = '/T4U/register.jsp'; //relative to domain
+    }) ;
+</script>
 </fmt:bundle>
 <jsp:include page="footer.jsp" />

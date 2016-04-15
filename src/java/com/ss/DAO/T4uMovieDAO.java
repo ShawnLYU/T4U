@@ -25,36 +25,36 @@ public class T4uMovieDAO {
     *
     * @return      A list of Movie objects.
     */
-    public List<T4uMovie> getAllMovies() {
-        List<T4uMovie> allMovies=new ArrayList<T4uMovie>();
-        try {
-            T4uJDBC db = new T4uJDBC();
-            String sql = "SELECT * FROM [T4U_movie]";
-            ResultSet rs = db.query(sql);
-            while (rs.next()) {
-                T4uMovie movie = new T4uMovie();
-                movie.setMovieId(rs.getInt("MovieId"));
-                movie.setMovieName(rs.getNString("MovieName"));
-                movie.setMovieDescription(rs.getNString("MovieDescription"));
-                movie.setMovieInfo(rs.getNString("MovieInfo"));
-                allMovies.add(movie);
-            }
-            db.close(rs);
-        } catch (SQLException ex) {
-            Logger.getLogger(T4uMovieDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(T4uMovieDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return allMovies;
-    }
+//    public List<T4uMovie> getAllMovies() {
+//        List<T4uMovie> allMovies=new ArrayList<T4uMovie>();
+//        try {
+//            T4uJDBC db = new T4uJDBC();
+//            String sql = "SELECT * FROM [T4U_movie]";
+//            ResultSet rs = db.query(sql);
+//            while (rs.next()) {
+//                T4uMovie movie = new T4uMovie();
+//                movie.setMovieId(rs.getInt("MovieId"));
+//                movie.setMovieName(rs.getNString("MovieName"));
+//                movie.setMovieDescription(rs.getNString("MovieDescription"));
+//                movie.setMovieInfo(rs.getNString("MovieInfo"));
+//                allMovies.add(movie);
+//            }
+//            db.close(rs);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(T4uMovieDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (Exception ex) {
+//            Logger.getLogger(T4uMovieDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return allMovies;
+//    }
     
     /**
     * Set all versions of specified movie.
     *
     * @param movie A Movie object.
     */
-    public void setAllVersions(T4uMovie movie) {
-        T4uVersionDAO vd = new T4uVersionDAO();
-        movie.setAllVersions(vd.getAllVersions(movie));
-    }
+//    public void setAllVersions(T4uMovie movie) {
+//        T4uVersionDAO vd = new T4uVersionDAO();
+//        movie.setAllVersions(vd.getAllVersions(movie));
+//    }
 }
