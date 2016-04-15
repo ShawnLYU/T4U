@@ -34,6 +34,7 @@ public class T4uUserLogOutServlet extends HttpServlet {
             throws ServletException, IOException {
         logger.debug("log out: going to make session invalid");
         request.getSession().invalidate();
+        logger.debug("log out: session invalid");
         response.sendRedirect(request.getContextPath()+"/index.jsp");
     }
 

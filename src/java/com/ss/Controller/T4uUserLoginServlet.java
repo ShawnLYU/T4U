@@ -64,7 +64,7 @@ public class T4uUserLoginServlet extends HttpServlet {
             T4uUserDAO.injectT4uUser(t4uUser);
             session.setAttribute(T4uConstants.T4uUser, t4uUser);
             logger.debug("User Account: "+t4uUser.getUserAccount());
-            response.sendRedirect("/");
+            response.sendRedirect(request.getContextPath());
         }else{
             logger.debug("Error: "+ session.getAttribute("error"));
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");

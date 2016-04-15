@@ -110,7 +110,7 @@ public class T4uUserDAO {
         statement.setInt(1, t4uUser.getUserId());
         ResultSet rs = statement.executeQuery();
         if (rs != null && rs.next()){
-            t4uUser.setUserAccount(rs.getString("UserAccont"));
+            t4uUser.setUserAccount(rs.getString("UserAccount"));
             t4uUser.setUserPassword(rs.getString("UserPassword"));
             t4uUser.setUserName(rs.getString("UserName"));
             t4uUser.setUserGender(rs.getString("UserGender"));
