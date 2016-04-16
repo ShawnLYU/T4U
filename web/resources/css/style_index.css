@@ -658,6 +658,9 @@ p.claim {
 	padding:3em;
 	border-top:1px solid #000;
 }
+.review-table  {
+        width:100%;
+}
 h3.head {
 	color: #000;
 	font-size: 2.5em;

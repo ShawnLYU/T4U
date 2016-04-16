@@ -19,15 +19,16 @@ import java.util.logging.Logger;
  * 
  * 2016041201    SM    Implemented getting all movies and all versions for a movie.
  * 2016041501    SM    Used PreparedStatement.
+ * 2016041601    SM    Changed return type of getAllMovies() from List to Map.
  */
 public class T4uMovieDAO {
     /**
     * Get all movies.
     *
-    * @return      A list of Movie objects.
+    * @return      A map of Movie objects.
     */
-    public static List<T4uMovie> getAllMovies() {
-        List<T4uMovie> allMovies=new ArrayList<T4uMovie>();
+    public static Map<Integer,T4uMovie> getAllMovies() {
+        Map<Integer,T4uMovie> allMovies=new HashMap<Integer,T4uMovie>();
         try {
             Connection conn =  T4uJDBC.connect();
             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM [T4U_movie]");
@@ -39,7 +40,7 @@ public class T4uMovieDAO {
                 movie.setMovieDescription(rs.getNString("MovieDescription"));
                 movie.setMovieInfo(rs.getNString("MovieInfo"));
                 movie.setAllVersions(T4uVersionDAO.getAllVersions(movie));
-                allMovies.add(movie);
+                allMovies.put(movie.getMovieId(), movie);
             }
             T4uJDBC.close(rs, pstmt, conn);
         } catch (SQLException ex) {

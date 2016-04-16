@@ -5,28 +5,37 @@
  */
 package com.ss.Controller;
 
+import com.ss.DAO.T4uCinemaDAO;
+import com.ss.DAO.T4uHouseDAO;
 import com.ss.DAO.T4uMovieDAO;
+import com.ss.DAO.T4uScheduleDAO;
+import com.ss.DAO.T4uVersionDAO;
+import com.ss.Model.T4uCinema;
+import com.ss.Model.T4uHouse;
 import com.ss.Model.T4uMovie;
+import com.ss.Model.T4uSchedule;
+import com.ss.Model.T4uVersion;
 import com.ss.app.T4uConstants;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author Steven
  * 
- * 2016041501    SM    Implemented the servlet
+ * 2016041601    SM    Implemented the servlet
  */
-public class T4uIndexInitServlet extends HttpServlet {
+public class T4uMovieDetailServlet extends HttpServlet {
 
-    private static final Logger LOGGER = Logger.getLogger(T4uIndexInitServlet.class);
+    private static final Logger LOGGER = Logger.getLogger(T4uMovieDetailServlet.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,12 +47,41 @@ public class T4uIndexInitServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        LOGGER.debug("Load resources for index.jsp.");
-        HttpSession session = request.getSession(true);
+        String strMovieId = request.getParameter("movieId");
+        int movieId = 0;
+        try {
+            movieId = Integer.parseInt(strMovieId);
+        } catch (NumberFormatException ex) {
+            movieId = 0;
+        }
+        // Retrive all movies
         Map<Integer,T4uMovie> allMovies = T4uMovieDAO.getAllMovies();
-        request.setAttribute(T4uConstants.T4U_ALLMOVIES, allMovies);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-        dispatcher.forward(request, response);
+        request.setAttribute(T4uConstants.T4U_ALLMOVIES, allMovies); // Only for poster roller
+        T4uMovie movie = allMovies.get(movieId);
+        if (movie == null) { // Cannot find this movie
+            LOGGER.debug(String.format("Cannot load movie whose movieId = %d.", movieId));
+            LOGGER.debug("Redirecting to /index.");
+            response.sendRedirect(request.getContextPath());
+        } else {
+            LOGGER.debug(String.format("Saving movie whose movieId = %d as %s into session.", movieId, T4uConstants.T4U_CURMOVIE));
+            request.setAttribute(T4uConstants.T4U_CURMOVIE, movie);
+            // Retrieve all versions
+            Map<Integer,T4uVersion> allVersions = T4uVersionDAO.getAllVersions(movie);
+            request.setAttribute(T4uConstants.T4U_ALLVERSIONS, allVersions); // Gor filtering versions
+            // Retrieve all cinemas and houses
+            Map<Integer, T4uCinema> allCinemas = T4uCinemaDAO.getAllCinemas();
+            Map<Integer, T4uHouse> allHouses = T4uHouseDAO.getAllHouses(allCinemas);
+            // Retrieve all schedules
+            Map<Integer, T4uSchedule> allSchedules = new HashMap<Integer, T4uSchedule>();
+            for (Entry<Integer, T4uVersion> entry : allVersions.entrySet())
+                T4uScheduleDAO.addSchedule(entry.getValue(), allHouses, allSchedules);
+            request.setAttribute(T4uConstants.T4U_SELSCHEDULES, allSchedules);
+            // Dispatch to JSP
+            LOGGER.debug("Redirecting to /movieDetail.jsp.");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/movieDetail.jsp");
+            dispatcher.forward(request, response);
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

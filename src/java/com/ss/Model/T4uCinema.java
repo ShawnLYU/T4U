@@ -17,6 +17,7 @@ import org.json.JSONObject;
  * 
  * 2016040901    SM    Add cinemaInfo field
  * 2016041201    SM    Use generic Map type as default variable type
+ * 2016041701    SM    Refactor codes
  */
 public class T4uCinema {
     private int cinemaId;
@@ -45,7 +46,7 @@ public class T4uCinema {
         return cinemaLocation;
     }
 
-    public void setT4uCinemaLocation(T4uCinemaLocation cinemaLocation) {
+    public void setCinemaLocation(T4uCinemaLocation cinemaLocation) {
         this.cinemaLocation = cinemaLocation;
     }
 

@@ -148,9 +148,9 @@
                 </div>
                 <div class="review-slider">
                     <ul id="flexiselDemo1">
-                        <c:set var="allMovies" value="${sessionScope.T4uAllMovies}" />
+                        <c:set var="allMovies" value="${requestScope.t4uAllMovies}" />
                         <c:forEach items="${allMovies}" var="movie">
-                            <li><img src="<c:out value="${movie.movieInfo.Poster}" />"></img></li>
+                            <li><img src="<c:out value="${movie.value.movieInfo.Poster}" />"></img></li>
                         </c:forEach>
                     </ul>
 

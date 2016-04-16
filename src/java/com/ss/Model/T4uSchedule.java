@@ -7,74 +7,60 @@
 package com.ss.Model;
 
 import com.ss.app.T4uMovieSlot;
+import java.sql.Timestamp;
 
 /**
  *
  * @author mengxualv2
+ * 
+* 2016041601    SM    Refactor codes
  */
 public class T4uSchedule {
     private int scheduleId;
-    private int movieId;
+    private T4uVersion version;
+    private T4uHouse house;
+    private Timestamp scheduleTimeslot;
+    private String scheduleOSeats;
+    private double price;
 
     public int getScheduleId() {
-        return scheduleId;
+        return this.scheduleId;
     }
 
     public void setScheduleId(int scheduleId) {
         this.scheduleId = scheduleId;
     }
 
-    public int getMovieId() {
-        return movieId;
+    public T4uVersion getVersion() {
+        return this.version;
     }
 
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
+    public void setVersion(T4uVersion version) {
+        this.version = version;
     }
 
-    public T4uMovie getT4uMovie() {
-        return t4uMovie;
+    public T4uHouse getHouse() {
+        return this.house;
     }
 
-    public void setT4uMovie(T4uMovie t4uMovie) {
-        this.t4uMovie = t4uMovie;
+    public void setHouse(T4uHouse house) {
+        this.house = house;
     }
 
-    public int getHouseId() {
-        return houseId;
+    public Timestamp getScheduleTimeslot() {
+        return this.scheduleTimeslot;
     }
 
-    public void setHouseId(int houseId) {
-        this.houseId = houseId;
+    public void setScheduleTimeslot(Timestamp scheduleTimeslot) {
+        this.scheduleTimeslot = scheduleTimeslot;
     }
 
-    public T4uHouse getT4uHouse() {
-        return t4uHouse;
+    public double getPrice() {
+        return this.price;
     }
 
-    public void setT4uHouse(T4uHouse t4uHouse) {
-        this.t4uHouse = t4uHouse;
+    public void setPrice(double price) {
+        this.price = price;
     }
-
-    public T4uMovieSlot getT4uMovieSlot() {
-        return t4uMovieSlot;
-    }
-
-    public void setT4uMovieSlot(T4uMovieSlot t4uMovieSlot) {
-        this.t4uMovieSlot = t4uMovieSlot;
-    }
-
-    public int getMoviePrice() {
-        return moviePrice;
-    }
-
-    public void setMoviePrice(int moviePrice) {
-        this.moviePrice = moviePrice;
-    }
-    private T4uMovie t4uMovie;
-    private int houseId;
-    private T4uHouse t4uHouse;
-    private T4uMovieSlot t4uMovieSlot;
-    private int moviePrice;
     
 }
