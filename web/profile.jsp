@@ -62,69 +62,56 @@
           //$('input[type="checkbox"]').bootstrapSwitch('state')
         });
         
-        
-        $('input[type="button"]').click(function() {
-            if($("input[name='firstName']").val()==''){
-                    showErrorMessage("You must provide your first name here");
+        $("#updateProfile").click(function(){
+          if($("#name").val()==''){
+                    showErrorMessage("You must provide your name here");
 
-            }
-            else if($("input[name='lastName']").val()==''){
-                    showErrorMessage("You must provide your last name here");
-
-            }
-            else if($("input[name='phone']").val()==''){
+          }
+          else if($("#phone").val()==''){
                     showErrorMessage("You must provide your phone number here");
 
-            }
-            else if($('#date1').val()==''){
-                    showErrorMessage("You must provide your birth date here");
-
-            }
-            else if($("input[name='account']").val()==''){
-                    showErrorMessage("You must provide your account here");
-
-            }
-            else if($("input[name='password1']").val()==''){
-                    showErrorMessage("You must provide your password");
-
-            }
-            else if($("input[name='password2']").val()==''){
-                    showErrorMessage("You need to confirm your password");
-
-            }
-            else if($("input[name='password1']").val()!= $("input[name='password2']").val()){
-                    showErrorMessage("Passwords are not consistent");
-
-            }
-            else if($("input[name='password1']").val()!= $("input[name='password2']").val()){
-                    showErrorMessage("Passwords are not consistent");
-
-            }
-            else if($("input[name='email']").val()==''){
+          }
+          else if($("#email").val()==''){
                     showErrorMessage("You need to provide your email address");
-
-            }
-            else{
-//                    var input = $("<input>")
-//                                    .attr("type", "hidden")
-//                                    .attr("name", "gender").val($('input[type="checkbox"]').bootstrapSwitch('state'));
-//                    $('#form1').append($(input));
-                $("input[name='gender']").val($('input[type="checkbox"]').bootstrapSwitch('state'));
-                $("input[name='password1']").val(md5($("input[name='password1']").val()));
-
-                $( "#form1" ).submit();
-            }
-
+          }
+          else if($('#date1').val()==''){
+                        showErrorMessage("You must provide your birth date here");
+                        
+          }
+          else{
+            $("input[name='gender']").val($('input[type="checkbox"]').bootstrapSwitch('state'));
+                    
+            $( "#form1" ).submit();
+          }
 
         });
+        <c:set var="userPassword" value="${sessionScope.t4uUser.userPassword}" />
+        $("#updatePwdConfirm").click(function(){
+            if(md5($("#oldPwd").val())!=<c:out value="${userPassword}"/>){
+            showErrorMessage("Please provide the correct old password");
+          }else if($("input[name='newPwd']").val()==''){
+                        showErrorMessage("You must provide your password");
+                        
+          }
+          else if($("input[name='confirmPwd']").val()==''){
+                  showErrorMessage("You need to confirm your password");
+                  
+          }
+          else if($("input[name='newPwd']").val()!= $("input[name='confirmPwd']").val()){
+                  showErrorMessage("Passwords are not consistent");
+                  
+          }else{
+            $("input[name='newPwd']").val(md5($("input[name='newPwd']").val()));
+                    
+                    $( "#form2" ).submit();
+          }
+        });
+        
         function showErrorMessage(msg){
             $.notify(msg, {
                             globalPosition: "top left",
                             autoHideDelay: 5000});
         }
-        $("#updateProfile").click(function(){
-            
-        });
         </script>
     </head>
     <body>
@@ -319,7 +306,8 @@
                         <h4 class="modal-title"><fmt:message key="profile.label.updateProfile"/></h4>
                       </div>
                       <div class="modal-body">
-                        <form id="form1" action="/T4U/user/register" method="POST" role="form">
+                        <form id="form1" action="/T4U/user/update.do" method="POST" role="form">
+                            <input name='action' type='hidden' value='profile' />
                             <div class="form-group">
                               <label for="name"><fmt:message key="register.label.name"/><label>*</label></label>
                               <input type="text" class="form-control" id="name" value="${sessionScope.t4uUser.userName}">
@@ -363,7 +351,7 @@
                         </form>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"><fmt:message key="profile.label.confirm"/></button>
+                        <button id="updateProfileConfirm" type="button" class="btn btn-primary" data-dismiss="modal"><fmt:message key="profile.label.confirm"/></button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal"><fmt:message key="profile.label.cancel"/></button>
                       </div>
                     </div>
@@ -383,10 +371,25 @@
                         <h4 class="modal-title"><fmt:message key="profile.label.changePassword"/></h4>
                       </div>
                       <div class="modal-body">
-                        <p>Some text in the modal.</p>
+                        
+                        <form id="form2" action="/T4U/user/update.do" method="POST" role="form">
+                            <input name='action' type='hidden' value='pwd' />
+                            <div class="form-group">
+                              <label for="oldPwd"><fmt:message key="profile.label.oldPwd"/></label>
+                              <input type="text" class="form-control " id="oldPwd">
+                            </div>
+                            <div class="form-group">
+                              <label for="newPwd"><fmt:message key="profile.label.newPwd"/></label>
+                              <input type="text" class="form-control " id="newPwd">
+                            </div>
+                            <div class="form-group">
+                              <label for="confirmPwd"><fmt:message key="profile.label.confirmPwd"/></label>
+                              <input type="text" class="form-control " id="confirmPwd">
+                            </div>
+                        </form>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"><fmt:message key="profile.label.confirm"/></button>
+                        <button type="button" id=updatePwdConfirm"" class="btn btn-primary" data-dismiss="modal"><fmt:message key="profile.label.confirm"/></button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal"><fmt:message key="profile.label.cancel"/></button>
                       </div>
                     </div>

@@ -159,12 +159,8 @@
            window.location.href = '/T4U/login.jsp'; //relative to domain
        }) ;
             $('input[type="button"]').click(function() {
-                if($("input[name='firstName']").val()==''){
+                if($("input[name='name']").val()==''){
                         showErrorMessage("You must provide your first name here");
-                        
-                }
-                else if($("input[name='lastName']").val()==''){
-                        showErrorMessage("You must provide your last name here");
                         
                 }
                 else if($("input[name='phone']").val()==''){
@@ -185,10 +181,6 @@
                 }
                 else if($("input[name='password2']").val()==''){
                         showErrorMessage("You need to confirm your password");
-                        
-                }
-                else if($("input[name='password1']").val()!= $("input[name='password2']").val()){
-                        showErrorMessage("Passwords are not consistent");
                         
                 }
                 else if($("input[name='password1']").val()!= $("input[name='password2']").val()){
