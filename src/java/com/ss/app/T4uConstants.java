@@ -19,5 +19,6 @@ public class T4uConstants {
     
     //key of attributes to be shown in jsp pages
     public static String T4uUser = "t4uUser";
+    public static final String T4U_ALLMOVIES = "T4uAllMovies";
     
 }
