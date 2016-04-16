@@ -20,6 +20,10 @@
         <servlet-name>T4uUserProfileServlet</servlet-name>
         <servlet-class>com.ss.Controller.T4uUserProfileServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>T4uMovieDetailServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uMovieDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
         <url-pattern>/user/login.do</url-pattern>
@@ -42,11 +46,15 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>T4uIndexInitServlet</servlet-name>
-        <url-pattern>/index.do</url-pattern>
+        <url-pattern>/index</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>T4uUserProfileServlet</servlet-name>
         <url-pattern>/user/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>T4uMovieDetailServlet</servlet-name>
+        <url-pattern>/movie/detail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -54,6 +62,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.do</welcome-file>
+        <welcome-file>index</welcome-file>
     </welcome-file-list>
 </web-app>

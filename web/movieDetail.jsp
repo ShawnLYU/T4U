@@ -26,13 +26,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Cinema</title>
         <!-- start plugins -->
-        <script src="resources/js/jquery-1.11.1.min.js"></script>
-        <script src="resources/js/common.js"></script>
+        <script src="/T4U/resources/js/jquery-1.11.1.min.js"></script>
+        <script src="/T4U/resources/js/common.js"></script>
         <script type="text/javascript" src="resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="resources/js/jquery.flexisel.js"></script>	
         
-        <link href="resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
-        <link href="resources/css/style_index.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+        <link href="/T4U/resources/css/style_index.css" rel="stylesheet" type="text/css" media="all" />
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
         <script type="text/javascript">
             $(document).ready(function(){
@@ -73,7 +73,7 @@
 					<div class="single-content">
                                             <div class="top-header span_top">
                                                 <div class="logo">
-                                                    <a href="index.html"><img src="resources/images/logo.png" alt="" /></a>
+                                                    <a href="index.html"><img src="/T4U/resources/images/logo.png" alt="" /></a>
                                                     <p>Movie Theater</p>
                                                 </div>
                                                 <div class="search v-search">
@@ -90,10 +90,12 @@
 							<div class="col-md-12 reviews-grids">
 								<div class="review">
                                                                     <div class="movie-pic">
-                                                                            <a href="single.html"><img src="resources/images/r4.jpg" alt="" /></a>
+                                                                            <a href=""><img src="<c:out value="${requestScope.t4uCurMovie.movieInfo.Poster}"/>" alt="" /></a>
                                                                     </div>
                                                                     <div class="review-info">
-                                                                        <a class="span" href="single.html">Lorem  <i>Movie Review</i></a>
+                                                                        <a class="span" href="">
+                                                                            <c:out value="${requestScope.t4uCurMovie.movieName}"/>
+                                                                        </a>
                                                                         <p class="dirctr"><a href="">Reagan Gavin Rasquinha, </a>TNN, Mar 12, 2015, 12.47PM IST</p>
                                                                         <p class="ratingview">Critic's Rating:</p>
                                                                         <div class="rating">
@@ -119,7 +121,7 @@
                                                                         &nbsp; 3.3/5</p>
                                                                         <div class="clearfix"></div>
                                                                         <div class="yrw">
-                                                                            <div class="dropdown-button">           			
+                                                                            <div class="dropdown-button">
                                                                                 <select class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
                                                                                 <option value="0">Your rating</option>	
                                                                                 <option value="1">1.Poor</option>
@@ -140,21 +142,30 @@
                                                                             </div>
                                                                             <div class="clearfix"></div>
                                                                         </div>
-                                                                        <p class="info">CAST:&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Will Smith, Margot Robbie, Adrian Martinez, Rodrigo Santoro, BD Wong, Robert Taylor</p>
-                                                                        <p class="info">DIRECTION: &nbsp;&nbsp;&nbsp;&nbsp;Glenn Ficarra, John Requa</p>
-                                                                        <p class="info">GENRE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Crime</p>
-                                                                        <p class="info">DURATION:&nbsp;&nbsp;&nbsp; &nbsp; 1 hour 45 minutes</p>
+                                                                        <table class="review-table">
+                                                                            <tr><td class="info">GENRE</td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Genre}"/></td></tr>
+                                                                            <tr><td class="info">CLASS</td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Class}"/></td></tr>
+                                                                            <tr><td class="info">DURATION</td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Length}"/></td></tr>
+                                                                            <tr><td class="info">DIRECTION</td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Director}"/></td></tr>
+                                                                            <tr><td class="info">CAST</td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Cast}"/></td></tr>
+                                                                        </table>
                                                                     </div>
                                                                     <div class="clearfix"></div>
 								</div>
 								<div class="single">
 									<h3>Lorem Ipsum IS A TENSE, TAUT, COMPELLING THRILLER</h3>
-									<p>STORY:<i> Meera and Arjun drive down Lorem Ipsum - can they survive a highway from hell?</i></p>
+									<table>
+                                                                            <thead><tr><th>Cinema</th><th>House</th><th>Time</th><th>Version</th><th>Price</th><th>Buy</th></tr></thead>
+                                                                            <tbody>
+                                                                                
+                                                                            </tbody>
+                                                                        </table>
 								</div>
 								<div class="best-review">
-									<h4>Best Reader's Review</h4>
-									<p>Excellent Movie and great performance by Lorem, one of the finest thriller of recent  like Aldus PageMaker including versions of Lorem Ipsum.</p>
-									<p><span>Neeraj Upadhyay (Noida)</span> 16/03/2015 at 12:14 PM</p>
+									<h4>Story</h4>
+                                                                        <p><c:out value="${requestScope.t4uCurMovie.movieDescription}"/></p>
+									<!--<p>Excellent Movie and great performance by Lorem, one of the finest thriller of recent  like Aldus PageMaker including versions of Lorem Ipsum.</p>
+									<p><span>Neeraj Upadhyay (Noida)</span> 16/03/2015 at 12:14 PM</p>-->
 								</div>
 								<div class="story-review">
 									<h4>REVIEW:</h4>
@@ -171,7 +182,7 @@
                                                                 <div class="comments-section-grids">
                                                                     <div class="comments-section-grid">
                                                                         <div class="col-md-2 comments-section-grid-image">
-                                                                                <img src="resources/images/eye-brow.jpg" class="img-responsive" alt="" />
+                                                                                <img src="/T4U/resources/images/eye-brow.jpg" class="img-responsive" alt="" />
                                                                         </div>
                                                                         <div class="col-md-10 comments-section-grid-text">
                                                                             <h4><a href="#">MARWA ELGENDY</a></h4>
@@ -184,7 +195,7 @@
                                                                     </div>
                                                                     <div class="comments-section-grid comments-section-middle-grid">
                                                                         <div class="col-md-2 comments-section-grid-image">
-                                                                            <img src="resources/images/beauty.jpg" class="img-responsive" alt="" />
+                                                                            <img src="/T4U/resources/images/beauty.jpg" class="img-responsive" alt="" />
                                                                         </div>
                                                                         <div class="col-md-10 comments-section-grid-text">
                                                                             <h4><a href="#">MARWA ELGENDY</a></h4>
@@ -197,7 +208,7 @@
                                                                     </div>
                                                                     <div class="comments-section-grid">
                                                                         <div class="col-md-2 comments-section-grid-image">
-                                                                            <img src="resources/images/stylish.jpg" class="img-responsive" alt="" />
+                                                                            <img src="/T4U/resources/images/stylish.jpg" class="img-responsive" alt="" />
                                                                         </div>
                                                                         <div class="col-md-10 comments-section-grid-text">
                                                                             <h4><a href="#">MARWA ELGENDY</a></h4>
@@ -234,12 +245,12 @@
 					</div>
 					<div class="review-slider">
                                             <ul id="flexiselDemo1">
-                                                <li><img src="resources/images/r1.jpg" alt=""/></li>
-                                                <li><img src="resources/images/r2.jpg" alt=""/></li>
-                                                <li><img src="resources/images/r3.jpg" alt=""/></li>
-                                                <li><img src="resources/images/r4.jpg" alt=""/></li>
-                                                <li><img src="resources/images/r5.jpg" alt=""/></li>
-                                                <li><img src="resources/images/r6.jpg" alt=""/></li>
+                                                <li><img src="/T4U/resources/images/r1.jpg" alt=""/></li>
+                                                <li><img src="/T4U/resources/images/r2.jpg" alt=""/></li>
+                                                <li><img src="/T4U/resources/images/r3.jpg" alt=""/></li>
+                                                <li><img src="/T4U/resources/images/r4.jpg" alt=""/></li>
+                                                <li><img src="/T4U/resources/images/r5.jpg" alt=""/></li>
+                                                <li><img src="/T4U/resources/images/r6.jpg" alt=""/></li>
                                             </ul>
 							
 					</div>	
