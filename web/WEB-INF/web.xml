@@ -12,6 +12,10 @@
         <servlet-name>T4uUserLogOutServlet</servlet-name>
         <servlet-class>com.ss.Controller.T4uUserLogOutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>T4uIndexInitServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uIndexInitServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
         <url-pattern>/user/login.do</url-pattern>
@@ -32,12 +36,16 @@
         <servlet-name>T4uUserLogOutServlet</servlet-name>
         <url-pattern>/user/logout.do</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>T4uIndexInitServlet</servlet-name>
+        <url-pattern>/index.do</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.do</welcome-file>
     </welcome-file-list>
 </web-app>
