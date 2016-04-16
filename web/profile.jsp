@@ -1,0 +1,398 @@
+<%-- 
+    Document   : error
+    Created on : Apr 11, 2016, 8:41:10 PM
+    Author     : mengxualv2
+--%>
+
+<%@page language="java" contentType="text/html;charset=utf-8" pageEncoding="UTF-8" import="java.util.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="lan" value="com.ss.i18n.T4uUI" scope="application" />
+<c:set var="gender" value="${sessionScope.t4uUser.userGender}" /> 
+<c:set var="birthdate" value="${sessionScope.t4uUser.userBirthdate}" /> 
+<%  String varLocal = request.getParameter("locale");  
+        if (varLocal == null || varLocal.equals("")) { 
+        } 
+        else if ("zh_CN".equalsIgnoreCase(varLocal)) {%>  
+        <fmt:setLocale value="zh_CN" scope="session" />  
+    <%    } else if ("en_US".equalsIgnoreCase(varLocal)){%>  
+        <fmt:setLocale value="en_US" scope="session" />  
+    <%    } else {%>  
+        <fmt:setLocale value="zh_HK" scope="session" />  
+    <%    } %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Cinema</title>
+        <!-- start plugins -->
+        <script src="/T4U/resources/js/jquery-1.11.1.min.js"></script>
+        <script src="/T4U/resources/js/common.js"></script>
+        <script type="text/javascript" src="/T4U/resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/T4U/resources/js/jquery.flexisel.js"></script>	
+        <script type="text/javascript" src="/T4U/resources/js/bootstrap-switch.min.js"></script>
+        <script src="/T4U/resources/js/moment.js" type="text/javascript"></script>
+        <script src="/T4U/resources/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+        <script src="/T4U/resources/js/md5.js" type="text/javascript"></script>
+        
+        
+        <link href="/T4U/resources/css/style_profile.css" rel="stylesheet" type="text/css" media="all" />
+        <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:100,200,300,400,500,600,700,800,900' rel='stylesheet' type='text/css'>
+<!--        <link href="resources/css/common.css" rel="stylesheet" type='text/css' />-->
+        <link href="/T4U/resources/css/bootstrap-switch.min.css" rel='stylesheet' type='text/css' />
+        <link href="/T4U/resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+        <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+        <link href="/T4U/resources/css/style_error.css" rel="stylesheet" type="text/css" media="all" />
+        <script>
+        $(document).ready(function(){
+            $('input[type="checkbox"]').bootstrapSwitch('onText',"M",'M');
+            $('input[type="checkbox"]').bootstrapSwitch('offText',"F",'F');
+            $('input[type="checkbox"]').bootstrapSwitch('offColor',"warning",'warning');
+            $('#datetimepicker1').datetimepicker({
+                viewMode: 'years',
+                format: 'DD/MM/YYYY'
+             });
+             
+            //$('#date1').val()
+        });
+        $('input[type="checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+          console.log(this); // DOM element
+          console.log(event); // jQuery event
+          console.log(state); // true | false
+          //$('input[type="checkbox"]').bootstrapSwitch('state')
+        });
+        
+        
+        $('input[type="button"]').click(function() {
+            if($("input[name='firstName']").val()==''){
+                    showErrorMessage("You must provide your first name here");
+
+            }
+            else if($("input[name='lastName']").val()==''){
+                    showErrorMessage("You must provide your last name here");
+
+            }
+            else if($("input[name='phone']").val()==''){
+                    showErrorMessage("You must provide your phone number here");
+
+            }
+            else if($('#date1').val()==''){
+                    showErrorMessage("You must provide your birth date here");
+
+            }
+            else if($("input[name='account']").val()==''){
+                    showErrorMessage("You must provide your account here");
+
+            }
+            else if($("input[name='password1']").val()==''){
+                    showErrorMessage("You must provide your password");
+
+            }
+            else if($("input[name='password2']").val()==''){
+                    showErrorMessage("You need to confirm your password");
+
+            }
+            else if($("input[name='password1']").val()!= $("input[name='password2']").val()){
+                    showErrorMessage("Passwords are not consistent");
+
+            }
+            else if($("input[name='password1']").val()!= $("input[name='password2']").val()){
+                    showErrorMessage("Passwords are not consistent");
+
+            }
+            else if($("input[name='email']").val()==''){
+                    showErrorMessage("You need to provide your email address");
+
+            }
+            else{
+//                    var input = $("<input>")
+//                                    .attr("type", "hidden")
+//                                    .attr("name", "gender").val($('input[type="checkbox"]').bootstrapSwitch('state'));
+//                    $('#form1').append($(input));
+                $("input[name='gender']").val($('input[type="checkbox"]').bootstrapSwitch('state'));
+                $("input[name='password1']").val(md5($("input[name='password1']").val()));
+
+                $( "#form1" ).submit();
+            }
+
+
+        });
+        function showErrorMessage(msg){
+            $.notify(msg, {
+                            globalPosition: "top left",
+                            autoHideDelay: 5000});
+        }
+        $("#updateProfile").click(function(){
+            
+        });
+        </script>
+    </head>
+    <body>
+        <div class="col-sm-8 col-sm-offset-2">
+            <fmt:bundle basename="${lan}">
+            <!-- header-section-starts -->
+            <div class="full">
+                <div class="main" style="border-left:0;">
+                    <div class="error-content">
+                        <div class="top-header span_top">
+                            <div class="logo">
+                                    <a href="index.jsp"><img src="/T4U/resources/images/logo.png" alt="" /></a>
+                                    <p>Movie Theater</p>
+                            </div>
+                            <div class="search" style="width:30%">
+                                <div  class="btn-group col-sm-6" role="group">
+                                    <button type="button" class="btn btn-default col-sm-4" onclick="setLocaleEN();">En</button>
+                                    <button type="button" class="btn btn-default col-sm-4 col-sm-offset-4" onclick="setLocaleCN();">简</button>
+                                    <button type="button" class="btn btn-default col-sm-4 col-sm-offset-4" onclick="setLocaleHK();">繁</button>
+
+                                </div>  
+                                <div class="dropdown col-sm-6" style="padding: 0;">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <c:choose>
+                                        <c:when test="${sessionScope.t4uUser != null}">
+                                           <c:out value="${sessionScope.t4uUser.userName}"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <fmt:message key="index.label.account"/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <c:choose>
+                                            <c:when test="${sessionScope.t4uUser != null}">
+                                               <li><a href="#"><fmt:message key="index.label.profile"/></a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                               <li><a href="/T4U/login.jsp"><fmt:message key="index.label.login"/></a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    <li><a href="/T4U/register.jsp"><fmt:message key="index.label.register"/></a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="/T4U/user/logout.do"><fmt:message key="index.label.logout"/></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="error-404 text-center">
+                            <c:choose>
+                                <c:when test="${sessionScope.t4uUser == null}">
+                                   <p><fmt:message key="profile.error.e1"/></p>
+                                   <a class="b-home" href="/T4U/login.jsp"><fmt:message key="index.label.login" /></a>
+                                </c:when>
+                                <c:otherwise>
+                                   <div class="container">
+                                    <div class="row">
+                                      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+                                        <div class="panel panel-info">
+                                          <div class="panel-heading">
+                                            <h3 class="panel-title"><c:out value="${sessionScope.t4uUser.userName}"/></h3>
+                                          </div>
+                                          <div class="panel-body">
+                                            <div class="row">
+
+                                             <div class=" col-md-12 col-lg-12 "> 
+                                                <table class="table table-user-information">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td><fmt:message key="profile.label.account"/></td>
+                                                      <td><c:out value="${sessionScope.t4uUser.userAccount}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td><fmt:message key="profile.label.email"/></td>
+                                                      <td><c:out value="${sessionScope.t4uUser.userEmail}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td><fmt:message key="profile.label.phone"/></td>
+                                                      <td><c:out value="${sessionScope.t4uUser.userPhone}"/></td>
+                                                    </tr>
+                                                     <tr>
+                                                      <td><fmt:message key="profile.label.gender"/></td>
+                                                      <td><c:out value="${sessionScope.t4uUser.userGender}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td><fmt:message key="profile.label.birthdate"/></td>
+                                                      <td><c:out value="${sessionScope.t4uUser.userBirthdate}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td><fmt:message key="profile.label.credit"/>:</td>
+                                                      <td><c:out value="${sessionScope.t4uUser.userCredit}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td><fmt:message key="profile.label.userGroup"/>:</td>
+                                                      <td><c:out value="${sessionScope.t4uUser.userGroup}"/></td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+
+                                                
+                                                <button type="button" class="btn btn-primary" id="updateProfile" data-toggle="modal" data-target="#modalForProfile"><fmt:message key="profile.label.updateProfile"/></button>
+                                                
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalForPassword"><fmt:message key="profile.label.changePassword"/></button>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+                                        <div class="panel panel-info">
+                                          <div class="panel-heading">
+                                            <h3 class="panel-title">Sheena Kristin A.Eschor</h3>
+                                          </div>
+                                          <div class="panel-body">
+                                            <div class="row">
+
+                                             <div class=" col-md-9 col-lg-9 "> 
+                                                <table class="table table-user-information">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td>Department:</td>
+                                                      <td>Programming</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>Hire date:</td>
+                                                      <td>06/23/2013</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>Date of Birth</td>
+                                                      <td>01/24/1988</td>
+                                                    </tr>
+
+                                                       <tr>
+                                                           <tr>
+                                                      <td>Gender</td>
+                                                      <td>Male</td>
+                                                    </tr>
+                                                      <tr>
+                                                      <td>Home Address</td>
+                                                      <td>Metro Manila,Philippines</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>Email</td>
+                                                      <td><a href="mailto:info@support.com">info@support.com</a></td>
+                                                    </tr>
+                                                      <td>Phone Number</td>
+                                                      <td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)
+                                                      </td>
+
+                                                    </tr>
+
+                                                  </tbody>
+                                                </table>
+
+                                                <a href="#" class="btn btn-primary">My Sales Performance</a>
+                                                <a href="#" class="btn btn-primary">Team Sales Performance</a>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                </c:otherwise>
+                            </c:choose>
+                        </div>		
+                    </div>
+                </div>
+                                    
+
+                <!-- Modal for update profile -->
+                <div class="modal fade" id="modalForProfile" role="dialog">
+                  <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><fmt:message key="profile.label.updateProfile"/></h4>
+                      </div>
+                      <div class="modal-body">
+                        <form id="form1" action="/T4U/user/register" method="POST" role="form">
+                            <div class="form-group">
+                              <label for="name"><fmt:message key="register.label.name"/><label>*</label></label>
+                              <input type="text" class="form-control" id="name" value="${sessionScope.t4uUser.userName}">
+                            </div>
+                            <div class="form-group">
+                              <label for="phone"><fmt:message key="register.label.phone"/><label>*</label></label>
+                              <input type="text" class="form-control" id="phone" value="${sessionScope.t4uUser.userPhone}">
+                            </div>
+                            <div class="form-group">
+                              <label for="account"><fmt:message key="register.label.account"/></label>
+                              <input type="text" class="form-control " readonly id="account" value="${sessionScope.t4uUser.userAccount}">
+                            </div>
+                            <div class="form-group">
+                              <label for="email"><fmt:message key="register.label.email"/><label>*</label></label>
+                              <input type="text" class="form-control" id="email" value="${sessionScope.t4uUser.userEmail}">
+                            </div>
+                            <div class="form-group">
+                                <label><fmt:message key="register.label.birthdate"  /><label>*</label></label>
+                                <div class="input-group" id="datetimepicker1">
+                                    <input type='text' name="birthdate" class="form-control" id="date1"/>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label><fmt:message key="register.label.gender"/><label>*</label></label>
+                                <div class="checkbox">
+                                    <c:choose>
+                                        <c:when test="${sessionScope.t4uUser.userGender == 'M'}">
+                                           <input type="checkbox" name="gender" checked/>
+                                        </c:when>
+                                        <c:otherwise>
+                                           <input type="checkbox" name="gender"/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    
+                                </div>
+                            </div>
+                            
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"><fmt:message key="profile.label.confirm"/></button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><fmt:message key="profile.label.cancel"/></button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+
+                <!-- Modal for update password -->
+                <div class="modal fade" id="modalForPassword" role="dialog">
+                  <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><fmt:message key="profile.label.changePassword"/></h4>
+                      </div>
+                      <div class="modal-body">
+                        <p>Some text in the modal.</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"><fmt:message key="profile.label.confirm"/></button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><fmt:message key="profile.label.cancel"/></button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                </fmt:bundle>
+                <jsp:include page="footer_normal.jsp" />
+                

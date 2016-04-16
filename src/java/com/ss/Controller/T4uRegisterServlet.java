@@ -100,7 +100,7 @@ public class T4uRegisterServlet extends HttpServlet {
         T4uUser t4uUser = new T4uUser();
         t4uUser.setUserAccount(request.getParameter("userAccount"));
         t4uUser.setUserPassword(request.getParameter("password1"));
-        t4uUser.setUserName(request.getParameter("lastName")+" "+request.getParameter("firstName"));
+        t4uUser.setUserName(request.getParameter("name"));
         String gender;
         if(request.getParameter("UserGender")=="true")
             gender = "M";
