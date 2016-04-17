@@ -52,10 +52,10 @@ public class T4uUserLoginServlet extends HttpServlet {
             if(T4uUserDAO.checkPassword(t4uUser)){
                 isUserValid = true;
             }else{
-                session.setAttribute("error",T4uConstants.ExUserPasswordNotCorrect);
+                request.setAttribute("error",T4uConstants.ExUserPasswordNotCorrect);
             }
         }else{
-            session.setAttribute("error",T4uConstants.ExUserAccountNotExisted);
+            request.setAttribute("error",T4uConstants.ExUserAccountNotExisted);
         }
         
         logger.debug("User authentication successfull or not: "+isUserValid);
@@ -67,7 +67,7 @@ public class T4uUserLoginServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath());
         }else{
             logger.debug("Error: "+ session.getAttribute("error"));
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
         }
     }

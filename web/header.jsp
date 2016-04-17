@@ -25,14 +25,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cinema</title>
         <!-- ########## JS ########## -->
-        <script src="resources/js/jquery-1.11.1.min.js"></script>
-        <script src="resources/js/md5.js" type="text/javascript"></script>
-        <script src="resources/js/common.js" type="text/javascript"></script>
-        
+        <script src="/T4U/resources/js/jquery-1.11.1.min.js"></script>
+        <script src="/T4U/resources/js/md5.js" type="text/javascript"></script>
+        <script src="/T4U/resources/js/common.js" type="text/javascript"></script>
+        <script src="/T4U/resources/js/notify.min.js"></script>
         <!-- ########## CSS ########## -->
         <!--
         <link href="../resources/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
         -->
-        <link href="resources/css/common.css" rel="stylesheet"/>
+        <link href="/T4U/resources/css/common.css" rel="stylesheet"/>
     </head>
     <body>
