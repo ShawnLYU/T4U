@@ -160,35 +160,35 @@
        }) ;
             $('input[type="button"]').click(function() {
                 if($("input[name='name']").val()==''){
-                        showErrorMessage("You must provide your first name here");
+                        showErrorMessage("<fmt:message key="notify.message.provideName"/>");
                         
                 }
                 else if($("input[name='phone']").val()==''){
-                        showErrorMessage("You must provide your phone number here");
+                        showErrorMessage("<fmt:message key="notify.message.provideNumber"/>");
                         
                 }
                 else if($('#date1').val()==''){
-                        showErrorMessage("You must provide your birth date here");
+                        showErrorMessage("<fmt:message key="notify.message.provideBirthdate"/>");
                         
                 }
                 else if($("input[name='account']").val()==''){
-                        showErrorMessage("You must provide your account here");
+                        showErrorMessage("<fmt:message key="notify.message.provideAccount"/>");
                         
                 }
                 else if($("input[name='password1']").val()==''){
-                        showErrorMessage("You must provide your password");
+                        showErrorMessage("<fmt:message key="notify.message.providePwd"/>");
                         
                 }
                 else if($("input[name='password2']").val()==''){
-                        showErrorMessage("You need to confirm your password");
+                        showErrorMessage("<fmt:message key="notify.message.provideConPwd"/>");
                         
                 }
                 else if($("input[name='password1']").val()!= $("input[name='password2']").val()){
-                        showErrorMessage("Passwords are not consistent");
+                        showErrorMessage("<fmt:message key="notify.message.pwdNotConsistent"/>");
                         
                 }
                 else if($("input[name='email']").val()==''){
-                        showErrorMessage("You need to provide your email address");
+                        showErrorMessage("<fmt:message key="notify.message.provideEmail"/>");
                         
                 }
                 else{
