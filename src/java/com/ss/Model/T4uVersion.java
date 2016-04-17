@@ -10,10 +10,11 @@ package com.ss.Model;
  * @author Steven Mao
  * 
  * 2016041201    SM    Rebuild Movie and Version Model
+ * 2016041701    SM    Change movieId to movie object
  */
 public class T4uVersion {
     private int versionId;
-    private int movieId;
+    private T4uMovie movie;
     private String versionName;
     private double versionBasePrice;
     
@@ -25,12 +26,12 @@ public class T4uVersion {
         this.versionId = versionId;
     }
 
-    public int getMovieId() {
-        return this.movieId;
+    public T4uMovie getMovie() {
+        return this.movie;
     }
 
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
+    public void setMovie(T4uMovie movie) {
+        this.movie = movie;
     }
 
     public String getVersionName() {

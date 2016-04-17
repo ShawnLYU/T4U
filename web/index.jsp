@@ -148,12 +148,10 @@
                 </div>
                 <div class="review-slider">
                     <ul id="flexiselDemo1">
-                        <li><img src="resources/images/r1.jpg" alt=""/></li>
-                        <li><img src="resources/images/r2.jpg" alt=""/></li>
-                        <li><img src="resources/images/r3.jpg" alt=""/></li>
-                        <li><img src="resources/images/r4.jpg" alt=""/></li>
-                        <li><img src="resources/images/r5.jpg" alt=""/></li>
-                        <li><img src="resources/images/r6.jpg" alt=""/></li>
+                        <c:set var="allMovies" value="${requestScope.t4uAllMovies}" />
+                        <c:forEach items="${allMovies}" var="movie">
+                            <li><img src="<c:out value="${movie.value.movieInfo.Poster}" />"></img></li>
+                        </c:forEach>
                     </ul>
 
 

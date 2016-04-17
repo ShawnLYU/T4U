@@ -18,35 +18,38 @@ import java.util.logging.Logger;
  * @author Steven Mao
  * 
  * 2016041201    SM    Implemented getting all versions.
+ * 2016041501    SM    Used PreparedStatement.
+ * 2016041601    SM    Changed return type of getAllVersions() from List to Map.
  */
 public class T4uVersionDAO {
     /**
     * Get all versions of specified movie.
     *
     * @param movie A Movie object.
-    * @return      A list of Version objects which belong to this movie.
+    * @return      A map of Version objects which belong to this movie.
     */
-//    public List<T4uVersion> getAllVersions(T4uMovie movie) {
-//        int movieId = movie.getMovieId();
-//        List<T4uVersion> allVersions=new ArrayList<T4uVersion>();
-//        try {
-//            T4uJDBC db = new T4uJDBC();
-//            String sql = "SELECT * FROM [T4U_version] WHERE [MovieId]=" + movieId;
-//            ResultSet rs = db.query(sql);
-//            while (rs.next()) {
-//                T4uVersion version = new T4uVersion();
-//                version.setVersionId(rs.getInt("VersionId"));
-//                version.setMovieId(rs.getInt("MovieId"));
-//                version.setVersionName(rs.getNString("VersionName"));
-//                version.setVersionBasePrice(rs.getDouble("VersionBasePrice"));
-//                allVersions.add(version);
-//            }
-//            db.close(rs);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(T4uMovieDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (Exception ex) {
-//            Logger.getLogger(T4uMovieDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return allVersions;
-//    }
+    public static Map<Integer, T4uVersion> getAllVersions(T4uMovie movie) {
+        int movieId = movie.getMovieId();
+        Map<Integer, T4uVersion> allVersions=new HashMap<Integer, T4uVersion>();
+        try {
+            Connection conn =  T4uJDBC.connect();
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM [T4U_version] WHERE [MovieId]= ?");
+            pstmt.setInt(1, movieId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                T4uVersion version = new T4uVersion();
+                version.setVersionId(rs.getInt("VersionId"));
+                version.setMovie(movie);
+                version.setVersionName(rs.getNString("VersionName"));
+                version.setVersionBasePrice(rs.getDouble("VersionBasePrice"));
+                allVersions.put(version.getVersionId(), version);
+            }
+            T4uJDBC.close(rs, pstmt, conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uMovieDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(T4uMovieDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return allVersions;
+    }
 }

@@ -7,56 +7,51 @@
 package com.ss.Model;
 
 import com.ss.app.T4uSeatPlan;
+import java.util.Map;
 
 /**
  *
  * @author mengxualv2
+ * 
+ * 2016041601    SM    Refactor codes
  */
 public class T4uHouse {
     private int houseId;
-    private int cinemaId;
-
-    public T4uCinema getT4uCinema() {
-        return t4uCinema;
-    }
-
-    public void setT4uCinema(T4uCinema t4uCinema) {
-        this.t4uCinema = t4uCinema;
-    }
-    private T4uCinema t4uCinema;
     private String houseName;
-    private T4uSeatPlan t4uSeatPlan;
-
+    private T4uCinema cinema;
+    private T4uSeatPlan housePlan;
+    
     public int getHouseId() {
-        return houseId;
+        return this.houseId;
     }
 
     public void setHouseId(int houseId) {
         this.houseId = houseId;
     }
-
-    public int getCinemaId() {
-        return cinemaId;
-    }
-
-    public void setCinemaId(int cinemaId) {
-        this.cinemaId = cinemaId;
-    }
-
+    
     public String getHouseName() {
-        return houseName;
+        return this.houseName;
     }
 
     public void setHouseName(String houseName) {
         this.houseName = houseName;
     }
+    
 
-    public T4uSeatPlan getT4uSeatPlan() {
-        return t4uSeatPlan;
+    public T4uCinema getCinema() {
+        return this.cinema;
     }
 
-    public void setT4uSeatPlan(T4uSeatPlan t4uSeatPlan) {
-        this.t4uSeatPlan = t4uSeatPlan;
+    public void setCinema(T4uCinema cinema) {
+        this.cinema = cinema;
+    }
+
+    public T4uSeatPlan getHousePlan() {
+        return this.housePlan;
+    }
+
+    public void setHousePlan(T4uSeatPlan housePlan) {
+        this.housePlan = housePlan;
     }
     
 }

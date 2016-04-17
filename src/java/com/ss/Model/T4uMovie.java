@@ -16,13 +16,14 @@ import org.json.JSONObject;
  * 
  * 2016040901    SM    Refactor codes
  * 2016041201    SM    Rebuild Movie and Version Model
+ * 2016041601    SM    Changed type of allVersions from List to Map.
  */
 public class T4uMovie {
     private int movieId;
     private String movieName;
     private String movieDescription;
     private Map<String, String> movieInfo;
-    private List<T4uVersion> allVersions;
+    private Map<Integer,T4uVersion> allVersions;
     
     public int getMovieId() {
         return this.movieId;
@@ -56,11 +57,11 @@ public class T4uMovie {
         this.movieInfo=T4uJson2Map.jsonToMap(new JSONObject(strMovieInfo));
     }
 
-    public List<T4uVersion> getAllVersions() {
+    public Map<Integer, T4uVersion> getAllVersions() {
         return this.allVersions;
     }
 
-    public void setAllVersions(List<T4uVersion> allVersions) {
+    public void setAllVersions(Map<Integer, T4uVersion> allVersions) {
         this.allVersions = allVersions;
     }
 

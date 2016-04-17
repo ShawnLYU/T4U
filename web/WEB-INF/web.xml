@@ -13,12 +13,20 @@
         <servlet-class>com.ss.Controller.T4uUserLogOutServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>T4uIndexInitServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uIndexInitServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>T4uUserProfileServlet</servlet-name>
         <servlet-class>com.ss.Controller.T4uUserProfileServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>T4uUserUpdateProfileServlet</servlet-name>
         <servlet-class>com.ss.Controller.T4uUserUpdateProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>T4uMovieDetailServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uMovieDetailServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
@@ -41,6 +49,10 @@
         <url-pattern>/user/logout.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>T4uIndexInitServlet</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>T4uUserProfileServlet</servlet-name>
         <url-pattern>/user/profile</url-pattern>
     </servlet-mapping>
@@ -48,12 +60,16 @@
         <servlet-name>T4uUserUpdateProfileServlet</servlet-name>
         <url-pattern>/user/update.do</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>T4uMovieDetailServlet</servlet-name>
+    <url-pattern>/movie/detail</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index</welcome-file>
     </welcome-file-list>
 </web-app>

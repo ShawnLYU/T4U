@@ -19,10 +19,17 @@ public class T4uConstants {
     public static String ExUserPasswordChanged = "error.update.e1";
     //key of attributes to be shown in jsp pages
     public static String T4uUser = "t4uUser";
+
+    public static final String T4U_ALLMOVIES = "t4uAllMovies";
+    public static final String T4U_CURMOVIE = "t4uCurMovie";
+    public static final String T4U_ALLVERSIONS = "t4uAllVersions";
+    public static final String T4U_SELSCHEDULES = "t4uSelSchedules";   
     
     
     //configuration
     public static final String DBURL = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad049_db;";
     public static final String DBUSER = "aiad049";
     public static final String DBPWD = "aiad049";
+ 
+
 }
