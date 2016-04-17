@@ -24,7 +24,7 @@ public class T4uConstants {
     public static final String T4U_CURMOVIE = "t4uCurMovie";
     public static final String T4U_ALLVERSIONS = "t4uAllVersions";
     public static final String T4U_SELSCHEDULES = "t4uSelSchedules";   
-    public static final String T4U_LOGINREDIRECT = "t4uLoginRedirect";
+    
     
     //configuration
     public static final String DBURL = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad049_db;";
