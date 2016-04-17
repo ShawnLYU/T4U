@@ -86,7 +86,7 @@
                                 <p><fmt:message key="${error}"/></p>
                             </c:if>
                             
-                            <a class="b-home" href="/T4U/index.jsp"><fmt:message key="error.register.backHome" /></a>
+                            <a class="b-home" href="${pageContext.request.contextPath}/index"><fmt:message key="error.register.backHome" /></a>
                         </div>		
                     </div>
                 </div>
