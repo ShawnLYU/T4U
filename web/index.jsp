@@ -96,7 +96,7 @@
                 <div class="header">
                     <div class="top-header">
                         <div class="logo">
-                            <a href="index.jsp"><img src="resources/images/logo.png" alt="" /></a>
+                            <a href="${pageContext.request.contextPath}/index"><img src="resources/images/logo.png" alt="" /></a>
                             <p>Movie Theater</p>
                         </div>
                         <div class="search" style="width:30%">
