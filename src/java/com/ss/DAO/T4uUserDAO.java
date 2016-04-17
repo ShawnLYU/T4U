@@ -103,12 +103,75 @@ public class T4uUserDAO {
         
     }
 
-    public static void injectT4uUser(T4uUser t4uUser) throws SQLException {//assume user exists
+    public static void injectT4uUserById(T4uUser t4uUser) throws SQLException {//assume user exists
         Connection conn =  T4uJDBC.connect();
         PreparedStatement statement = conn.prepareStatement("select * from dbo.T4U_user where userid = ?");
         statement.setInt(1, t4uUser.getUserId());
         ResultSet rs = statement.executeQuery();
         if (rs != null && rs.next()){
+            t4uUser.setUserAccount(rs.getString("UserAccount"));
+            t4uUser.setUserPassword(rs.getString("UserPassword"));
+            t4uUser.setUserName(rs.getString("UserName"));
+            t4uUser.setUserGender(rs.getString("UserGender"));
+            Date birthdate = null;
+            birthdate = rs.getDate("UserBirthDate");
+            t4uUser.setUserBirthdate(birthdate);
+            t4uUser.setUserPhone(rs.getString("UserPhone"));
+            t4uUser.setUserEmail(rs.getString("UserEmail"));
+            t4uUser.setUserCredit(rs.getInt("UserCredit"));
+            t4uUser.setUserGroup(rs.getString("UserGroup"));
+        }
+        T4uJDBC.close(rs, statement, conn);
+        
+    }
+
+    public static boolean updateUserProfile(T4uUser user) throws SQLException {
+        Connection conn =  T4uJDBC.connect();
+        PreparedStatement statement = conn.prepareStatement(
+                "update dbo.T4U_user"+
+                " set UserName = ? ,"+
+                " UserGender = ? ,"+
+                " UserBirthdate = ? ,"+
+                " UserPhone = ? ,"+
+                " UserEmail = ?"+
+                " where useraccount = ?");
+        statement.setString(1, user.getUserName());
+        statement.setString(2, user.getUserGender());
+        statement.setDate(3, user.getUserBirthdate());
+        statement.setString(4, user.getUserPhone());
+        statement.setString(5, user.getUserEmail());
+        statement.setString(6, user.getUserAccount());
+        
+        int rows = statement.executeUpdate();
+        if(rows>0)
+            return true;
+        else
+            return false;
+    }
+
+    public static boolean updateUserPassword(T4uUser user) throws SQLException {
+        Connection conn =  T4uJDBC.connect();
+        PreparedStatement statement = conn.prepareStatement(
+                "update dbo.T4U_user"+
+                " set userpassword = ?"+
+                " where useraccount = ?");
+        statement.setString(1, user.getUserPassword());
+        statement.setString(2, user.getUserAccount());
+        
+        int rows = statement.executeUpdate();
+        if(rows>0)
+            return true;
+        else
+            return false;
+    }
+    
+    public static void injectT4uUserByAccount(T4uUser t4uUser) throws SQLException {//assume user exists
+        Connection conn =  T4uJDBC.connect();
+        PreparedStatement statement = conn.prepareStatement("select * from dbo.T4U_user where useraccount = ?");
+        statement.setString(1, t4uUser.getUserAccount());
+        ResultSet rs = statement.executeQuery();
+        if (rs != null && rs.next()){
+            t4uUser.setUserId(rs.getInt("UserId"));
             t4uUser.setUserAccount(rs.getString("UserAccount"));
             t4uUser.setUserPassword(rs.getString("UserPassword"));
             t4uUser.setUserName(rs.getString("UserName"));

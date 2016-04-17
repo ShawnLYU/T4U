@@ -6,6 +6,7 @@
 
 package com.ss.Utility;
 
+import com.ss.app.T4uConstants;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,18 +18,17 @@ import java.util.logging.Logger;
  * 2016040901    SM    Implemented JDBC connection
  */
 public class T4uJDBC {
-    private static final String DBURL = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad049_db;";
-    private static final String DBUSER = "aiad049";
-    private static final String DBPWD = "aiad049";
     // Close JDBC connection
     public static Connection connect() throws SQLException {
         Connection conn = null;
         try {
-//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection(DBURL, DBUSER, DBPWD);//no need anymore since JDBC API 4.0
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            conn = DriverManager.getConnection(T4uConstants.DBURL, T4uConstants.DBUSER, T4uConstants.DBPWD);//no need anymore since JDBC API 4.0
         } catch (SQLException ex) {
             Logger.getLogger(T4uJDBC.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Cannot connect to database:\n" + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(T4uJDBC.class.getName()).log(Level.SEVERE, null, ex);
         }
         return conn;
     }
