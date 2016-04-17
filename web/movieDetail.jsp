@@ -74,7 +74,7 @@
 					<div class="single-content">
                                             <div class="top-header span_top">
                                                 <div class="logo">
-                                                    <a href="index.html"><img src="/T4U/resources/images/logo.png" alt="" /></a>
+                                                    <a href="${pageContext.request.contextPath}/index"><img src="/T4U/resources/images/logo.png" alt="" /></a>
                                                     <p>Movie Theater</p>
                                                 </div>
                                                 <div class="search v-search">

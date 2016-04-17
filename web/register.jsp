@@ -49,7 +49,7 @@
             <div class="container_wrap">
                 <div class="header_top">
                     <div class="col-sm-3 logo">
-                        <a href="index.jsp"><img src="/T4U/resources/images/logo.png" alt=""/></a>
+                        <a href="${pageContext.request.contextPath}/index"><img src="/T4U/resources/images/logo.png" alt=""/></a>
                     </div>
                     <div class="col-sm-3 col-sm-offset-6 nav">
                         <div  class="btn-group" role="group">
