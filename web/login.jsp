@@ -29,6 +29,11 @@
         <form action="/T4U/user/login.do" method="POST" onsubmit="return hashPassword(this);">
             <input type="text" name="userAccount" class="user" value="<fmt:message key="login.label.username"/>" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '<fmt:message key="login.label.username"/>';}" />
             <input type="password" name="userPassword" class="pass" />
+            
+            <input type="hidden" name="redir" value="<c:out value="${requestScope.t4uLoginRedirect}" />"/>
+           
+            
+            
             <input type="submit" value="<fmt:message key="login.label.submit"/>" />
             <input id="signup" type="button" value="<fmt:message key="register.label.signup"/>" />
         </form>
