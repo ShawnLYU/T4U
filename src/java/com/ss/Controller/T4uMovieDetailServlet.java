@@ -68,9 +68,8 @@ public class T4uMovieDetailServlet extends HttpServlet {
             // Retrieve all versions
             Map<Integer,T4uVersion> allVersions = T4uVersionDAO.getAllVersions(movie);
             request.setAttribute(T4uConstants.T4U_ALLVERSIONS, allVersions); // Gor filtering versions
-            // Retrieve all cinemas and houses
-            Map<Integer, T4uCinema> allCinemas = T4uCinemaDAO.getAllCinemas();
-            Map<Integer, T4uHouse> allHouses = T4uHouseDAO.getAllHouses(allCinemas);
+            // Retrieve all houses
+            Map<Integer, T4uHouse> allHouses = T4uHouseDAO.getAllHouses();
             // Retrieve all schedules
             Map<Integer, T4uSchedule> allSchedules = new HashMap<Integer, T4uSchedule>();
             for (Entry<Integer, T4uVersion> entry : allVersions.entrySet())

@@ -23,7 +23,8 @@ import java.util.logging.Logger;
  * @author mengxualv2
  */
 public class T4uHouseDAO {
-    public static Map<Integer,T4uHouse> getAllHouses(Map<Integer,T4uCinema> allCinemas) {
+    public static Map<Integer,T4uHouse> getAllHouses() {
+        Map<Integer, T4uCinema> allCinemas = T4uCinemaDAO.getAllCinemas();
         Map<Integer, T4uHouse> allHouses=new HashMap<Integer, T4uHouse>();
         try {
             Connection conn =  T4uJDBC.connect();
