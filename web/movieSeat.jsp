@@ -33,6 +33,12 @@
         <link href="/T4U/resources/css/style_error.css" rel="stylesheet" type="text/css" media="all" />
         <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:100,200,300,400,500,600,700,800,900' rel='stylesheet' type='text/css'>
 <!--        <link href="resources/css/common.css" rel="stylesheet" type='text/css' />-->
+        <!-- jQuery Seat Plan -->
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+        <link href="/T4U/resources/css/jquery.seat-charts.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="/T4U/resources/css/style_seat.css" rel="stylesheet" type="text/css" media="all" />
+        <script src="/T4U/resources/js/jquery.seat-charts.js"></script>
+        
     </head>
     <body>
         <div class="col-sm-8 col-sm-offset-2">
@@ -81,8 +87,130 @@
                             </div>
                             <div class="clearfix"></div>
                         </div>
-                        <div class="error-404 text-center">
-                            
+
+                        <div class="error-404">
+                            <div class="wrapper">
+                                <div class="container">
+                                    <div id="seat-map">
+                                        <div class="front-indicator">Screen</div>
+                                    </div>
+                                    <div class="booking-details">
+                                        <div id="legend"></div>
+                                        <h2>Booking Details</h2>
+                                        <h3> Selected Seats (<span id="counter">0</span>):</h3>
+                                        <ul id="selected-seats"></ul>
+                                        Total: <b>$<span id="total">0</span></b>
+                                        <button class="checkout-button">Checkout &raquo;</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    var $cart = $('#selected-seats'),
+                                        $counter = $('#counter'),
+                                        $total = $('#total'),
+                                        sc = $('#seat-map').seatCharts({
+                                        map: [
+                                            'ee__eeeeeeee__ee',
+                                            'ee_eeeeeeeeee_ee',
+                                            'ee_eeeeeeeeee_ee',
+                                            'ee_eeeeeeeeee_ee',
+                                            'ee_eeeeeeeeee_ee',
+                                            'ee_eeeeeeeeee_ee',
+                                            'ee_eeeeeeeeee_ee',
+                                            'ee_eeeeeeeeee_ee',
+                                            'ee_eeeeeeeeee_ee',
+                                            'ee_eeee__eeee_ee',
+                                            'ee_eeee__eeee_ee',
+                                            '___eeeeeeeeee___',
+                                        ],
+                                        seats: {
+                                            e: {
+                                                price   : 40,
+                                                classes : 'economy-class', //your custom CSS class
+                                                category: 'Economy Class'
+                                            }                   
+
+                                        },
+                                        naming : {
+                                            top : false,
+                                            rows: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
+                                            getLabel : function (character, row, column) {
+                                                return column;
+                                            },
+                                            getId : function(character, row, column) {
+                                                return row + column;
+                                            },
+                                        },
+                                        legend : {
+                                            node : $('#legend'),
+                                            items : [
+                                                [ 'e', 'available',   'Available'],
+                                                [ 'e', 'unavailable', 'Already Booked']
+                                            ]                   
+                                        },
+                                        click: function () {
+                                            if (this.status() == 'available') {
+                                                //let's create a new <li> which we'll add to the cart items
+                                                $('<li>Seat '+this.settings.id+': <b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
+                                                    .attr('id', 'cart-item-'+this.settings.id)
+                                                    .data('seatId', this.settings.id)
+                                                    .appendTo($cart);
+
+                                                /*
+                                                 * Lets update the counter and total
+                                                 *
+                                                 * .find function will not find the current seat, because it will change its stauts only after return
+                                                 * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
+                                                 */
+                                                $counter.text(sc.find('selected').length+1);
+                                                $total.text(recalculateTotal(sc)+this.data().price);
+
+                                                return 'selected';
+                                            } else if (this.status() == 'selected') {
+                                                //update the counter
+                                                $counter.text(sc.find('selected').length-1);
+                                                //and total
+                                                $total.text(recalculateTotal(sc)-this.data().price);
+
+                                                //remove the item from our cart
+                                                $('#cart-item-'+this.settings.id).remove();
+
+                                                //seat has been vacated
+                                                return 'available';
+                                            } else if (this.status() == 'unavailable') {
+                                                //seat has been already booked
+                                                return 'unavailable';
+                                            } else {
+                                                return this.style();
+                                            }
+                                        }
+                                    });
+
+                                    //this will handle "[cancel]" link clicks
+                                    $('#selected-seats').on('click', '.cancel-cart-item', function () {
+                                        //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+                                        sc.get($(this).parents('li').data('seatId')).click();
+                                        return false;
+                                    });
+
+                                    //let's pretend some seats have already been booked
+                                    sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
+
+                                });
+
+                                function recalculateTotal(sc) {
+                                    var total = 0;
+
+                                    //basically find every selected seat and sum its price
+                                    sc.find('selected').each(function () {
+                                        total += this.data().price;
+                                    });
+
+                                    return total;
+                                }
+
+                            </script>
                         </div>		
                     </div>
                 </div>

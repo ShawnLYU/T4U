@@ -6,9 +6,6 @@
 
 package com.ss.Model;
 
-import com.ss.app.T4uSeatPlan;
-import java.util.Map;
-
 /**
  *
  * @author mengxualv2
@@ -19,7 +16,7 @@ public class T4uHouse {
     private int houseId;
     private String houseName;
     private T4uCinema cinema;
-    private T4uSeatPlan housePlan;
+    private String housePlan;
     
     public int getHouseId() {
         return this.houseId;
@@ -46,11 +43,11 @@ public class T4uHouse {
         this.cinema = cinema;
     }
 
-    public T4uSeatPlan getHousePlan() {
+    public String getHousePlan() {
         return this.housePlan;
     }
 
-    public void setHousePlan(T4uSeatPlan housePlan) {
+    public void setHousePlan(String housePlan) {
         this.housePlan = housePlan;
     }
     

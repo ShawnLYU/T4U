@@ -46,7 +46,14 @@ public class T4uMovieSeatServlet extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
         } else { // User logged in
-            LOGGER.debug("User has logged in.");
+            LOGGER.debug(String.format("%s has logged in.", user.getUserAccount()));
+            String strScheuleId = request.getParameter("scheduleId");
+            int scheuleId = 0;
+            try {
+                scheuleId = Integer.parseInt(strScheuleId);
+            } catch (NumberFormatException ex) {
+                scheuleId = 0;
+            }
         }
     }
 

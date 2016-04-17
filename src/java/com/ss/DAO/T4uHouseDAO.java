@@ -36,7 +36,7 @@ public class T4uHouseDAO {
                 house.setHouseId(houseId);
                 house.setHouseName(rs.getNString("HouseName"));
                 house.setCinema(allCinemas.get(rs.getInt("CinemaId")));
-                // Set House Plan
+                house.setHousePlan(rs.getNString("HousePlan"));
                 allHouses.put(houseId, house);
             }
             T4uJDBC.close(rs, pstmt, conn);
