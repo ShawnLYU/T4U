@@ -1063,13 +1063,9 @@ font-weight: 700;
 }
 .single p{
 	color:#000;
-	font-size:1.4em;
-	font-weight:600;
-	margin-bottom:1em;
-}
-.single p i {
-	font-weight:400;
 	font-size:0.95em;
+	font-weight:400;
+	margin-bottom:1em;
 }
 .best-review {
 	border-top: 3px solid #000;

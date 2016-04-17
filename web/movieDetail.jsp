@@ -19,6 +19,7 @@
     <%    } else {%>  
         <fmt:setLocale value="zh_HK" scope="session" />  
     <%    } %>
+<c:set var="selSchedules" value="${requestScope.t4uSelSchedules}" />
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -153,17 +154,26 @@
                                                                     <div class="clearfix"></div>
 								</div>
 								<div class="single">
-									<h3>Lorem Ipsum IS A TENSE, TAUT, COMPELLING THRILLER</h3>
-									<table>
-                                                                            <thead><tr><th>Cinema</th><th>House</th><th>Time</th><th>Version</th><th>Price</th><th>Buy</th></tr></thead>
-                                                                            <tbody>
-                                                                                
-                                                                            </tbody>
-                                                                        </table>
+									<h3>Story</h3>
+                                                                        <p><c:out value="${requestScope.t4uCurMovie.movieDescription}"/></p>
 								</div>
 								<div class="best-review">
-									<h4>Story</h4>
-                                                                        <p><c:out value="${requestScope.t4uCurMovie.movieDescription}"/></p>
+									<h4>Ticketing</h4>
+                                                                        <table style="width: 100%">
+                                                                            <thead><tr><th>Cinema</th><th>House</th><th>Time</th><th>Version</th><th>Price</th><th>Buy</th></tr></thead>
+                                                                            <tbody>
+                                                                                <c:forEach items="${selSchedules}" var="schedule">
+                                                                                <tr>
+                                                                                    <td><c:out value="${schedule.value.house.cinema.cinemaName}"/></td>
+                                                                                    <td><c:out value="${schedule.value.house.houseName}"/></td>
+                                                                                    <td><c:out value="${schedule.value.scheduleTimeslot}"/></td>
+                                                                                    <td><c:out value="${schedule.value.version.versionName}"/></td>
+                                                                                    <td><c:out value="${schedule.value.price}" /></td>
+                                                                                    <td><input type="button" value="Ticketing" title="Ticketing" onclick="location.href='<c:out value="${pageContext.request.contextPath}"/>/movie/buy?scheduleId=<c:out value="${schedule.key}"/>';" /></td>
+                                                                                </tr>
+                                                                                </c:forEach>
+                                                                            </tbody>
+                                                                        </table>
 									<!--<p>Excellent Movie and great performance by Lorem, one of the finest thriller of recent  like Aldus PageMaker including versions of Lorem Ipsum.</p>
 									<p><span>Neeraj Upadhyay (Noida)</span> 16/03/2015 at 12:14 PM</p>-->
 								</div>
