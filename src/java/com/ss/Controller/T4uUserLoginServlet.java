@@ -43,7 +43,8 @@ public class T4uUserLoginServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         String userAccount = request.getParameter("userAccount");
         String userPassword = request.getParameter("userPassword");
-        String redirectedFrom = request.getParameter("redirect");
+//        String redirectedFrom = request.getParameter(T4uConstants.T4U_LOGINREDIRECT);
+        String redirectedFrom = request.getParameter("redir");
         if (redirectedFrom == null || redirectedFrom.trim().equals(""))
             redirectedFrom = request.getContextPath(); // return to index
         T4uUser t4uUser = new T4uUser();
@@ -56,10 +57,10 @@ public class T4uUserLoginServlet extends HttpServlet {
             if(T4uUserDAO.checkPassword(t4uUser)){
                 isUserValid = true;
             }else{
-                session.setAttribute("error",T4uConstants.ExUserPasswordNotCorrect);
+                request.setAttribute("error",T4uConstants.ExUserPasswordNotCorrect);
             }
         }else{
-            session.setAttribute("error",T4uConstants.ExUserAccountNotExisted);
+            request.setAttribute("error",T4uConstants.ExUserAccountNotExisted);
         }
         
         logger.debug("User authentication successfull or not: "+isUserValid);
@@ -71,7 +72,8 @@ public class T4uUserLoginServlet extends HttpServlet {
             response.sendRedirect(URLDecoder.decode(redirectedFrom, "UTF-8"));
         }else{
             logger.debug("Error: "+ session.getAttribute("error"));
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
+            request.setAttribute(T4uConstants.T4U_LOGINREDIRECT, redirectedFrom);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
         }
     }

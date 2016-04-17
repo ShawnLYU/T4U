@@ -20,6 +20,7 @@
     <%    } %>
 <!DOCTYPE html>
 <html>
+    <fmt:bundle basename="${lan}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cinema</title>
@@ -83,21 +84,21 @@
             console.log( "GO" ); 
           if($("#name").val()==''){
               $('#modalForProfile').modal('toggle');
-                    showErrorMessage("You must provide your name here");
+                    showErrorMessage("<fmt:message key="notify.message.provideName"/>");
 
           }
           else if($("#phone").val()==''){
               $('#modalForProfile').modal('toggle');
-                    showErrorMessage("You must provide your phone number here");
+                    showErrorMessage("<fmt:message key="notify.message.provideNumber"/>");
 
           }
           else if($("#email").val()==''){
               $('#modalForProfile').modal('toggle');
-                    showErrorMessage("You need to provide your email address");
+                    showErrorMessage("<fmt:message key="notify.message.provideEmail"/>");
           }
           else if($('#date1').val()==''){
               $('#modalForProfile').modal('toggle');
-                        showErrorMessage("You must provide your birth date here");
+                        showErrorMessage("<fmt:message key="notify.message.provideBirthdate"/>");
                         
           }
           else{
@@ -112,20 +113,20 @@
              console.log( "updatePwdConfirm" ); 
             if(md5($("#oldPwd").val())!="<c:out value="${sessionScope.t4uUser.userPassword}"/>"){
                 $('#modalForPassword').modal('toggle');
-            showErrorMessage("Please provide the correct old password");
+            showErrorMessage("<fmt:message key="notify.message.provideCorrectPwd"/>");
           }else if($("input[name='newPwd']").val()==''){
             $('#modalForPassword').modal('toggle');
-            showErrorMessage("You must provide your password");
+            showErrorMessage("<fmt:message key="notify.message.providePwd"/>");
                         
           }
           else if($("#confirmPwd").val()==''){
               $('#modalForPassword').modal('toggle');
-                  showErrorMessage("You need to confirm your password");
+                  showErrorMessage("<fmt:message key="notify.message.provideConPwd"/>");
                   
           }
           else if($("input[name='newPwd']").val()!= $("#confirmPwd").val()){
               $('#modalForPassword').modal('toggle');
-                  showErrorMessage("Passwords are not consistent");
+                  showErrorMessage("<fmt:message key="notify.message.pwdNotConsistent"/>");
                   
           }else{
             $("input[name='newPwd']").val(md5($("input[name='newPwd']").val()));
@@ -144,7 +145,7 @@
     </head>
     <body>
         <div class="col-sm-8 col-sm-offset-2">
-            <fmt:bundle basename="${lan}">
+            
             <!-- header-section-starts -->
             <div class="full">
                 <div class="main" style="border-left:0;">

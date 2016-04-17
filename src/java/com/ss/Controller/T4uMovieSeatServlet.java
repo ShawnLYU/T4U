@@ -9,6 +9,7 @@ import com.ss.Model.T4uUser;
 import com.ss.app.T4uConstants;
 import java.io.IOException;
 import java.net.URLEncoder;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +41,10 @@ public class T4uMovieSeatServlet extends HttpServlet {
             LOGGER.debug("User has not yet logged in.");
             String requestUri = request.getRequestURI() + "?" + request.getQueryString();
             LOGGER.debug(String.format("Redirecting to /login.jsp?redirect=%s.", requestUri));
-            response.sendRedirect(request.getContextPath() + "/login.jsp?redirect=" + URLEncoder.encode(requestUri, "UTF-8"));
+            request.setAttribute(T4uConstants.T4U_LOGINREDIRECT, requestUri);
+//            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+            dispatcher.forward(request, response);
         } else { // User logged in
             LOGGER.debug(String.format("%s has logged in.", user.getUserAccount()));
             String strScheuleId = request.getParameter("scheduleId");
