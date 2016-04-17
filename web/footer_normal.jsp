@@ -13,7 +13,7 @@
                     <p class="claim"><fmt:message key="footer.disclaimer.e1"/></p>
                     <h6><fmt:message key="footer.disclaimer.e2"/></h2>
                     <div class="copyright">
-                            <p> <fmt:message key="footer.fork"/>  <a href="https://github.com/ShawnLYU/T4U">  github.com/ShawnLYU/T4U </a></p>
+                            <p> <fmt:message key="footer.fork"/>  <a href="http://shawnlyu.github.io/T4U/">  github.com/ShawnLYU/T4U </a></p>
                     </div>
                 </div>
                 
