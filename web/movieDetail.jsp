@@ -29,8 +29,8 @@
         <!-- start plugins -->
         <script src="/T4U/resources/js/jquery-1.11.1.min.js"></script>
         <script src="/T4U/resources/js/common.js"></script>
-        <script type="text/javascript" src="/T4U/resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/T4U/resources/js/jquery.flexisel.js"></script>	
+        <script type="text/javascript" src="resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="resources/js/jquery.flexisel.js"></script>	
         
         <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
         <link href="/T4U/resources/css/style_index.css" rel="stylesheet" type="text/css" media="all" />
