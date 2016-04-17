@@ -92,7 +92,7 @@ HttpSession session = null;
             t4uUser.setUserAccount(request.getParameter("account"));
             t4uUser.setUserName(request.getParameter("name"));
             String gender;
-            if(request.getParameter("gender")=="true")
+            if(request.getParameter("gender").equals("true"))
                 gender = "M";
             else
                 gender = "F";
@@ -137,8 +137,10 @@ HttpSession session = null;
                 if(T4uUserDAO.updateUserPassword(t4uUser)){
                     logger.debug("Update Password Successfully: "+t4uUser.getUserAccount());
                     T4uUserDAO.injectT4uUserByAccount(t4uUser);
-                    session.setAttribute("error",T4uConstants.ExUserPasswordChanged);
                     session.invalidate();
+                    session = request.getSession(true);
+                    session.setAttribute("error",T4uConstants.ExUserPasswordChanged);
+                    
                     response.sendRedirect(request.getContextPath()+"/error.jsp");
                     
                 }else{
