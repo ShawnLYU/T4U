@@ -10,6 +10,7 @@ import com.ss.Model.T4uUser;
 import com.ss.app.T4uConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import javax.servlet.RequestDispatcher;
@@ -42,6 +43,9 @@ public class T4uUserLoginServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         String userAccount = request.getParameter("userAccount");
         String userPassword = request.getParameter("userPassword");
+        String redirectedFrom = request.getParameter("redirect");
+        if (redirectedFrom == null || redirectedFrom.trim().equals(""))
+            redirectedFrom = request.getContextPath(); // return to index
         T4uUser t4uUser = new T4uUser();
         t4uUser.setUserAccount(userAccount);
         t4uUser.setUserPassword(userPassword);
@@ -64,7 +68,7 @@ public class T4uUserLoginServlet extends HttpServlet {
             T4uUserDAO.injectT4uUserById(t4uUser);
             session.setAttribute(T4uConstants.T4uUser, t4uUser);
             logger.debug("User Account: "+t4uUser.getUserAccount());
-            response.sendRedirect(request.getContextPath());
+            response.sendRedirect(URLDecoder.decode(redirectedFrom, "UTF-8"));
         }else{
             logger.debug("Error: "+ session.getAttribute("error"));
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");

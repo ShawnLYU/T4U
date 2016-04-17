@@ -5,12 +5,10 @@
  */
 package com.ss.Controller;
 
-import com.ss.DAO.T4uCinemaDAO;
 import com.ss.DAO.T4uHouseDAO;
 import com.ss.DAO.T4uMovieDAO;
 import com.ss.DAO.T4uScheduleDAO;
 import com.ss.DAO.T4uVersionDAO;
-import com.ss.Model.T4uCinema;
 import com.ss.Model.T4uHouse;
 import com.ss.Model.T4uMovie;
 import com.ss.Model.T4uSchedule;

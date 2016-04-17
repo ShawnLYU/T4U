@@ -28,6 +28,10 @@
         <servlet-name>T4uMovieDetailServlet</servlet-name>
         <servlet-class>com.ss.Controller.T4uMovieDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>T4uMovieSeatServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uMovieSeatServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
         <url-pattern>/user/login.do</url-pattern>
@@ -61,8 +65,12 @@
         <url-pattern>/user/update.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-    <servlet-name>T4uMovieDetailServlet</servlet-name>
-    <url-pattern>/movie/detail</url-pattern>
+        <servlet-name>T4uMovieDetailServlet</servlet-name>
+        <url-pattern>/movie/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>T4uMovieSeatServlet</servlet-name>
+        <url-pattern>/movie/seat</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

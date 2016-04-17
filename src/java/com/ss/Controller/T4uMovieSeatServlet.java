@@ -3,23 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.ss.Controller;
 
+import com.ss.Model.T4uUser;
+import com.ss.app.T4uConstants;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.net.URLEncoder;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 /**
  *
- * @author mengxualv2
+ * @author Steven
  */
-public class T4uUserLogOutServlet extends HttpServlet {
+public class T4uMovieSeatServlet extends HttpServlet {
 
+    private static final Logger LOGGER = Logger.getLogger(T4uMovieSeatServlet.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -29,13 +32,18 @@ public class T4uUserLogOutServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static Logger logger = Logger.getLogger(T4uUserLogOutServlet.class);  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        logger.debug("log out: going to make session invalid");
-        request.getSession().invalidate();
-        logger.debug("log out: session invalid");
-        response.sendRedirect(request.getContextPath());
+        HttpSession session = request.getSession(true);
+        T4uUser user = (T4uUser)session.getAttribute(T4uConstants.T4uUser);
+        if (user == null) { // User not logged in
+            LOGGER.debug("User has not yet logged in.");
+            String requestUri = request.getRequestURI() + "?" + request.getQueryString();
+            LOGGER.debug(String.format("Redirecting to /login.jsp?redirect=%s.", requestUri));
+            response.sendRedirect(request.getContextPath() + "/login.jsp?redirect=" + URLEncoder.encode(requestUri, "UTF-8"));
+        } else { // User logged in
+            LOGGER.debug("User has logged in.");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
