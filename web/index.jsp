@@ -19,6 +19,7 @@
     <%    } else {%>  
         <fmt:setLocale value="zh_HK" scope="session" />  
     <%    } %>
+<c:set var="allMovies" value="${requestScope.t4uAllMovies}"/>
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -148,9 +149,8 @@
                 </div>
                 <div class="review-slider">
                     <ul id="flexiselDemo1">
-                        <c:set var="allMovies" value="${requestScope.t4uAllMovies}" />
                         <c:forEach items="${allMovies}" var="movie">
-                            <li><img src="<c:out value="${movie.value.movieInfo.Poster}" />"></img></li>
+                        <li><img src="<c:out value="${movie.value.movieInfo.Poster}"/>"></img></li>
                         </c:forEach>
                     </ul>
 
@@ -187,10 +187,10 @@
                 </div>
                 <div class="more-reviews">
                     <ul id="flexiselDemo2">
-                        <li><img src="resources/images/m1.jpg" alt=""/></li>
-                        <li><img src="resources/images/m2.jpg" alt=""/></li>
-                        <li><img src="resources/images/m3.jpg" alt=""/></li>
-                        <li><img src="resources/images/m4.jpg" alt=""/></li>
+                        <c:forEach items="${allMovies}" var="movie">
+                        <!--<li><a href="<c:out value="${pageContext.request.contextPath}"/>/movie/detail?movieId=<c:out value="${movie.key}"/>"><img src="<c:out value="${movie.value.movieInfo.Poster}"/>"></img></a></li>-->
+                        <li><img src="<c:out value="${movie.value.movieInfo.Poster}"/>" onclick="location.href='<c:out value="${pageContext.request.contextPath}"/>/movie/detail?movieId=<c:out value="${movie.key}"/>'"/></li>
+                        </c:forEach>
                     </ul>
                 </div>	
             </div>
