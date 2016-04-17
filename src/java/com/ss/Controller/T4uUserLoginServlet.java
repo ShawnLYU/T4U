@@ -61,7 +61,7 @@ public class T4uUserLoginServlet extends HttpServlet {
         logger.debug("User authentication successfull or not: "+isUserValid);
         
         if(isUserValid){
-            T4uUserDAO.injectT4uUser(t4uUser);
+            T4uUserDAO.injectT4uUserById(t4uUser);
             session.setAttribute(T4uConstants.T4uUser, t4uUser);
             logger.debug("User Account: "+t4uUser.getUserAccount());
             response.sendRedirect(request.getContextPath());

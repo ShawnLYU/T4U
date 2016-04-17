@@ -8,8 +8,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="lan" value="com.ss.i18n.T4uUI" scope="application" />
-<c:set var="gender" value="${sessionScope.t4uUser.userGender}" /> 
-<c:set var="birthdate" value="${sessionScope.t4uUser.userBirthdate}" /> 
 <%  String varLocal = request.getParameter("locale");  
         if (varLocal == null || varLocal.equals("")) { 
         } 
@@ -34,7 +32,7 @@
         <script src="/T4U/resources/js/moment.js" type="text/javascript"></script>
         <script src="/T4U/resources/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
         <script src="/T4U/resources/js/md5.js" type="text/javascript"></script>
-        
+        <script src="/T4U/resources/js/notify.min.js"></script>
         
         <link href="/T4U/resources/css/style_profile.css" rel="stylesheet" type="text/css" media="all" />
         <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:100,200,300,400,500,600,700,800,900' rel='stylesheet' type='text/css'>
@@ -62,69 +60,86 @@
           //$('input[type="checkbox"]').bootstrapSwitch('state')
         });
         
-        
-        $('input[type="button"]').click(function() {
-            if($("input[name='firstName']").val()==''){
-                    showErrorMessage("You must provide your first name here");
-
-            }
-            else if($("input[name='lastName']").val()==''){
-                    showErrorMessage("You must provide your last name here");
-
-            }
-            else if($("input[name='phone']").val()==''){
-                    showErrorMessage("You must provide your phone number here");
-
-            }
-            else if($('#date1').val()==''){
-                    showErrorMessage("You must provide your birth date here");
-
-            }
-            else if($("input[name='account']").val()==''){
-                    showErrorMessage("You must provide your account here");
-
-            }
-            else if($("input[name='password1']").val()==''){
-                    showErrorMessage("You must provide your password");
-
-            }
-            else if($("input[name='password2']").val()==''){
-                    showErrorMessage("You need to confirm your password");
-
-            }
-            else if($("input[name='password1']").val()!= $("input[name='password2']").val()){
-                    showErrorMessage("Passwords are not consistent");
-
-            }
-            else if($("input[name='password1']").val()!= $("input[name='password2']").val()){
-                    showErrorMessage("Passwords are not consistent");
-
-            }
-            else if($("input[name='email']").val()==''){
-                    showErrorMessage("You need to provide your email address");
-
-            }
-            else{
-//                    var input = $("<input>")
-//                                    .attr("type", "hidden")
-//                                    .attr("name", "gender").val($('input[type="checkbox"]').bootstrapSwitch('state'));
-//                    $('#form1').append($(input));
-                $("input[name='gender']").val($('input[type="checkbox"]').bootstrapSwitch('state'));
-                $("input[name='password1']").val(md5($("input[name='password1']").val()));
-
-                $( "#form1" ).submit();
-            }
-
-
+        $(document).on("click", "#doUpdateProfile", function(event){
+            $('#modalForProfile').modal('toggle');
+            $("#name").val("${sessionScope.t4uUser.userName}");
+            $("#phone").val("${sessionScope.t4uUser.userPhone}");
+            $("#email").val("${sessionScope.t4uUser.userEmail}");
+            <c:choose>
+                <c:when test="${sessionScope.t4uUser.userGender == 'M'}">
+                    $("#gender").bootstrapSwitch('state', true);
+                   
+                </c:when>
+                <c:otherwise>
+                   $("#gender").bootstrapSwitch('state', false);
+                </c:otherwise>
+            </c:choose>
         });
-        function showErrorMessage(msg){
-            $.notify(msg, {
-                            globalPosition: "top left",
-                            autoHideDelay: 5000});
-        }
-        $("#updateProfile").click(function(){
+        $(document).on("click", "#doUpdatePwd", function(event){
+            $('#modalForPassword').modal('toggle');
             
         });
+        $(document).on("click", "#updateProfileConfirm", function(event){
+            console.log( "GO" ); 
+          if($("#name").val()==''){
+              $('#modalForProfile').modal('toggle');
+                    showErrorMessage("You must provide your name here");
+
+          }
+          else if($("#phone").val()==''){
+              $('#modalForProfile').modal('toggle');
+                    showErrorMessage("You must provide your phone number here");
+
+          }
+          else if($("#email").val()==''){
+              $('#modalForProfile').modal('toggle');
+                    showErrorMessage("You need to provide your email address");
+          }
+          else if($('#date1').val()==''){
+              $('#modalForProfile').modal('toggle');
+                        showErrorMessage("You must provide your birth date here");
+                        
+          }
+          else{
+            $("input[name='gender']").val($('input[type="checkbox"]').bootstrapSwitch('state'));
+                    
+            $( "#form1" ).submit();
+            $('#modalForProfile').modal('toggle');
+          }
+
+        });
+        $(document).on("click", "#updatePwdConfirm", function(event){
+             console.log( "updatePwdConfirm" ); 
+            if(md5($("#oldPwd").val())!="<c:out value="${sessionScope.t4uUser.userPassword}"/>"){
+                $('#modalForPassword').modal('toggle');
+            showErrorMessage("Please provide the correct old password");
+          }else if($("input[name='newPwd']").val()==''){
+            $('#modalForPassword').modal('toggle');
+            showErrorMessage("You must provide your password");
+                        
+          }
+          else if($("#confirmPwd").val()==''){
+              $('#modalForPassword').modal('toggle');
+                  showErrorMessage("You need to confirm your password");
+                  
+          }
+          else if($("input[name='newPwd']").val()!= $("#confirmPwd").val()){
+              $('#modalForPassword').modal('toggle');
+                  showErrorMessage("Passwords are not consistent");
+                  
+          }else{
+            $("input[name='newPwd']").val(md5($("input[name='newPwd']").val()));
+                    
+            $( "#form2" ).submit();
+            $('#modalForPassword').modal('toggle');
+          }
+        });
+        
+        function showErrorMessage(msg){
+            $.notify(msg, {
+                globalPosition: "top left",
+                autoHideDelay: 5000});
+        }
         </script>
     </head>
     <body>
@@ -226,9 +241,9 @@
                                                 </table>
 
                                                 
-                                                <button type="button" class="btn btn-primary" id="updateProfile" data-toggle="modal" data-target="#modalForProfile"><fmt:message key="profile.label.updateProfile"/></button>
+                                                <button type="button" class="btn btn-primary" id="doUpdateProfile" ><fmt:message key="profile.label.updateProfile"/></button>
                                                 
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalForPassword"><fmt:message key="profile.label.changePassword"/></button>
+                                                <button type="button" class="btn btn-primary" id="doUpdatePwd"><fmt:message key="profile.label.changePassword"/></button>
                                               </div>
                                             </div>
                                           </div>
@@ -306,9 +321,7 @@
                         </div>		
                     </div>
                 </div>
-                                    
-
-                <!-- Modal for update profile -->
+                 <!-- Modal for update profile -->
                 <div class="modal fade" id="modalForProfile" role="dialog">
                   <div class="modal-dialog">
 
@@ -319,22 +332,23 @@
                         <h4 class="modal-title"><fmt:message key="profile.label.updateProfile"/></h4>
                       </div>
                       <div class="modal-body">
-                        <form id="form1" action="/T4U/user/register" method="POST" role="form">
+                        <form id="form1" action="/T4U/user/update.do" method="POST" role="form">
+                            <input name='action' type='hidden' value='profile' />
                             <div class="form-group">
                               <label for="name"><fmt:message key="register.label.name"/><label>*</label></label>
-                              <input type="text" class="form-control" id="name" value="${sessionScope.t4uUser.userName}">
+                              <input type="text" class="form-control" id="name" name="name">
                             </div>
                             <div class="form-group">
                               <label for="phone"><fmt:message key="register.label.phone"/><label>*</label></label>
-                              <input type="text" class="form-control" id="phone" value="${sessionScope.t4uUser.userPhone}">
+                              <input type="text" class="form-control" id="phone" name="phone">
                             </div>
                             <div class="form-group">
                               <label for="account"><fmt:message key="register.label.account"/></label>
-                              <input type="text" class="form-control " readonly id="account" value="${sessionScope.t4uUser.userAccount}">
+                              <input type="text" class="form-control " readonly id="account" name="account" value="${sessionScope.t4uUser.userAccount}">
                             </div>
                             <div class="form-group">
                               <label for="email"><fmt:message key="register.label.email"/><label>*</label></label>
-                              <input type="text" class="form-control" id="email" value="${sessionScope.t4uUser.userEmail}">
+                              <input type="text" class="form-control" id="email" name="email"> 
                             </div>
                             <div class="form-group">
                                 <label><fmt:message key="register.label.birthdate"  /><label>*</label></label>
@@ -348,22 +362,14 @@
                             <div class="form-group">
                                 <label><fmt:message key="register.label.gender"/><label>*</label></label>
                                 <div class="checkbox">
-                                    <c:choose>
-                                        <c:when test="${sessionScope.t4uUser.userGender == 'M'}">
-                                           <input type="checkbox" name="gender" checked/>
-                                        </c:when>
-                                        <c:otherwise>
-                                           <input type="checkbox" name="gender"/>
-                                        </c:otherwise>
-                                    </c:choose>
-                                    
+                                    <input type="checkbox" name="gender" id="gender"/>
                                 </div>
                             </div>
                             
                         </form>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"><fmt:message key="profile.label.confirm"/></button>
+                        <button id="updateProfileConfirm" type="button" class="btn btn-primary"><fmt:message key="profile.label.confirm"/></button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal"><fmt:message key="profile.label.cancel"/></button>
                       </div>
                     </div>
@@ -383,16 +389,37 @@
                         <h4 class="modal-title"><fmt:message key="profile.label.changePassword"/></h4>
                       </div>
                       <div class="modal-body">
-                        <p>Some text in the modal.</p>
+                        
+                        <form id="form2" action="/T4U/user/update.do" method="POST" role="form">
+                            <input name='action' type='hidden' value='pwd' />
+                            <div class="form-group">
+                              <label for="account2"><fmt:message key="register.label.account"/></label>
+                              <input type="text" class="form-control " readonly id="account2" name="account2" value="${sessionScope.t4uUser.userAccount}">
+                            </div>
+                            <div class="form-group">
+                              <label for="oldPwd"><fmt:message key="profile.label.oldPwd"/></label>
+                              <input type="password" class="form-control " id="oldPwd">
+                            </div>
+                            <div class="form-group">
+                              <label for="newPwd"><fmt:message key="profile.label.newPwd"/></label>
+                              <input type="password" class="form-control " id="newPwd" name="newPwd">
+                            </div>
+                            <div class="form-group">
+                              <label for="confirmPwd"><fmt:message key="profile.label.confirmPwd"/></label>
+                              <input type="password" class="form-control " id="confirmPwd">
+                            </div>
+                        </form>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"><fmt:message key="profile.label.confirm"/></button>
+                        <button type="button" id="updatePwdConfirm" class="btn btn-primary"><fmt:message key="profile.label.confirm"/></button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal"><fmt:message key="profile.label.cancel"/></button>
                       </div>
                     </div>
 
                   </div>
-                </div>
+                </div>                   
+                
+                
                 </fmt:bundle>
                 <jsp:include page="footer_normal.jsp" />
                 
