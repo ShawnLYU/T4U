@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class T4uScheduleDAO {
 
-    public static void addSchedule(T4uVersion version, Map<Integer, T4uHouse> allHouses, Map<Integer, T4uSchedule> allSchedules) {
+    public static void getScheduleForVersion(T4uVersion version, Map<Integer, T4uHouse> allHouses, Map<Integer, T4uSchedule> allSchedules) {
         int versionId = version.getVersionId();
         try {
             Connection conn =  T4uJDBC.connect();

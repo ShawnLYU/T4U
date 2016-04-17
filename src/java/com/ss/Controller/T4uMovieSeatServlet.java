@@ -42,7 +42,14 @@ public class T4uMovieSeatServlet extends HttpServlet {
             LOGGER.debug(String.format("Redirecting to /login.jsp?redirect=%s.", requestUri));
             response.sendRedirect(request.getContextPath() + "/login.jsp?redirect=" + URLEncoder.encode(requestUri, "UTF-8"));
         } else { // User logged in
-            LOGGER.debug("User has logged in.");
+            LOGGER.debug(String.format("%s has logged in.", user.getUserAccount()));
+            String strScheuleId = request.getParameter("scheduleId");
+            int scheuleId = 0;
+            try {
+                scheuleId = Integer.parseInt(strScheuleId);
+            } catch (NumberFormatException ex) {
+                scheuleId = 0;
+            }
         }
     }
 

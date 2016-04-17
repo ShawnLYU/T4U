@@ -71,7 +71,7 @@ public class T4uMovieDetailServlet extends HttpServlet {
             // Retrieve all schedules
             Map<Integer, T4uSchedule> allSchedules = new HashMap<Integer, T4uSchedule>();
             for (Entry<Integer, T4uVersion> entry : allVersions.entrySet())
-                T4uScheduleDAO.addSchedule(entry.getValue(), allHouses, allSchedules);
+                T4uScheduleDAO.getScheduleForVersion(entry.getValue(), allHouses, allSchedules);
             request.setAttribute(T4uConstants.T4U_SELSCHEDULES, allSchedules);
             // Dispatch to JSP
             LOGGER.debug("Redirecting to /movieDetail.jsp.");
