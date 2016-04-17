@@ -43,7 +43,8 @@ public class T4uUserLoginServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         String userAccount = request.getParameter("userAccount");
         String userPassword = request.getParameter("userPassword");
-        String redirectedFrom = request.getParameter("redirect");
+//        String redirectedFrom = request.getParameter(T4uConstants.T4U_LOGINREDIRECT);
+        String redirectedFrom = request.getParameter("redir");
         if (redirectedFrom == null || redirectedFrom.trim().equals(""))
             redirectedFrom = request.getContextPath(); // return to index
         T4uUser t4uUser = new T4uUser();
@@ -71,6 +72,7 @@ public class T4uUserLoginServlet extends HttpServlet {
             response.sendRedirect(URLDecoder.decode(redirectedFrom, "UTF-8"));
         }else{
             logger.debug("Error: "+ session.getAttribute("error"));
+            request.setAttribute(T4uConstants.T4U_LOGINREDIRECT, redirectedFrom);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
         }
