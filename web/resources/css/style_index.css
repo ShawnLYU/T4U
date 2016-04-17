@@ -1326,12 +1326,10 @@ font-weight: 700;
 		width: 95%;
 	}
 	.search {
-/*		padding: 6px 8px;
-		width: 19%;
-                width: 36%;
-		margin-top: 3px;*/
+		padding: 6px 0px;
+		margin-top: 3px;
 
-                display:none;
+                /*display:none;*/
 	}
 	.logo p {
 		font-size: 1.3em;
@@ -1764,7 +1762,7 @@ font-weight: 700;
 }
 @media screen and (max-width: 768px) {
         div.search{
-            display: none;
+            /*display: none;*/
             /*width: 60%;*/
         }
 	.header {

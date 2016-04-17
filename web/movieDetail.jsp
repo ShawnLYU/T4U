@@ -159,7 +159,7 @@
 								</div>
 								<div class="best-review">
 									<h4>Ticketing</h4>
-                                                                        <table style="width: 100%">
+                                                                        <table style="width: 100%" class="table table-hover">
                                                                             <thead><tr><th>Cinema</th><th>House</th><th>Time</th><th>Version</th><th>Price</th><th>Buy</th></tr></thead>
                                                                             <tbody>
                                                                                 <c:forEach items="${selSchedules}" var="schedule">
@@ -169,7 +169,7 @@
                                                                                     <td><c:out value="${schedule.value.scheduleTimeslot}"/></td>
                                                                                     <td><c:out value="${schedule.value.version.versionName}"/></td>
                                                                                     <td><c:out value="${schedule.value.price}" /></td>
-                                                                                    <td><input type="button" value="Ticketing" title="Ticketing" onclick="location.href='<c:out value="${pageContext.request.contextPath}"/>/movie/buy?scheduleId=<c:out value="${schedule.key}"/>';" /></td>
+                                                                                    <td><input type="button" value="Ticketing" title="Ticketing" onclick="location.href='<c:out value="${pageContext.request.contextPath}"/>/movie/seat?scheduleId=<c:out value="${schedule.key}"/>';" /></td>
                                                                                 </tr>
                                                                                 </c:forEach>
                                                                             </tbody>
