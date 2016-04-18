@@ -18,6 +18,7 @@
     <%    } else {%>  
         <fmt:setLocale value="zh_HK" scope="session" />  
     <%    } %>
+<c:set var="schedule" value="${requestScope.t4uUserCurSchedule}" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -110,20 +111,7 @@
                                         $counter = $('#counter'),
                                         $total = $('#total'),
                                         sc = $('#seat-map').seatCharts({
-                                        map: [
-                                            'ee__eeeeeeee__ee',
-                                            'ee_eeeeeeeeee_ee',
-                                            'ee_eeeeeeeeee_ee',
-                                            'ee_eeeeeeeeee_ee',
-                                            'ee_eeeeeeeeee_ee',
-                                            'ee_eeeeeeeeee_ee',
-                                            'ee_eeeeeeeeee_ee',
-                                            'ee_eeeeeeeeee_ee',
-                                            'ee_eeeeeeeeee_ee',
-                                            'ee_eeee__eeee_ee',
-                                            'ee_eeee__eeee_ee',
-                                            '___eeeeeeeeee___',
-                                        ],
+                                        map: <c:out value="${schedule.house.housePlan}" escapeXml="false" />,
                                         seats: {
                                             e: {
                                                 price   : 40,
@@ -195,7 +183,7 @@
                                     });
 
                                     //let's pretend some seats have already been booked
-                                    sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
+                                    sc.get([<c:out value="${schedule.scheduleOSeats}" escapeXml="false" />]).status('unavailable');
 
                                 });
 

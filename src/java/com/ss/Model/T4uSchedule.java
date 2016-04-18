@@ -6,7 +6,6 @@
 
 package com.ss.Model;
 
-import com.ss.app.T4uMovieSlot;
 import java.sql.Timestamp;
 
 /**
@@ -61,6 +60,14 @@ public class T4uSchedule {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+    
+    public String getScheduleOSeats() {
+        return this.scheduleOSeats;
+    }
+    
+    public void setScheduleOSeats(String scheduleOSeats) {
+        this.scheduleOSeats = scheduleOSeats;
     }
     
 }
