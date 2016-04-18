@@ -33,11 +33,18 @@
         <script type="text/javascript" src="/T4U/resources/js/jquery.flexisel.js"></script>	
         
         <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+        <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap-theme.min.css" rel='stylesheet' type='text/css' />
         <link href="/T4U/resources/css/style_index.css" rel="stylesheet" type="text/css" media="all" />
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+        <style type="text/css">
+            .modal-content iframe{
+                margin: 0 auto;
+                display: block;
+            }
+        </style>
         <script type="text/javascript">
             $(document).ready(function(){
-
+                
                 $("#flexiselDemo1").flexisel({
                     visibleItems: 6,
                     animationSpeed: 1000,
@@ -60,6 +67,21 @@
                         }
                     }
                 });
+                /* Get iframe src attribute value i.e. YouTube video url
+                and store it in a variable */
+                var url = $("#cartoonVideo").attr('src');
+
+                /* Assign empty url value to the iframe src attribute when
+                modal hide, which stop the video playing */
+                $("#myModal").on('hide.bs.modal', function(){
+                    $("#cartoonVideo").attr('src', '');
+                });
+
+                /* Assign the initially stored url back to the iframe src
+                attribute when modal is displayed again */
+                $("#myModal").on('show.bs.modal', function(){
+                    $("#cartoonVideo").attr('src', url);
+                });
             });
         </script>
     </head>
@@ -77,13 +99,39 @@
                                                     <a href="${pageContext.request.contextPath}/index"><img src="/T4U/resources/images/logo.png" alt="" /></a>
                                                     <p>Movie Theater</p>
                                                 </div>
-                                                <div class="search v-search">
-                                                    <div  class="btn-group" role="group">
-                                                    <button type="button" class="btn btn-default col-sm-4" onclick="setLocaleEN();">En</button>
-                                                    <button type="button" class="btn btn-default col-sm-4 col-sm-offset-4" onclick="setLocaleCN();">简</button>
-                                                    <button type="button" class="btn btn-default col-sm-4 col-sm-offset-4" onclick="setLocaleHK();">繁</button>
-                                                </div>  
-                                                </div>
+                                                <div class="search" style="width:30%">
+                            <div  class="btn-group col-sm-6" role="group">
+                                <button type="button" class="btn btn-default col-sm-4" onclick="setLocaleEN();">En</button>
+                                <button type="button" class="btn btn-default col-sm-4 col-sm-offset-4" onclick="setLocaleCN();">简</button>
+                                <button type="button" class="btn btn-default col-sm-4 col-sm-offset-4" onclick="setLocaleHK();">繁</button>
+                                
+                            </div>  
+                            <div class="dropdown col-sm-6" style="padding: 0;">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                <c:choose>
+                                    <c:when test="${sessionScope.t4uUser != null}">
+                                       <c:out value="${sessionScope.t4uUser.userName}"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <fmt:message key="index.label.account"/>
+                                    </c:otherwise>
+                                </c:choose>
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                        <c:choose>
+                                            <c:when test="${sessionScope.t4uUser != null}">
+                                               <li><a href="/T4U/user/profile"><fmt:message key="index.label.profile"/></a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                               <li><a href="/T4U/login.jsp"><fmt:message key="index.label.login"/></a></li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    <li><a href="/T4U/register.jsp"><fmt:message key="index.label.register"/></a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="/T4U/user/logout.do"><fmt:message key="index.label.logout"/></a></li>
+                                </ul>
+                            </div>
+                        </div>
                                                 <div class="clearfix"></div>
                                             </div>
 						<div class="reviews-section">
@@ -97,51 +145,26 @@
                                                                         <a class="span" href="">
                                                                             <c:out value="${requestScope.t4uCurMovie.movieName}"/>
                                                                         </a>
-                                                                        <p class="dirctr"><a href="">Reagan Gavin Rasquinha, </a>TNN, Mar 12, 2015, 12.47PM IST</p>
-                                                                        <p class="ratingview">Critic's Rating:</p>
-                                                                        <div class="rating">
-                                                                            <span>☆</span>
-                                                                            <span>☆</span>
-                                                                            <span>☆</span>
-                                                                            <span>☆</span>
-                                                                            <span>☆</span>
-                                                                        </div>
-                                                                        <p class="ratingview">
-                                                                        &nbsp;3.5/5  
-                                                                        </p>
-                                                                        <div class="clearfix"></div>
-                                                                        <p class="ratingview c-rating">Avg Readers' Rating:</p>
-                                                                        <div class="rating c-rating">
-                                                                            <span>☆</span>
-                                                                            <span>☆</span>
-                                                                            <span>☆</span>
-                                                                            <span>☆</span>
-                                                                            <span>☆</span>
-                                                                        </div> 	
-                                                                        <p class="ratingview c-rating">								
-                                                                        &nbsp; 3.3/5</p>
-                                                                        <div class="clearfix"></div>
+                                                                        
                                                                         <div class="yrw">
-                                                                            <div class="dropdown-button">
-                                                                                <select class="dropdown" tabindex="9" data-settings='{"wrapperClass":"flat"}'>
-                                                                                <option value="0">Your rating</option>	
-                                                                                <option value="1">1.Poor</option>
-                                                                                <option value="2">1.5(Below average)</option>
-                                                                                <option value="3">2.Average</option>
-                                                                                <option value="4">2.5(Above average)</option>
-                                                                                <option value="5">3.Watchable</option>
-                                                                                <option value="6">3.5(Good)</option>
-                                                                                <option value="7">4.5(Very good)</option>
-                                                                                <option value="8">5.Outstanding</option>
-                                                                              </select>
-                                                                            </div>
-                                                                            <div class="rtm text-center">
-                                                                                <a href="#">REVIEW THIS MOVIE</a>
-                                                                            </div>
                                                                             <div class="wt text-center">
-                                                                                <a href="#">WATCH THIS TRAILER</a>
+                                                                                <a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal"><fmt:message key="index.label.watchTrailer"/></a>
                                                                             </div>
                                                                             <div class="clearfix"></div>
+                                                                        </div>
+                                                                        <!-- Modal HTML -->
+                                                                        <div id="myModal" class="modal fade">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                                        <h4 class="modal-title">YouTube</h4>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <iframe id="cartoonVideo" width="560" height="315" src="//www.youtube.com/embed/${requestScope.t4uCurMovie.movieInfo.Trailer}" frameborder="0" allowfullscreen></iframe>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                         <table class="review-table">
                                                                             <tr><td class="info">GENRE</td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Genre}"/></td></tr>
@@ -174,80 +197,7 @@
                                                                                 </c:forEach>
                                                                             </tbody>
                                                                         </table>
-									<!--<p>Excellent Movie and great performance by Lorem, one of the finest thriller of recent  like Aldus PageMaker including versions of Lorem Ipsum.</p>
-									<p><span>Neeraj Upadhyay (Noida)</span> 16/03/2015 at 12:14 PM</p>-->
 								</div>
-								<div class="story-review">
-									<h4>REVIEW:</h4>
-									<p>So,Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-								</div>
-									<!-- comments-section-starts -->
-							    <div class="comments-section">
-                                                            <div class="comments-section-head">
-                                                                            <div class="comments-section-head-text">
-                                                                                    <h3>25 Comments</h3>
-                                                                            </div>
-                                                                            <div class="clearfix"></div>
-                                                            </div>
-                                                                <div class="comments-section-grids">
-                                                                    <div class="comments-section-grid">
-                                                                        <div class="col-md-2 comments-section-grid-image">
-                                                                                <img src="/T4U/resources/images/eye-brow.jpg" class="img-responsive" alt="" />
-                                                                        </div>
-                                                                        <div class="col-md-10 comments-section-grid-text">
-                                                                            <h4><a href="#">MARWA ELGENDY</a></h4>
-                                                                            <label>5/4/2014 at 22:00   </label>
-                                                                            <p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound but because those who do not know how to pursue pleasure rationally encounter consequences.</p>
-                                                                            <span><a href="#">Reply</a></span>
-                                                                            <i class="rply-arrow"></i>
-                                                                        </div>
-                                                                        <div class="clearfix"></div>
-                                                                    </div>
-                                                                    <div class="comments-section-grid comments-section-middle-grid">
-                                                                        <div class="col-md-2 comments-section-grid-image">
-                                                                            <img src="/T4U/resources/images/beauty.jpg" class="img-responsive" alt="" />
-                                                                        </div>
-                                                                        <div class="col-md-10 comments-section-grid-text">
-                                                                            <h4><a href="#">MARWA ELGENDY</a></h4>
-                                                                            <label>5/4/2014 at 22:00   </label>
-                                                                            <p>But I must explain to you how all this idea denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound but because those who do not know how to pursue pleasure rationally encounter consequences.</p>
-                                                                            <span><a href="#">Reply</a></span>
-                                                                            <i class="rply-arrow"></i>
-                                                                        </div>
-                                                                        <div class="clearfix"></div>
-                                                                    </div>
-                                                                    <div class="comments-section-grid">
-                                                                        <div class="col-md-2 comments-section-grid-image">
-                                                                            <img src="/T4U/resources/images/stylish.jpg" class="img-responsive" alt="" />
-                                                                        </div>
-                                                                        <div class="col-md-10 comments-section-grid-text">
-                                                                            <h4><a href="#">MARWA ELGENDY</a></h4>
-                                                                            <label>5/4/2014 at 22:00   </label>
-                                                                            <p>But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound but because those who do not know how to pursue pleasure rationally encounter consequences.</p>
-                                                                            <span><a href="#">Reply</a></span>
-                                                                            <i class="rply-arrow"></i>
-                                                                        </div>
-                                                                        <div class="clearfix"></div>
-                                                                    </div>
-                                                                </div>
-							    </div>
-								<!-- comments-section-ends -->
-                                                            <div class="reply-section">
-                                                                <div class="reply-section-head">
-                                                                    <div class="reply-section-head-text">
-                                                                        <h3>Leave Reply</h3>
-                                                                     </div>
-                                                                </div> 
-                                                                <div class="blog-form">
-                                                                    <form>
-                                                                        <input type="text" class="text" value="Enter Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Name';}">
-                                                                        <input type="text" class="text" value="Enter Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Enter Email';}">
-                                                                        <input type="text" class="text" value="Subject" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Subject';}">
-                                                                        <textarea></textarea>
-                                                                        <input type="button" value="SUBMIT COMMENT">
-                                                                    </form>
-                                                                 </div>
-                                                            </div>
 				  			</div>
 
 							<div class="clearfix"></div>
