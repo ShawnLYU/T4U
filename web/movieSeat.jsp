@@ -114,7 +114,7 @@
                                         map: <c:out value="${schedule.house.housePlan}" escapeXml="false" />,
                                         seats: {
                                             e: {
-                                                price   : 40,
+                                                price   : <c:out value="${schedule.price}" />,
                                                 classes : 'economy-class', //your custom CSS class
                                                 category: 'Economy Class'
                                             }                   
