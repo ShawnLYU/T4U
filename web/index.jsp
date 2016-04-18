@@ -81,7 +81,16 @@
                           }
                   }
               });
+              
+              
+              
           });
+          function showTrailer(address){
+//                  $("iframe").attr("src", "https://www.youtube.com/embed/"+address); 
+//                  var iFrame = $('iframe');
+//                    iFrame.load("https://www.youtube.com/embed/"+address);
+                    document.getElementById('myFrame').src = "https://www.youtube.com/embed/"+address;
+              }
         </script>
     </head>
     
@@ -150,14 +159,17 @@
                 <div class="review-slider">
                     <ul id="flexiselDemo1">
                         <c:forEach items="${allMovies}" var="movie">
-                        <li><img src="<c:out value="${movie.value.movieInfo.Poster}"/>"></img></li>
+                            <c:if test="${empty firstEle}">
+                                <c:set var="firstTrailer" scope="request" value="${movie.value.movieInfo.Trailer}"/>
+                            </c:if>
+                            <li><img class="trailerToBePlayed" src="<c:out value="${movie.value.movieInfo.Poster}"/>" onclick="showTrailer('<c:out value="${movie.value.movieInfo.Trailer}"/>')"></img></li>
                         </c:forEach>
                     </ul>
 
 
                 </div>
                 <div class="video">
-                    <iframe  src="https://www.youtube.com/embed/2LqzF5WauAw" frameborder="0" allowfullscreen></iframe>
+                    <iframe  id="myFrame" src="https://www.youtube.com/embed/${firstTrailer}" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <div class="news">
                     <div class="col-md-6 news-left-grid">
