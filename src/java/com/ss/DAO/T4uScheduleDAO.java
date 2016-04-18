@@ -39,7 +39,9 @@ public class T4uScheduleDAO {
                 schedule.setHouse(allHouses.get(rs.getInt("HouseId")));
                 schedule.setScheduleTimeslot(rs.getTimestamp("ScheduleTimeslot"));
                 // Calculate price
+                schedule.setPrice(version.getVersionBasePrice());
                 allSchedules.put(scheduleId, schedule);
+                
             }
             T4uJDBC.close(rs, pstmt, conn);
         } catch (SQLException ex) {

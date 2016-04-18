@@ -23,6 +23,14 @@ public class T4uCinema {
     private int cinemaId;
     private String cinemaName;
     private T4uCinemaLocation cinemaLocation;
+
+    public void setCinemaInfo(Map<String, String> cinemaInfo) {
+        this.cinemaInfo = cinemaInfo;
+    }
+
+    public T4uCinemaLocation getCinemaLocation() {
+        return cinemaLocation;
+    }
     private String cinemaPhone;
     private Map<String, String> cinemaInfo;
 
