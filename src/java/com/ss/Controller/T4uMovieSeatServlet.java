@@ -5,6 +5,8 @@
  */
 package com.ss.Controller;
 
+import com.ss.DAO.T4uScheduleDAO;
+import com.ss.Model.T4uSchedule;
 import com.ss.Model.T4uUser;
 import com.ss.app.T4uConstants;
 import java.io.IOException;
@@ -53,6 +55,16 @@ public class T4uMovieSeatServlet extends HttpServlet {
                 scheuleId = Integer.parseInt(strScheuleId);
             } catch (NumberFormatException ex) {
                 scheuleId = 0;
+            }
+            T4uSchedule schedule = T4uScheduleDAO.getScheduleById(scheuleId);
+            if (schedule == null) { // Cannot find this schedule
+                // Redirect to error page
+            } else {
+                request.setAttribute(T4uConstants.T4U_USERCURSCHEDULE, schedule);
+                // Dispatch to JSP
+                LOGGER.debug("Redirecting to /movieSeat.jsp.");
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/movieSeat.jsp");
+                dispatcher.forward(request, response);
             }
         }
     }

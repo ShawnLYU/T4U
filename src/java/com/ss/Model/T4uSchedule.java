@@ -6,7 +6,6 @@
 
 package com.ss.Model;
 
-import com.ss.app.T4uMovieSlot;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -69,6 +68,14 @@ public class T4uSchedule {
         }
         
         this.price = (hour<11 || hour>23)?(price-20):price;
+    }
+    
+    public String getScheduleOSeats() {
+        return this.scheduleOSeats;
+    }
+    
+    public void setScheduleOSeats(String scheduleOSeats) {
+        this.scheduleOSeats = scheduleOSeats;
     }
     
 }

@@ -1,6 +1,7 @@
 .error-404 {
 	font-family: 'Lato', sans-serif;
         padding-top: 2em;
+        min-height: 620px;
 }
 .error-404 a {
 	color: #b71a4c;
@@ -26,7 +27,7 @@
 .booking-details {
 	/*float: left;*/
 	text-align: left;
-	margin-left: 10%;
+	margin-left: 15%;
 	font-size: 12px;
 	position: relative;
 	height: 250px;
@@ -41,17 +42,17 @@
 }
 div.seatCharts-cell {
 	color: #182C4E;
-	height: 25px;
-	width: 25px;
-	line-height: 25px;
-	
+	height: 1.8em;
+	width: 1.8em;
+	line-height: 2.2em;
+	font-size: 0.8em;
 }
 div.seatCharts-seat {
 	color: #FFFFFF;
 	cursor: pointer;	
 }
 div.seatCharts-row {
-	height: 35px;
+	height: 2.2em;
 }
 div.seatCharts-seat.available {
 	background-color: #B9DEA0;
@@ -62,10 +63,12 @@ div.seatCharts-seat.available.first-class {
 	background-color: #3a78c3;
 }
 div.seatCharts-seat.focused {
-	background-color: #76B474;
+	/*background-color: #76B474;*/
+        background-color: #FDE74C;
 }
 div.seatCharts-seat.selected {
-	background-color: #E6CAC4;
+	/*background-color: #E6CAC4;*/
+        background-color: #FA7921;
 }
 div.seatCharts-seat.unavailable {
 	background-color: #472B34;
@@ -78,7 +81,7 @@ div.seatCharts-container {
         margin: 0 auto;
 }
 div.seatCharts-legend {
-        right: 10%;
+        right: 15%;
 	padding-left: 0px;
 	position: absolute;
 	top: 0px;
