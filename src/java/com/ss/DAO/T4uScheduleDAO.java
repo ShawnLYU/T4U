@@ -38,6 +38,7 @@ public class T4uScheduleDAO {
                 schedule.setScheduleTimeslot(rs.getTimestamp("ScheduleTimeslot"));
                 schedule.setPrice(version.getVersionBasePrice());
                 allSchedules.put(scheduleId, schedule);
+                
             }
             T4uJDBC.close(rs, pstmt, conn);
         } catch (SQLException ex) {

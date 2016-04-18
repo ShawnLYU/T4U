@@ -7,6 +7,8 @@
 package com.ss.Model;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 
 /**
  *
@@ -59,7 +61,13 @@ public class T4uSchedule {
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        int hour = 0;
+        if(this.scheduleTimeslot!=null){
+            LocalDateTime tmp = this.scheduleTimeslot.toLocalDateTime();
+            hour = tmp.getHour();
+        }
+        
+        this.price = (hour<11 || hour>23)?(price-20):price;
     }
     
     public String getScheduleOSeats() {

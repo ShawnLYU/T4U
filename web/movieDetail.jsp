@@ -30,12 +30,15 @@
         <script src="/T4U/resources/js/jquery-1.11.1.min.js"></script>
         <script src="/T4U/resources/js/common.js"></script>
         <script type="text/javascript" src="/T4U/resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/T4U/resources/js/jquery.flexisel.js"></script>	
+        <script type="text/javascript" src="/T4U/resources/js/jquery.flexisel.js"></script>
+        <script src="/T4U/resources/js/jquery.dataTables.min.js"></script>
+        
         
         <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
         <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap-theme.min.css" rel='stylesheet' type='text/css' />
         <link href="/T4U/resources/css/style_index.css" rel="stylesheet" type="text/css" media="all" />
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+        <link href="/T4U/resources/css/jquery.dataTables.min.css" rel="stylesheet"/>
         <style type="text/css">
             .modal-content iframe{
                 margin: 0 auto;
@@ -44,7 +47,11 @@
         </style>
         <script type="text/javascript">
             $(document).ready(function(){
-                
+                $(document).ready(function() {
+                    $('#example').DataTable({
+                        "oSearch": {"bSmart": false}
+                    });
+                } );
                 $("#flexiselDemo1").flexisel({
                     visibleItems: 6,
                     animationSpeed: 1000,
@@ -135,7 +142,7 @@
                                                 <div class="clearfix"></div>
                                             </div>
 						<div class="reviews-section">
-							<h3 class="head">Movie Reviews</h3>
+							<h3 class="head"><fmt:message key="movieDetail.label.title"/></h3>
 							<div class="col-md-12 reviews-grids">
 								<div class="review">
                                                                     <div class="movie-pic">
@@ -148,7 +155,7 @@
                                                                         
                                                                         <div class="yrw">
                                                                             <div class="wt text-center">
-                                                                                <a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal"><fmt:message key="index.label.watchTrailer"/></a>
+                                                                                <a href="#myModal" class="btn btn-lg btn-info col-sm-12" data-toggle="modal"><fmt:message key="index.label.watchTrailer"/></a>
                                                                             </div>
                                                                             <div class="clearfix"></div>
                                                                         </div>
@@ -166,36 +173,59 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <table class="review-table">
-                                                                            <tr><td class="info">GENRE</td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Genre}"/></td></tr>
-                                                                            <tr><td class="info">CLASS</td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Class}"/></td></tr>
-                                                                            <tr><td class="info">DURATION</td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Length}"/></td></tr>
-                                                                            <tr><td class="info">DIRECTION</td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Director}"/></td></tr>
-                                                                            <tr><td class="info">CAST</td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Cast}"/></td></tr>
+                                                                        <table class="table">
+                                                                            <tr><td class="info"><fmt:message key="movieDetail.label.genre"/></td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Genre}"/></td></tr>
+                                                                            <tr><td class="info"><fmt:message key="movieDetail.label.class"/></td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Class}"/></td></tr>
+                                                                            <tr><td class="info"><fmt:message key="movieDetail.label.duration"/></td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Length}"/></td></tr>
+                                                                            <tr><td class="info"><fmt:message key="movieDetail.label.direction"/></td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Director}"/></td></tr>
+                                                                            <tr><td class="info"><fmt:message key="movieDetail.label.cast"/></td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Cast}"/></td></tr>
                                                                         </table>
                                                                     </div>
                                                                     <div class="clearfix"></div>
 								</div>
 								<div class="single">
-									<h3>Story</h3>
+									<h3><fmt:message key="movieDetail.label.story"/></h3>
                                                                         <p><c:out value="${requestScope.t4uCurMovie.movieDescription}"/></p>
 								</div>
 								<div class="best-review">
-									<h4>Ticketing</h4>
-                                                                        <table style="width: 100%" class="table table-hover">
-                                                                            <thead><tr><th>Cinema</th><th>House</th><th>Time</th><th>Version</th><th>Price</th><th>Buy</th></tr></thead>
+									<h4><fmt:message key="movieDetail.label.info"/></h4>
+                                                                        <table id="example" class="display" cellspacing="0" width="100%">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th><fmt:message key="movieDetail.table.head.cinemaName"/></th>
+                                                                                    <th><fmt:message key="movieDetail.table.head.houseName"/></th>
+                                                                                    <th><fmt:message key="movieDetail.table.head.versionName"/></th>
+                                                                                    <th><fmt:message key="movieDetail.table.head.scheduleTimeslot"/></th>
+                                                                                    <th><fmt:message key="movieDetail.table.head.cinemaLocation"/></th>
+                                                                                    <th><fmt:message key="movieDetail.table.head.versionPrice"/></th>
+                                                                                    <th><fmt:message key="movieDetail.button.ticketing"/></th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            
                                                                             <tbody>
                                                                                 <c:forEach items="${selSchedules}" var="schedule">
-                                                                                <tr>
-                                                                                    <td><c:out value="${schedule.value.house.cinema.cinemaName}"/></td>
-                                                                                    <td><c:out value="${schedule.value.house.houseName}"/></td>
-                                                                                    <td><c:out value="${schedule.value.scheduleTimeslot}"/></td>
-                                                                                    <td><c:out value="${schedule.value.version.versionName}"/></td>
-                                                                                    <td><c:out value="${schedule.value.price}" /></td>
-                                                                                    <td><input type="button" value="Ticketing" title="Ticketing" onclick="location.href='<c:out value="${pageContext.request.contextPath}"/>/movie/seat?scheduleId=<c:out value="${schedule.key}"/>';" /></td>
-                                                                                </tr>
+                                                                                    <tr>
+                                                                                        <td><c:out value="${schedule.value.house.cinema.cinemaName}"/></td>
+                                                                                        <td><c:out value="${schedule.value.house.houseName}"/></td>
+                                                                                        <td><c:out value="${schedule.value.version.versionName}"/></td>
+                                                                                        <td><c:out value="${schedule.value.scheduleTimeslot}"/></td>
+                                                                                        <td><c:out value="${schedule.value.house.cinema.cinemaLocation.district}"/></td>
+                                                                                        <td><c:out value="${schedule.value.price}" /></td>
+                                                                                        <td><input type="button" class="btn btn-primary" value="<fmt:message key="movieDetail.button.ticketing"/>" title="Ticketing" onclick="location.href='<c:out value="${pageContext.request.contextPath}"/>/movie/seat?scheduleId=<c:out value="${schedule.key}"/>';" /></td>
+                                                                                    </tr>
                                                                                 </c:forEach>
                                                                             </tbody>
+                                                                            <tfoot>
+                                                                                <tr>
+                                                                                    <th><fmt:message key="movieDetail.table.head.cinemaName"/></th>
+                                                                                    <th><fmt:message key="movieDetail.table.head.houseName"/></th>
+                                                                                    <th><fmt:message key="movieDetail.table.head.versionName"/></th>
+                                                                                    <th><fmt:message key="movieDetail.table.head.scheduleTimeslot"/></th>
+                                                                                    <th><fmt:message key="movieDetail.table.head.cinemaLocation"/></th>
+                                                                                    <th><fmt:message key="movieDetail.table.head.versionPrice"/></th>
+                                                                                    <th><fmt:message key="movieDetail.button.ticketing"/></th>
+                                                                                </tr>
+                                                                            </tfoot>
                                                                         </table>
 								</div>
 				  			</div>
