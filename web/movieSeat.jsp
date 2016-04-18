@@ -92,15 +92,15 @@
                             <div class="wrapper">
                                 <div class="container">
                                     <div id="seat-map">
-                                        <div class="front-indicator">Screen</div>
+                                        <div class="front-indicator"><fmt:message key="seat.label.screen"/></div>
                                     </div>
                                     <div class="booking-details">
                                         <div id="legend"></div>
-                                        <h2>Booking Details</h2>
-                                        <h3> Selected Seats (<span id="counter">0</span>):</h3>
+                                        <h2><fmt:message key="seat.label.detail"/></h2>
+                                        <h3> <fmt:message key="seat.label.selected"/> (<span id="counter">0</span>):</h3>
                                         <ul id="selected-seats"></ul>
-                                        Total: <b>$<span id="total">0</span></b>
-                                        <button class="checkout-button">Checkout &raquo;</button>
+                                        <fmt:message key="seat.label.total"/>: <b>$<span id="total">0</span></b>
+                                        <button class="btn btn-info checkout-button"><fmt:message key="seat.label.checkout"/> &raquo;</button>
                                     </div>
                                 </div>
                             </div>
@@ -145,8 +145,8 @@
                                         legend : {
                                             node : $('#legend'),
                                             items : [
-                                                [ 'e', 'available',   'Available'],
-                                                [ 'e', 'unavailable', 'Already Booked']
+                                                [ 'e', 'available',   '<fmt:message key="seat.label.available"/>'],
+                                                [ 'e', 'unavailable', '<fmt:message key="seat.label.unavailable"/>']
                                             ]                   
                                         },
                                         click: function () {
