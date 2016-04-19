@@ -41,7 +41,8 @@ public class T4uIndexInitServlet extends HttpServlet {
         LOGGER.debug("Load resources for index.jsp.");
         HttpSession session = request.getSession(true);
         Map<Integer,T4uMovie> allMovies = T4uMovieDAO.getAllMovies();
-        request.setAttribute(T4uConstants.T4U_ALLMOVIES, allMovies);
+//        request.setAttribute(T4uConstants.T4U_ALLMOVIES, allMovies);
+        getServletContext().setAttribute(T4uConstants.T4U_ALLMOVIES, allMovies);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
     }
