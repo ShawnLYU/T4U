@@ -19,7 +19,7 @@
     <%    } else {%>  
         <fmt:setLocale value="zh_HK" scope="session" />  
     <%    } %>
-<c:set var="allMovies" value="${requestScope.t4uAllMovies}"/>
+<c:set var="allMovies" value="${applicationScope.t4uAllMovies}"/>
 <!DOCTYPE HTML>
 <html>
     <head>
