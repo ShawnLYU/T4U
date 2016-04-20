@@ -99,9 +99,9 @@
                                         <div id="legend"></div>
                                         <h2><fmt:message key="seat.label.detail"/></h2>
                                         <h3> <fmt:message key="seat.label.selected"/> (<span id="counter">0</span>):</h3>
-                                        <ul id="selected-seats"></ul>
+                                        <ul id="selected-seats" class="list-group"></ul>
                                         <fmt:message key="seat.label.total"/>: <b>$<span id="total">0</span></b>
-                                        <button class="btn btn-info checkout-button"><fmt:message key="seat.label.checkout"/> &raquo;</button>
+                                        <button id="pay" class="btn btn-info checkout-button"><fmt:message key="seat.label.checkout"/> &raquo;</button>
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +140,7 @@
                                         click: function () {
                                             if (this.status() == 'available') {
                                                 //let's create a new <li> which we'll add to the cart items
-                                                $('<li>Seat '+this.settings.id+': <b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[cancel]</a></li>')
+                                                $('<li class="list-group-item">Seat '+this.settings.id+'&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;<b>$'+this.data().price+'</b> &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="cancel-cart-item">[cancel]</a></li>')
                                                     .attr('id', 'cart-item-'+this.settings.id)
                                                     .data('seatId', this.settings.id)
                                                     .appendTo($cart);
@@ -185,6 +185,33 @@
                                     //let's pretend some seats have already been booked
                                     sc.get([<c:out value="${schedule.scheduleOSeats}" escapeXml="false" />]).status('unavailable');
 
+                                });
+                                
+                                $("#pay").click(function(){
+                                    var seatsSeleted = [];
+                                    $('.selected').each(function () {
+                                        seatsSeleted.push($(this).attr("id"));
+                                     });
+                                    $.ajax({
+                                        url:'/T4U/confirm',
+                                        type:"POST",
+                                        dataType:'json',
+                                        data:{
+                                            seats:seatsSeleted
+                                        },
+                                        success:function(data){
+                                           alert(data);
+                                        },
+                                        error:function(){
+                                          alert('error');
+                                        }
+                                    });
+//                                    $.post("/T4U/confirm",{'seats':seatsSeleted},function(data){},"json");
+//                                        $.post("/T4U/confirm",{
+//                                            seats:seatsSeleted
+//                                        }).done(function( data ) {
+//                                             alert( "name: " + data );
+//                                        })
                                 });
 
                                 function recalculateTotal(sc) {
