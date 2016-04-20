@@ -32,6 +32,14 @@
         <servlet-name>T4uMovieSeatServlet</servlet-name>
         <servlet-class>com.ss.Controller.T4uMovieSeatServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>T4uMoviePaymentServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uMoviePaymentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>T4uConfirmPaymentServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uConfirmPaymentServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
         <url-pattern>/user/login.do</url-pattern>
@@ -71,6 +79,14 @@
     <servlet-mapping>
         <servlet-name>T4uMovieSeatServlet</servlet-name>
         <url-pattern>/movie/seat</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>T4uMoviePaymentServlet</servlet-name>
+        <url-pattern>/pay.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>T4uConfirmPaymentServlet</servlet-name>
+        <url-pattern>/confirm</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
