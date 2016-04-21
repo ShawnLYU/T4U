@@ -80,6 +80,7 @@ public class T4uConfirmPaymentServlet extends HttpServlet {
 //        processRequest(request, response);
 //        String seats[] = (String[]) request.getAttribute("seats");
         String[] myJsonData = request.getParameterValues("seats[]");
+        int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
         LOGGER.debug(myJsonData);
         
     }

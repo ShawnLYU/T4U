@@ -197,7 +197,8 @@
                                         type:"POST",
                                         dataType:'json',
                                         data:{
-                                            seats:seatsSeleted
+                                            seats:seatsSeleted,
+                                            scheduleId:${schedule.scheduleId}
                                         },
                                         success:function(data){
                                            alert(data);
