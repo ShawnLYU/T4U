@@ -202,6 +202,7 @@
                                         },
                                         success:function(data){
                                            alert(data);
+                                           //display post response via ajax
                                         },
                                         error:function(){
                                           alert('error');
