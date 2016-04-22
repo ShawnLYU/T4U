@@ -3,30 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.ss.Controller;
 
-import com.ss.DAO.T4uMovieDAO;
-import com.ss.Model.T4uMovie;
-import com.ss.app.T4uConstants;
 import java.io.IOException;
-import java.util.Map;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 /**
  *
- * @author Steven
- * 
- * 2016041501    SM    Implemented the servlet
+ * @author mengxualv2
  */
-public class T4uIndexInitServlet extends HttpServlet {
+public class T4uConfirmPaymentServlet extends HttpServlet {
 
-    private static final Logger LOGGER = Logger.getLogger(T4uIndexInitServlet.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,15 +29,25 @@ public class T4uIndexInitServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private static final Logger LOGGER = Logger.getLogger(T4uConfirmPaymentServlet.class);
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        LOGGER.debug("Load resources for index.jsp.");
-        HttpSession session = request.getSession(true);
-        Map<Integer,T4uMovie> allMovies = T4uMovieDAO.getAllMovies();
-//        request.setAttribute(T4uConstants.T4U_ALLMOVIES, allMovies);
-        getServletContext().setAttribute(T4uConstants.T4U_ALLMOVIES, allMovies);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-        dispatcher.forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        try {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet T4uConfirmPaymentServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet T4uConfirmPaymentServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        } finally {
+            out.close();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -59,7 +62,8 @@ public class T4uIndexInitServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        doPost(request, response);
     }
 
     /**
@@ -73,7 +77,12 @@ public class T4uIndexInitServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+//        String seats[] = (String[]) request.getAttribute("seats");
+        String[] myJsonData = request.getParameterValues("seats[]");
+        int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
+        LOGGER.debug(myJsonData);
+        
     }
 
     /**

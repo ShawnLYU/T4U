@@ -20,6 +20,7 @@
         <fmt:setLocale value="zh_HK" scope="session" />  
     <%    } %>
 <c:set var="selSchedules" value="${requestScope.t4uSelSchedules}" />
+<c:set var="allMovies" value="${applicationScope.t4uAllMovies}"/>
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -235,12 +236,10 @@
 					</div>
 					<div class="review-slider">
                                             <ul id="flexiselDemo1">
-                                                <li><img src="/T4U/resources/images/r1.jpg" alt=""/></li>
-                                                <li><img src="/T4U/resources/images/r2.jpg" alt=""/></li>
-                                                <li><img src="/T4U/resources/images/r3.jpg" alt=""/></li>
-                                                <li><img src="/T4U/resources/images/r4.jpg" alt=""/></li>
-                                                <li><img src="/T4U/resources/images/r5.jpg" alt=""/></li>
-                                                <li><img src="/T4U/resources/images/r6.jpg" alt=""/></li>
+                                                <c:forEach items="${allMovies}" var="movie">
+                                                <!--<li><a href="<c:out value="${pageContext.request.contextPath}"/>/movie/detail?movieId=<c:out value="${movie.key}"/>"><img src="<c:out value="${movie.value.movieInfo.Poster}"/>"></img></a></li>-->
+                                                <li><img src="<c:out value="${movie.value.movieInfo.Poster}"/>" onclick="location.href='<c:out value="${pageContext.request.contextPath}"/>/movie/detail?movieId=<c:out value="${movie.key}"/>'"/></li>
+                                                </c:forEach>
                                             </ul>
 							
 					</div>	

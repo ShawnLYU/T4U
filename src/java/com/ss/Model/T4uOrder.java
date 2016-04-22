@@ -6,19 +6,36 @@
 
 package com.ss.Model;
 
+import com.ss.app.OrderStatus;
+
 /**
  *
  * @author mengxualv2
  */
 public class T4uOrder {
     private int orderId;
-    private int userId;
     private T4uUser t4uUser;
-    private int scheduleId;
     private T4uSchedule t4uSchedule;
+    private OrderStatus orderStatus;
+    private boolean isRefundable;
 
+    public boolean isIsRefundable() {
+        return isRefundable;
+    }
+
+    public void setIsRefundable(boolean isRefundable) {
+        this.isRefundable = isRefundable;
+    }
     public int getOrderId() {
         return orderId;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public T4uUser getT4uUser() {
@@ -39,21 +56,5 @@ public class T4uOrder {
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getScheduleId() {
-        return scheduleId;
-    }
-
-    public void setScheduleId(int scheduleId) {
-        this.scheduleId = scheduleId;
     }
 }
