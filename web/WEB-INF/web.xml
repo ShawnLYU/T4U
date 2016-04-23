@@ -82,7 +82,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>T4uMoviePaymentServlet</servlet-name>
-        <url-pattern>/pay.do</url-pattern>
+        <url-pattern>/pay</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>T4uConfirmPaymentServlet</servlet-name>

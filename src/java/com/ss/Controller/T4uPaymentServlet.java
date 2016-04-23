@@ -8,10 +8,14 @@ package com.ss.Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.*;
 
 /**
  *
@@ -30,22 +34,37 @@ public class T4uPaymentServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        // Get request query
+        int userId = 0;
+        int scheduleId = 0;
+        int payMethod = 0;
+        List<String> seats = new ArrayList<String>();
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet T4uMoviePaymentServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet T4uMoviePaymentServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+            userId = Integer.parseInt(request.getParameter("userId"));
+            scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
+            JSONArray jsonSeats = new JSONArray(request.getParameter("seats"));
+            if (jsonSeats.length() > 0)
+                for (int i=0; i<jsonSeats.length(); i++)
+                    seats.add(jsonSeats.getString(i));
+            payMethod = Integer.parseInt(request.getParameter("payMethod"));
+            if (payMethod != 1 && payMethod != 2)
+                throw new NumberFormatException();
+        } catch (NumberFormatException ex) {
+        } catch (JSONException ex) {
         }
+        // Alert database
+        // Check whether the seats are occupied or unavailable in table T4U_schedule
+        
+        // Add the seats to the Occupied List in table T4U_schedule
+        if (payMethod == 1) {
+            String cardNo = request.getParameter("cardNo");
+            String cardPwd = request.getParameter("cardPwd");
+            // Create a new refundable order in table T4U_order
+        } else {
+            // Create a new unrefundable order in table T4U_order
+        }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
