@@ -134,6 +134,7 @@
                                             node : $('#legend'),
                                             items : [
                                                 [ 'e', 'available',   '<fmt:message key="seat.label.available"/>'],
+                                                [ 'e', 'sold',   '<fmt:message key="seat.label.sold"/>'],
                                                 [ 'e', 'unavailable', '<fmt:message key="seat.label.unavailable"/>']
                                             ]                   
                                         },
@@ -166,8 +167,11 @@
 
                                                 //seat has been vacated
                                                 return 'available';
-                                            } else if (this.status() == 'unavailable') {
+                                            } else if (this.status() == 'sold') {
                                                 //seat has been already booked
+                                                return 'sold';
+                                            } else if (this.status() == 'unavailable') {
+                                                //seat was unavailable
                                                 return 'unavailable';
                                             } else {
                                                 return this.style();
@@ -183,7 +187,8 @@
                                     });
 
                                     //let's pretend some seats have already been booked
-                                    sc.get([<c:out value="${schedule.scheduleOSeats}" escapeXml="false" />]).status('unavailable');
+                                    sc.get([<c:out value="${schedule.scheduleOSeats}" escapeXml="false" />]).status('sold');
+                                    sc.get([<c:out value="${schedule.scheduleUSeats}" escapeXml="false" />]).status('unavailable');
 
                                 });
                                 

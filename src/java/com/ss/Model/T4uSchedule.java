@@ -21,6 +21,7 @@ public class T4uSchedule {
     private T4uHouse house;
     private Timestamp scheduleTimeslot;
     private String scheduleOSeats;
+    private String scheduleUSeats;
     private double price;
 
     public int getScheduleId() {
@@ -75,6 +76,14 @@ public class T4uSchedule {
     
     public void setScheduleOSeats(String scheduleOSeats) {
         this.scheduleOSeats = scheduleOSeats;
+    }
+    
+    public String getScheduleUSeats() {
+        return this.scheduleUSeats;
+    }
+    
+    public void setScheduleUSeats(String scheduleUSeats) {
+        this.scheduleUSeats = scheduleUSeats;
     }
     
 }

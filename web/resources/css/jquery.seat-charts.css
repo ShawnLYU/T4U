@@ -54,6 +54,11 @@ div.seatCharts-seat.available {
 	background-color: green;
 }
 
+div.seatCharts-seat.sold {
+	background-color: red;
+	cursor: not-allowed;
+}
+
 div.seatCharts-seat.unavailable {
 	background-color: red;
 	cursor: not-allowed;
