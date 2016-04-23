@@ -8,7 +8,6 @@ package com.ss.Model;
 
 
 import java.sql.Timestamp;
-import com.ss.app.T4uOrderStatus;
 
 /**
  *
