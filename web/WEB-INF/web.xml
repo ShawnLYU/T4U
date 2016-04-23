@@ -34,7 +34,7 @@
     </servlet>
     <servlet>
         <servlet-name>T4uMoviePaymentServlet</servlet-name>
-        <servlet-class>com.ss.Controller.T4uMoviePaymentServlet</servlet-class>
+        <servlet-class>com.ss.Controller.T4uPaymentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>T4uConfirmPaymentServlet</servlet-name>

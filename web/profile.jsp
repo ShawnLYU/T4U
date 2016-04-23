@@ -18,6 +18,7 @@
     <%    } else {%>  
         <fmt:setLocale value="zh_HK" scope="session" />  
     <%    } %>
+<c:set var="allOrders" value="${requestScope.t4uUserAllOrders}"/>
 <!DOCTYPE html>
 <html>
     <fmt:bundle basename="${lan}">
@@ -263,41 +264,53 @@
                                             <div class="row">
 
                                              <div class=" col-md-9 col-lg-9 "> 
-                                                <table class="table table-user-information">
-                                                  <tbody>
-                                                    <tr>
-                                                      <td>Department:</td>
-                                                      <td>Programming</td>
-                                                    </tr>
-                                                    <tr>
-                                                      <td>Hire date:</td>
-                                                      <td>06/23/2013</td>
-                                                    </tr>
-                                                    <tr>
-                                                      <td>Date of Birth</td>
-                                                      <td>01/24/1988</td>
-                                                    </tr>
-
-                                                       <tr>
-                                                           <tr>
-                                                      <td>Gender</td>
-                                                      <td>Male</td>
-                                                    </tr>
-                                                      <tr>
-                                                      <td>Home Address</td>
-                                                      <td>Metro Manila,Philippines</td>
-                                                    </tr>
-                                                    <tr>
-                                                      <td>Email</td>
-                                                      <td><a href="mailto:info@support.com">info@support.com</a></td>
-                                                    </tr>
-                                                      <td>Phone Number</td>
-                                                      <td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)
-                                                      </td>
-
-                                                    </tr>
-
-                                                  </tbody>
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th><fmt:message key="profile.label.date"/></th>
+                                                            <th><fmt:message key="profile.label.movie"/></th>
+                                                            <th><fmt:message key="profile.label.cinema"/></th>
+                                                            <th><fmt:message key="profile.label.status"/></th>
+                                                            <th><fmt:message key="profile.label.action"/></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <c:forEach items="${allOrders}" var="order">
+                                                        <tr>
+                                                            <td>+</td>
+                                                            <td><c:out value="${order.key}"/></td>
+                                                            <td><c:out value="${order.value.schedule.version.movie.movieName}"/></td>
+                                                            <td><c:out value="${order.value.schedule.house.cinema.cinemaName}"/></td>
+                                                            <td>
+                                                            <c:choose>
+                                                                <c:when test="${(order.value.orderStatus==1)}">
+                                                                    <fmt:message key="profile.label.statusPaid"/>
+                                                                </c:when>
+                                                                <c:when test="${(order.value.orderStatus==2)}">
+                                                                    <fmt:message key="profile.label.statusPending"/>
+                                                                </c:when>
+                                                                <c:when test="${(order.value.orderStatus==3)}">
+                                                                    <fmt:message key="profile.label.statusRefunded"/>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <fmt:message key="profile.label.statusUnmanaged"/>
+                                                                </c:otherwise>
+                                                            </c:choose>    
+                                                            </td>
+                                                            <td>
+                                                            <c:choose>
+                                                                <c:when test="${(order.value.orderStatus==1) && (order.value.orderIsRefundable)}">
+                                                                    <fmt:message key="profile.label.applyRefund"/>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <fmt:message key="profile.label.noAction"/>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                    </tbody>
                                                 </table>
 
                                                 <a href="#" class="btn btn-primary">My Sales Performance</a>

@@ -57,7 +57,7 @@ public class T4uScheduleDAO {
 "v.VersionId, v.VersionName, v.VersionBasePrice, " +
 "c.CinemaId, c.CinemaName, " +
 "h.HouseId, h.HouseName, h.HousePlan, " +
-"s.ScheduleId, s.ScheduleTimeslot, s.ScheduleOSeats " +
+"s.ScheduleId, s.ScheduleTimeslot, s.ScheduleOSeats, s.ScheduleUSeats " +
 "FROM [T4U_schedule] s " +
 "INNER JOIN [T4U_version] v ON s.versionId = v.versionId " +
 "INNER JOIN [T4U_movie] m ON v.movieId = m.movieId " +
@@ -95,6 +95,7 @@ public class T4uScheduleDAO {
                 schedule.setHouse(house);
                 schedule.setPrice(version.getVersionBasePrice());
                 schedule.setScheduleOSeats(rs.getNString("ScheduleOSeats"));
+                schedule.setScheduleUSeats(rs.getNString("ScheduleUSeats"));
             }
             T4uJDBC.close(rs, pstmt, conn);
         } catch (SQLException ex) {
