@@ -29,6 +29,7 @@
         <script src="/T4U/resources/js/common.js"></script>
         <script type="text/javascript" src="/T4U/resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/T4U/resources/js/jquery.flexisel.js"></script>	
+        <script src="/T4U/resources/js/notify.min.js"></script>
 
         <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
         <link href="/T4U/resources/css/style_error.css" rel="stylesheet" type="text/css" media="all" />
@@ -74,7 +75,7 @@
                                     <ul class="dropdown-menu">
                                         <c:choose>
                                             <c:when test="${sessionScope.t4uUser != null}">
-                                               <li><a href="#"><fmt:message key="index.label.profile"/></a></li>
+                                               <li><a href="/T4U/user/profile"><fmt:message key="index.label.profile"/></a></li>
                                             </c:when>
                                             <c:otherwise>
                                                <li><a href="/T4U/login.jsp"><fmt:message key="index.label.login"/></a></li>
@@ -105,7 +106,13 @@
                                     </div>
                                 </div>
                             </div>
+                                    <form id="myForm" method="POST" action = "/T4U/confirm"></form>
                             <script>
+                                function showErrorMessage(msg){
+                                        $.notify(msg, {
+                                                        globalPosition: "top left",
+                                                        autoHideDelay: 5000});
+                                }
                                 $(document).ready(function() {
                                     var $cart = $('#selected-seats'),
                                         $counter = $('#counter'),
@@ -192,28 +199,39 @@
                                     $('.selected').each(function () {
                                         seatsSeleted.push($(this).attr("id"));
                                      });
-                                    $.ajax({
-                                        url:'/T4U/confirm',
-                                        type:"POST",
-                                        dataType:'json',
-                                        data:{
-                                            seats:seatsSeleted,
-                                            scheduleId:${schedule.scheduleId}
-                                        },
-                                        success:function(data){
-                                           alert(data);
-                                           //display post response via ajax
-                                        },
-                                        error:function(){
-                                          alert('error');
-                                        }
-                                    });
-//                                    $.post("/T4U/confirm",{'seats':seatsSeleted},function(data){},"json");
-//                                        $.post("/T4U/confirm",{
-//                                            seats:seatsSeleted
-//                                        }).done(function( data ) {
-//                                             alert( "name: " + data );
-//                                        })
+                                     if(seatsSeleted.length==0){
+                                         showErrorMessage('<fmt:message key="seat.error.notSelected"/>');
+                                     }else{
+                                        $('#myForm').append('<input type="hidden" name="seats" value='+seatsSeleted+' />');
+                                        $('#myForm').append('<input type="hidden" name="scheduleId" value="${schedule.scheduleId}" />');
+                                        $('#myForm').append('<input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}" />');
+                                        $("#myForm").submit(); 
+//                                         $.ajax({
+//                                            url:'/T4U/confirm',
+//                                            type:"POST",
+//                                            dataType:'json',
+//                                            data:{
+//                                                
+//                                            },
+//                                            success:function(data){
+//    //                                           alert(data);
+//                                               //display post response via ajax
+//                                               
+//                                            },
+//                                            error:function(){
+//                                              alert('error');
+//                                            }
+//                                        });
+//    //                                    $.post("/T4U/confirm",{'seats':seatsSeleted},function(data){},"json");
+//    //                                        $.post("/T4U/confirm",{
+//    //                                            seats:seatsSeleted
+//    //                                        }).done(function( data ) {
+//    //                                             alert( "name: " + data );
+//    //                                        })
+                                     }
+                                     
+                                    
+
                                 });
 
                                 function recalculateTotal(sc) {

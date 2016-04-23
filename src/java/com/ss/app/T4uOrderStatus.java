@@ -10,7 +10,7 @@ package com.ss.app;
  *
  * @author mengxualv2
  */
-public enum OrderStatus {
+public enum T4uOrderStatus {
     PAID(1), 
     PENDING(2),
     REFUNDED(3);
@@ -19,7 +19,7 @@ public enum OrderStatus {
     public int getStatusCode() {
         return statusCode;
     }
-    OrderStatus(int sc) {
+    T4uOrderStatus(int sc) {
         statusCode = sc;
     }
 

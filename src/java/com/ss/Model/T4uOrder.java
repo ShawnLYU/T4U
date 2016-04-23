@@ -6,7 +6,7 @@
 
 package com.ss.Model;
 
-import com.ss.app.OrderStatus;
+import com.ss.app.T4uOrderStatus;
 
 /**
  *
@@ -16,7 +16,7 @@ public class T4uOrder {
     private int orderId;
     private T4uUser t4uUser;
     private T4uSchedule t4uSchedule;
-    private OrderStatus orderStatus;
+    private T4uOrderStatus orderStatus;
     private boolean isRefundable;
 
     public boolean isIsRefundable() {
@@ -30,11 +30,11 @@ public class T4uOrder {
         return orderId;
     }
 
-    public OrderStatus getOrderStatus() {
+    public T4uOrderStatus getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(OrderStatus orderStatus) {
+    public void setOrderStatus(T4uOrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
 

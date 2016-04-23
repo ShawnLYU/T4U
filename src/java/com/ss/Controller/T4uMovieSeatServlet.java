@@ -50,13 +50,13 @@ public class T4uMovieSeatServlet extends HttpServlet {
         } else { // User logged in
             LOGGER.debug(String.format("%s has logged in.", user.getUserAccount()));
             String strScheuleId = request.getParameter("scheduleId");
-            int scheuleId = 0;
+            int scheduleId = 0;
             try {
-                scheuleId = Integer.parseInt(strScheuleId);
+                scheduleId = Integer.parseInt(strScheuleId);
             } catch (NumberFormatException ex) {
-                scheuleId = 0;
+                scheduleId = 0;
             }
-            T4uSchedule schedule = T4uScheduleDAO.getScheduleById(scheuleId);
+            T4uSchedule schedule = T4uScheduleDAO.getScheduleById(scheduleId);
             if (schedule == null) { // Cannot find this schedule
                 // Redirect to error page
             } else {
