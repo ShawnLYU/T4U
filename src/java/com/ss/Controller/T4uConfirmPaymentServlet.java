@@ -6,8 +6,14 @@
 
 package com.ss.Controller;
 
+import com.ss.DAO.T4uScheduleDAO;
+import com.ss.Model.T4uSchedule;
+import com.ss.app.T4uConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -81,7 +87,20 @@ public class T4uConfirmPaymentServlet extends HttpServlet {
 //        String seats[] = (String[]) request.getAttribute("seats");
         String[] myJsonData = request.getParameterValues("seats[]");
         int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
-        LOGGER.debug(myJsonData);
+        T4uSchedule schedule = T4uScheduleDAO.getScheduleById(scheduleId);
+        List<String> seatsVar = Arrays.asList(request.getParameter("seats").split(","));  
+
+        LOGGER.debug("Schedule id (to be paid) detail: " + scheduleId);
+        
+        request.setAttribute(T4uConstants.T4uScheduleToBePaid, schedule);
+        request.setAttribute(T4uConstants.T4uSeats, seatsVar);
+        double price = seatsVar.size() * schedule.getPrice();
+        request.setAttribute(T4uConstants.T4uPriceToBePaidCash, price);
+        request.setAttribute(T4uConstants.T4uPriceToBePaidPoints, price*10);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/moviePayment.jsp");
+        dispatcher.forward(request, response);
+        
+        
         
     }
 
