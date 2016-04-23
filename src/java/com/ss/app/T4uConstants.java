@@ -19,6 +19,10 @@ public class T4uConstants {
     public static String ExUserPasswordChanged = "error.update.e1";
     //key of attributes to be shown in jsp pages
     public static String T4uUser = "t4uUser";
+    public static String T4uScheduleToBePaid = "t4uScheduleToBePaid";
+    public static String T4uSeats = "t4uSeatsSelected";
+    public static String T4uPriceToBePaidCash = "t4uNumOfSeatsCash";
+    public static String T4uPriceToBePaidPoints = "t4uNumOfSeatsPoints";
 
     public static final String T4U_ALLMOVIES = "t4uAllMovies";
     public static final String T4U_CURMOVIE = "t4uCurMovie";

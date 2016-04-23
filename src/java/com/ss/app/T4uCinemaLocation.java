@@ -42,6 +42,10 @@ public class T4uCinemaLocation {
     public String getBuilding() {
         return building;
     }
+    @Override
+    public String toString(){
+        return building + " " + street + " " + district;
+    }
 
     public void setBuilding(String building) {
         this.building = building;
