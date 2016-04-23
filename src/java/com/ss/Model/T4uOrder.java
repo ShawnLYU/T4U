@@ -6,6 +6,7 @@
 
 package com.ss.Model;
 
+
 import java.sql.Timestamp;
 
 /**
@@ -13,6 +14,7 @@ import java.sql.Timestamp;
  * @author mengxualv2
  */
 public class T4uOrder {
+
     private Timestamp orderId;
     private T4uUser user;
     private T4uSchedule schedule;
@@ -30,6 +32,7 @@ public class T4uOrder {
     public T4uUser getUser() {
         return this.user;
     }
+
 
     public void setUser(T4uUser user) {
         this.user = user;

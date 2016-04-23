@@ -8,6 +8,7 @@ package com.ss.DAO;
 
 import com.ss.Model.*;
 import com.ss.Utility.T4uJDBC;
+import com.ss.app.T4uCinemaLocation;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -55,7 +56,7 @@ public class T4uScheduleDAO {
             PreparedStatement pstmt = conn.prepareStatement("SELECT " +
 "m.MovieId, m.MovieName, " +
 "v.VersionId, v.VersionName, v.VersionBasePrice, " +
-"c.CinemaId, c.CinemaName, " +
+"c.CinemaId, c.CinemaName, c.CinemaLocation, " +
 "h.HouseId, h.HouseName, h.HousePlan, " +
 "s.ScheduleId, s.ScheduleTimeslot, s.ScheduleOSeats, s.ScheduleUSeats " +
 "FROM [T4U_schedule] s " +
@@ -81,6 +82,7 @@ public class T4uScheduleDAO {
                 T4uCinema cinema = new T4uCinema();
                 cinema.setCinemaId(rs.getInt("CinemaId"));
                 cinema.setCinemaName(rs.getNString("CinemaName"));
+                cinema.setCinemaLocation(new T4uCinemaLocation(rs.getNString("CinemaLocation")));
                 // Set house
                 T4uHouse house = new T4uHouse();
                 house.setHouseId(rs.getInt("HouseId"));
