@@ -84,11 +84,9 @@ public class T4uConfirmPaymentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-//        String seats[] = (String[]) request.getAttribute("seats");
-        String[] myJsonData = request.getParameterValues("seats[]");
         int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
         T4uSchedule schedule = T4uScheduleDAO.getScheduleById(scheduleId);
-        List<String> seatsVar = Arrays.asList(request.getParameter("seats").split(","));  
+        List<String> seatsVar = Arrays.asList(request.getParameter("seats").split(","));
 
         LOGGER.debug("Schedule id (to be paid) detail: " + scheduleId);
         

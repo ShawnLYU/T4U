@@ -89,24 +89,24 @@
               </tbody>
             </table>
 
-            <form role="form" >
+            <form role="form" method="POST" action="/T4U/pay">
                 <input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}">
                 <input type="hidden" name="scheduleId" value="">
                 <input type="hidden" name="seats" value="">
                 <div class="form-group">
                     <label for="exampleSelect1"><fmt:message key="payment.form.payWay"/></label>
-                    <select class="form-control" id="exampleSelect1">
-                        <option><fmt:message key="payment.form.bankCard"/></option>
-                        <option><fmt:message key="payment.form.loyaltyPoints"/></option>
+                    <select class="form-control" id="exampleSelect1" name="payMethod">
+                        <option value="1"><fmt:message key="payment.form.bankCard"/></option>
+                        <option value="2"><fmt:message key="payment.form.loyaltyPoints"/></option>
                     </select>
                 </div>
                 <div class="form-group">
                   <label for="cardNo"><fmt:message key="payment.form.cardNo"/></label>
-                  <input type="text" class="form-control" id="cardNo">
+                  <input type="text" class="form-control" id="cardNo" name="cardNo" maxlength="16">
                 </div>
                 <div class="form-group">
                   <label for="cardPwd"><fmt:message key="payment.form.cardPwd"/></label>
-                  <input type="password" class="form-control" id="cardPwd">
+                  <input type="password" class="form-control" id="cardPwd" name="cardPwd" maxlength="3">
                 </div>
                 <button type="button" class="btn btn-primary"><fmt:message key="payment.form.submit"/></button>
               </form>
@@ -137,10 +137,6 @@
                     $("#cardPwd").prop('disabled', true);
                 }
             });
-        
-        
-        
-        
         });
         $('button[type="button"]').click(function(){
             if($("#exampleSelect1").val()=='Bank Card'||$("#exampleSelect1").val()=='银行卡'||$("#exampleSelect1").val()=='銀行卡'){
@@ -149,9 +145,9 @@
                 }else if($("#cardPwd").val()==''){
                     showErrorMessage('<fmt:message key="notify.message.providePwd"/>');
                 }else{
-                    $('#form').append('<input type="hidden" name="scheduleId" value="${requestScope.t4uScheduleToBePaid.scheduleId}"/>');
-                    $('#form').append('<input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}"/>');
-                    $('#form').append('<input type="hidden" name="seats" value="${requestScope.t4uSeatsSelected}"/>');
+                    $('form').append('<input type="hidden" name="scheduleId" value="${requestScope.t4uScheduleToBePaid.scheduleId}"/>');
+                    $('form').append('<input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}"/>');
+                    $('form').append('<input type="hidden" name="seats" value="${requestScope.t4uSeatsSelected}"/>');
                     
                     $('form').submit();
                 }
@@ -159,9 +155,9 @@
                 if(${sessionScope.t4uUser.userCredit}<${requestScope.t4uNumOfSeatsPoints}){
                     showErrorMessage('<fmt:message key="notify.message.pointsNotEnough"/>');
                 }else{
-                    $('#form').append('<input type="hidden" name="scheduleId" value="${requestScope.t4uScheduleToBePaid.scheduleId}"/>');
-                    $('#form').append('<input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}"/>');
-                    $('#form').append('<input type="hidden" name="seats" value="${requestScope.t4uSeatsSelected}"/>');
+                    $('form').append('<input type="hidden" name="scheduleId" value="${requestScope.t4uScheduleToBePaid.scheduleId}"/>');
+                    $('form').append('<input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}"/>');
+                    $('form').append('<input type="hidden" name="seats" value="${requestScope.t4uSeatsSelected}"/>');
                     
                     $('form').submit();
                 }
