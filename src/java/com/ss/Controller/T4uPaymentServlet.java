@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author mengxualv2
  */
-public class T4uMoviePaymentServlet extends HttpServlet {
+public class T4uPaymentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

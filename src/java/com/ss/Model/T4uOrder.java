@@ -6,55 +6,65 @@
 
 package com.ss.Model;
 
-import com.ss.app.OrderStatus;
+import java.sql.Timestamp;
 
 /**
  *
  * @author mengxualv2
  */
 public class T4uOrder {
-    private int orderId;
-    private T4uUser t4uUser;
-    private T4uSchedule t4uSchedule;
-    private OrderStatus orderStatus;
-    private boolean isRefundable;
+    private Timestamp orderId;
+    private T4uUser user;
+    private T4uSchedule schedule;
+    private String orderSeats;
+    private int orderStatus;
+    private boolean orderIsRefundable;
 
-    public boolean isIsRefundable() {
-        return isRefundable;
+    public Timestamp getOrderId() {
+        return this.orderId;
     }
-
-    public void setIsRefundable(boolean isRefundable) {
-        this.isRefundable = isRefundable;
-    }
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public T4uUser getT4uUser() {
-        return t4uUser;
-    }
-
-    public void setT4uUser(T4uUser t4uUser) {
-        this.t4uUser = t4uUser;
-    }
-
-    public T4uSchedule getT4uSchedule() {
-        return t4uSchedule;
-    }
-
-    public void setT4uSchedule(T4uSchedule t4uSchedule) {
-        this.t4uSchedule = t4uSchedule;
-    }
-
-    public void setOrderId(int orderId) {
+    
+    public void setOrderId(Timestamp orderId) {
         this.orderId = orderId;
     }
+    public T4uUser getUser() {
+        return this.user;
+    }
+
+    public void setUser(T4uUser user) {
+        this.user = user;
+    }
+    
+    public T4uSchedule getSchedule() {
+        return this.schedule;
+    }
+
+    public void setSchedule(T4uSchedule schedule) {
+        this.schedule = schedule;
+    }
+    
+    public String getOrderSeats(){
+        return this.orderSeats;
+    }
+    
+    public void setOrderSeats(String orderSeats) {
+        this.orderSeats = orderSeats;
+    }
+    
+    public int getOrderStatus() {
+        return this.orderStatus;
+    }
+
+    public void setOrderStatus(int orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+    
+    public boolean isOrderIsRefundable() {
+        return this.orderIsRefundable;
+    }
+
+    public void setOrderIsRefundable(boolean orderIsRefundable) {
+        this.orderIsRefundable = orderIsRefundable;
+    }
+
 }

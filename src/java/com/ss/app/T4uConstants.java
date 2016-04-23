@@ -26,6 +26,7 @@ public class T4uConstants {
     public static final String T4U_SELSCHEDULES = "t4uSelSchedules";   
     public static final String T4U_LOGINREDIRECT = "t4uLoginRedirect";
     public static final String T4U_USERCURSCHEDULE = "t4uUserCurSchedule";
+    public static final String T4U_USERALLORDERS = "t4uUserAllOrders";
     
     //configuration
     public static final String DBURL = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad049_db;";

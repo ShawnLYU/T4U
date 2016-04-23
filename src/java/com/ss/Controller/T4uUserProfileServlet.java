@@ -6,15 +6,19 @@
 
 package com.ss.Controller;
 
+import com.ss.DAO.T4uOrderDAO;
 import com.ss.DAO.T4uUserDAO;
+import com.ss.Model.T4uOrder;
 import com.ss.Model.T4uUser;
 import com.ss.app.T4uConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.logging.Level;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,11 +43,27 @@ public class T4uUserProfileServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static Logger logger = Logger.getLogger(T4uUserProfileServlet.class);  
+    private static final Logger LOGGER = Logger.getLogger(T4uUserProfileServlet.class);  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profile.jsp");
-        dispatcher.forward(request, response);
+        HttpSession session = request.getSession(true);
+        T4uUser user = (T4uUser)session.getAttribute(T4uConstants.T4uUser);
+        if (user == null) { // User not logged in
+            LOGGER.debug("User has not yet logged in.");
+            String requestUri = request.getRequestURI();
+            LOGGER.debug(String.format("Redirecting to /login.jsp?redirect=%s.", requestUri));
+            request.setAttribute(T4uConstants.T4U_LOGINREDIRECT, requestUri);
+//            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+            dispatcher.forward(request, response);
+        } else { // User logged in
+            LOGGER.debug(String.format("%s has logged in.", user.getUserAccount()));
+            // Retrive all orders for this user
+            Map<Timestamp ,T4uOrder> allOrders = T4uOrderDAO.getAllOrdersByUser(user);
+            request.setAttribute(T4uConstants.T4U_USERALLORDERS, allOrders);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profile.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
