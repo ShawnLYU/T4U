@@ -5,9 +5,13 @@
  */
 package com.ss.Controller;
 
+import com.ss.DAO.T4uScheduleDAO;
+import com.ss.Model.T4uSchedule;
 import com.ss.Model.T4uUser;
 import com.ss.app.T4uConstants;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -49,7 +53,13 @@ public class T4uArrangeSeatServlet extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
             dispatcher.forward(request, response);
         } else { // Logged in as a manager
-            
+            List<Integer> allScheduleIds = T4uScheduleDAO.getAllScheduleIds();
+            List<T4uSchedule> allSchedules = new ArrayList<T4uSchedule>();
+            for (int scheduleId: allScheduleIds)
+                allSchedules.add(T4uScheduleDAO.getScheduleById(scheduleId));
+            request.setAttribute(T4uConstants.T4U_ALLSCHEDULES, allSchedules);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/movieSeatForManager.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
