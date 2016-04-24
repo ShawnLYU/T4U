@@ -48,11 +48,9 @@
         </style>
         <script type="text/javascript">
             $(document).ready(function(){
-                $(document).ready(function() {
-                    $('#example').DataTable({
-                        "oSearch": {"bSmart": false}
-                    });
-                } );
+                $('#example').DataTable({
+                    "oSearch": {"bSmart": false}
+                });
                 $("#flexiselDemo1").flexisel({
                     visibleItems: 6,
                     animationSpeed: 1000,
