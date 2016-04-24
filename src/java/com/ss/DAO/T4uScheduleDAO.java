@@ -108,4 +108,39 @@ public class T4uScheduleDAO {
         return schedule;
     }
     
+    public static String getOSeatsById(int scheduleId) {
+        String oSeats = null;
+        try {
+            Connection conn =  T4uJDBC.connect();
+            PreparedStatement pstmt = conn.prepareStatement("SELECT [ScheduleOSeats] FROM [T4U_schedule] WHERE [ScheduleId]=?");
+            pstmt.setInt(1, scheduleId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next())
+                oSeats = rs.getNString("ScheduleOSeats");
+            T4uJDBC.close(rs, pstmt, conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return oSeats;
+    }
+    
+    public static boolean updateOSeatsById(int scheduleId, String oSeats) {
+        boolean success = false;
+        try {
+            Connection conn =  T4uJDBC.connect();
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE [T4U_schedule] SET [ScheduleOSeats] = ? WHERE [ScheduleId] = ?");
+            pstmt.setNString(1, oSeats);
+            pstmt.setInt(2, scheduleId);
+            int rows = pstmt.executeUpdate();
+            success = rows > 0;
+            T4uJDBC.close(pstmt, conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return success;
+    }
 }

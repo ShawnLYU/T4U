@@ -185,6 +185,23 @@ public class T4uUserDAO {
             t4uUser.setUserGroup(rs.getString("UserGroup"));
         }
         T4uJDBC.close(rs, statement, conn);
-        
+    }
+    
+    public static boolean deductUserCredit(int userId, int newCredit) {
+        boolean success = false;
+        try {
+            Connection conn =  T4uJDBC.connect();
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE [T4U_user] SET [UserCredit] = ? WHERE [UserId] = ?");
+            pstmt.setInt(1, newCredit);
+            pstmt.setInt(2, userId);
+            int rows = pstmt.executeUpdate();
+            success = rows > 0;
+            T4uJDBC.close(pstmt, conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return success;
     }
 }

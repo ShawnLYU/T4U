@@ -15,19 +15,29 @@ import java.sql.Timestamp;
  */
 public class T4uOrder {
 
-    private Timestamp orderId;
+    private long orderId;
+    private Timestamp orderDate;
     private T4uUser user;
     private T4uSchedule schedule;
     private String orderSeats;
     private int orderStatus;
-    private boolean orderIsRefundable;
+    private double orderCash;
+    private int orderCredit;
 
-    public Timestamp getOrderId() {
+    public long getOrderId() {
         return this.orderId;
     }
     
-    public void setOrderId(Timestamp orderId) {
+    public void setOrderId(long orderId) {
         this.orderId = orderId;
+    }
+    
+    public Timestamp getOrderDate() {
+        return this.orderDate;
+    }
+    
+    public void setOrderDate(Timestamp orderDateorderDate) {
+        this.orderDate = orderDateorderDate;
     }
     public T4uUser getUser() {
         return this.user;
@@ -62,12 +72,20 @@ public class T4uOrder {
         this.orderStatus = orderStatus;
     }
     
-    public boolean isOrderIsRefundable() {
-        return this.orderIsRefundable;
+    public double getOrderCash() {
+        return this.orderCash;
     }
-
-    public void setOrderIsRefundable(boolean orderIsRefundable) {
-        this.orderIsRefundable = orderIsRefundable;
+    
+    public void setOrderCash(double orderCash) {
+        this.orderCash = orderCash;
+    }
+    
+    public int getOrderCredit() {
+        return this.orderCredit;
+    }
+    
+    public void setOrderCredit(int orderCredit) {
+        this.orderCredit = orderCredit;
     }
 
 }

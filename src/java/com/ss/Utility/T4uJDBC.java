@@ -34,12 +34,19 @@ public class T4uJDBC {
     }
     
     // Close JDBC connection
-
-
     public static void close(ResultSet rs, PreparedStatement statement, Connection conn) throws SQLException {
         if (rs != null) {
             rs.close();
         }
+        if (statement != null) {
+            statement.close();
+        }
+        if (conn != null) {
+            conn.close();
+        }
+    }
+    
+    public static void close(PreparedStatement statement, Connection conn) throws SQLException {
         if (statement != null) {
             statement.close();
         }
