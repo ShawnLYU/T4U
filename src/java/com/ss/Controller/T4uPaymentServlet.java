@@ -77,7 +77,7 @@ public class T4uPaymentServlet extends HttpServlet {
                 // Create a new order in table T4U_order
                 orderId = T4uOrderDAO.placeOrder(userId, scheduleId, allSeats, orderCash, orderCredit, oldOSeats);
                 // Deduct user's credit
-                T4uUserDAO.deductUserCredit(userId, userCredit - orderCredit);
+                T4uUserDAO.deductUserCredit(userId, userCredit - orderCredit + (int)orderCash * 5);
             }
         }
         
