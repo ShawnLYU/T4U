@@ -133,9 +133,9 @@
                         </div>
                     </div>
                 
-                <button type="button" class="btn btn-primary"><fmt:message key="payment.form.submit"/></button>
+                <button type="button" id="buy" class="btn btn-primary"><fmt:message key="payment.form.submit"/></button>
                 <c:if test="${sessionScope.t4uUser.userGroup == 'officer'}" >
-                <button type="button" class="btn btn-warning"><fmt:message key="payment.form.submit"/></button>        
+                    <button type="button" id="addToCart" class="btn btn-warning"><fmt:message key="payment.form.addToCart"/></button>        
                 </c:if>
               </form>
           </div>
@@ -157,7 +157,7 @@
         $(document).ready(function(){
             $('td').css("font-family", "monospace");
         });
-        $('button[type="button"]').click(function(){
+        $('#buy').click(function(){
             if($("#demo5").val()> ${userBuying.userCredit}){
                 showErrorMessage('<fmt:message key="payment.form.notEnoughPoints"/>');
             }else if($("#demo5").val()> ${requestScope.t4uNumOfSeatsPoints}){
@@ -176,6 +176,13 @@
                     $('form').submit();
                 }
             }
+            
+        });
+        $('#addToCart').click(function(){
+            
+            $('form').attr('action', '/T4U/user/myCart');
+            $('form').submit();
+            
             
         });
         
