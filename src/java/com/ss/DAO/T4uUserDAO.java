@@ -6,6 +6,7 @@
 
 package com.ss.DAO;
 
+import com.ss.Controller.T4uRegisterServlet;
 import com.ss.Model.T4uUser;
 import com.ss.Utility.T4uJDBC;
 import java.sql.*;
@@ -25,6 +26,7 @@ public class T4uUserDAO {
     * @param  user User Model.
     * @return      Return userId if the account exists, or 0 if not.
     */
+    private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(T4uUserDAO.class);  
     public static int checkAccountExist(T4uUser user) {
         int userId = -1;
         String userAccount = user.getUserAccount();

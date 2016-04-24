@@ -8,6 +8,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="lan" value="com.ss.i18n.T4uUI" scope="application" />
+<c:choose>
+  <c:when test="${sessionScope.t4uUser.userGroup == 'officer'}">
+    <c:set var="userBuying" value="${requestScope.t4uCustomer}" scope="session" />
+  </c:when>
+  <c:otherwise>
+    <c:set var="userBuying" value="${sessionScope.t4uUser}" scope="session" />
+  </c:otherwise>
+</c:choose>
 <fmt:setBundle basename="com.ss.i18n" />
 <%  String varLocal = request.getParameter("locale");  
         if (varLocal == null || varLocal.equals("")) { 
@@ -52,6 +60,10 @@
          <div class=" col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 table-responsive"> 
             <table class="table table-user-information">
               <tbody>
+                 <c:if test="${sessionScope.t4uUser.userGroup == 'officer'}">
+                    <td><fmt:message key="register.label.account"/>:</td>
+                  <td>${userBuying.userName}</td>
+                </c:if>
                 <tr>
                   <td><fmt:message key="payment.form.version"/>:</td>
                   <td>${requestScope.t4uScheduleToBePaid.version.versionName}</td>
@@ -92,7 +104,7 @@
 -->
                 <tr>
                   <td><fmt:message key="payment.form.userPoints"/>:</td>
-                  <td>${sessionScope.t4uUser.userCredit}</td>
+                  <td>${userBuying.userCredit}</td>
                 </tr>
                 
               </tbody>
@@ -101,22 +113,9 @@
             <form role="form" method="POST" action="/T4U/pay">
                 <input type="hidden" name="scheduleId" value="${requestScope.t4uScheduleToBePaid.scheduleId}"/>
                 <input type="hidden" name="seats" value="${requestScope.t4uSeatsSelected}"/>
-                
-                <c:if test="${sessionScope.t4uUser.userGroup == 'user'}">
+                <input type="hidden" name="userGroup" value="${sessionScope.t4uUser.userGroup}"/>
+                <input type="hidden" name="userCredit" value="${sessionScope.t4uUser.userCredit}"/>
                     <input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}"/>
-<!--                    
-                    <div class="form-group">
-                        <label for="exampleSelect1"><fmt:message key="payment.form.payWay"/></label>
-                        <div class="input-group">
-                            <select class="form-control" id="exampleSelect1" name="payMethod">
-                                <option value="1"><fmt:message key="payment.form.cardOnly"/></option>
-                                <option value="2"><fmt:message key="payment.form.creditOnly"/></option>
-                                <option value="3"><fmt:message key="payment.form.both"/></option>
-                            </select>
-                            <input id="demo5" type="text" class="form-control" name="demo5" value="50">
-                        </div>
-                    </div>
-                            -->
                     <div class="form-group">
                       <label for="cardNo"><fmt:message key="payment.form.cardNo"/></label>
                       <input type="text" class="form-control" id="cardNo" name="cardNo" maxlength="16">
@@ -133,9 +132,11 @@
                             
                         </div>
                     </div>
-                </c:if>
                 
                 <button type="button" class="btn btn-primary"><fmt:message key="payment.form.submit"/></button>
+                <c:if test="${sessionScope.t4uUser.userGroup == 'officer'}" >
+                <button type="button" class="btn btn-warning"><fmt:message key="payment.form.submit"/></button>        
+                </c:if>
               </form>
           </div>
         </div>
@@ -157,7 +158,7 @@
             $('td').css("font-family", "monospace");
         });
         $('button[type="button"]').click(function(){
-            if($("#demo5").val()> ${sessionScope.t4uUser.userCredit}){
+            if($("#demo5").val()> ${userBuying.userCredit}){
                 showErrorMessage('<fmt:message key="payment.form.notEnoughPoints"/>');
             }else if($("#demo5").val()> ${requestScope.t4uNumOfSeatsPoints}){
                 showErrorMessage('<fmt:message key="payment.form.exceed"/>');
@@ -184,7 +185,7 @@
                     '<input id="demo5" type="text" class="form-control" name="demo5" value="0">'
                     
                     );
-//                var maximum = ${requestScope.t4uNumOfSeatsPoints}>${requestScope.t4uNumOfSeatsCash}?${requestScope.t4uNumOfSeatsPoints}>:${requestScope.t4uNumOfSeatsCash};
+
                 $("#demo5").TouchSpin({
                     min:0,
                     max:100000
