@@ -81,17 +81,20 @@
                   </td>
                 </tr>
                 <tr>
-                  <td><fmt:message key="payment.form.priceCard"/>:</td>
-                  <td>${requestScope.t4uNumOfSeatsCash}</td>
+                  <td><fmt:message key="payment.form.total"/>:</td>
+                  <td id="total">${requestScope.t4uNumOfSeatsCash}</td>
                 </tr>
+<!--                
                 <tr>
                   <td><fmt:message key="payment.form.pricePoints"/>:</td>
                   <td>${requestScope.t4uNumOfSeatsPoints}</td>
                 </tr>
+-->
                 <tr>
                   <td><fmt:message key="payment.form.userPoints"/>:</td>
                   <td>${sessionScope.t4uUser.userCredit}</td>
                 </tr>
+                
               </tbody>
             </table>
                 
@@ -101,6 +104,7 @@
                 
                 <c:if test="${sessionScope.t4uUser.userGroup == 'user'}">
                     <input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}"/>
+<!--                    
                     <div class="form-group">
                         <label for="exampleSelect1"><fmt:message key="payment.form.payWay"/></label>
                         <div class="input-group">
@@ -112,6 +116,7 @@
                             <input id="demo5" type="text" class="form-control" name="demo5" value="50">
                         </div>
                     </div>
+                            -->
                     <div class="form-group">
                       <label for="cardNo"><fmt:message key="payment.form.cardNo"/></label>
                       <input type="text" class="form-control" id="cardNo" name="cardNo" maxlength="16">
@@ -119,6 +124,14 @@
                     <div class="form-group">
                       <label for="cardPwd"><fmt:message key="payment.form.cardPwd"/></label>
                       <input type="password" class="form-control" id="cardPwd" name="cardPwd" maxlength="3">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> <fmt:message key="payment.form.useCredit"/>
+                        </label>
+                        <div id="payCredit">
+                            
+                        </div>
                     </div>
                 </c:if>
                 
@@ -141,31 +154,10 @@
                                 autoHideDelay: 5000});
         }
         $(document).ready(function(){
-            $("#demo5").prop('disabled', true);
             $('td').css("font-family", "monospace");
-            $("#demo5").TouchSpin({
-                postfix: "$",
-                min:1,
-                max: ${requestScope.t4uNumOfSeatsCash}-1
-            });
-            $("#exampleSelect1").change(function(){
-                if($("#exampleSelect1").val()==1){
-                    $("#cardNo").prop('disabled', false);
-                    $("#cardPwd").prop('disabled', false);
-                    $("#demo5").prop('disabled', true);
-                }else if($("#exampleSelect1").val()==2){
-                    $("#cardNo").prop('disabled', true);
-                    $("#cardPwd").prop('disabled', true);
-                    $("#demo5").prop('disabled', true);
-                }else{
-                    $("#cardNo").prop('disabled', false);
-                    $("#cardPwd").prop('disabled', false);
-                    $("#demo5").prop('disabled', false);
-                }
-            });
         });
         $('button[type="button"]').click(function(){
-            if($("#exampleSelect1").val()==1){
+            if($('#total').html()!=0){
                 if($("#cardNo").val()==''){
                     showErrorMessage('<fmt:message key="notify.message.provideBankCard"/>');
                 }else if($("#cardPwd").val()==''){
@@ -173,23 +165,42 @@
                 }else{
                     $('form').submit();
                 }
-            }else if($("#exampleSelect1").val()==2){
-                if(${sessionScope.t4uUser.userCredit}<${requestScope.t4uNumOfSeatsPoints}){
-                    showErrorMessage('<fmt:message key="notify.message.pointsNotEnough"/>');
-                }else{
-                    $('form').submit();
-                }
             }else{
-                if($("#demo5").val()*10>${sessionScope.t4uUser.userCredit}){
-                    showErrorMessage('<fmt:message key="notify.message.pointsNotEnough"/>');
-                }else if($("#cardNo").val()==''){
-                    showErrorMessage('<fmt:message key="notify.message.provideBankCard"/>');
-                }else if($("#cardPwd").val()==''){
-                    showErrorMessage('<fmt:message key="notify.message.providePwd"/>');
-                }else{
-                    $('form').submit();
-                }
+                $('form').submit();
             }
+        });
+        
+        $('input[type="checkbox"]').change(function() {
+            if($(this).is(":checked")) {
+                $("#payCredit").append(
+                    '<input id="demo5" type="text" class="form-control" name="demo5" value="0">'
+                    
+                    );
+                var maximum;
+                if( ${requestScope.t4uNumOfSeatsPoints} > ${sessionScope.t4uUser.userCredit} ){
+                    maximum = ${sessionScope.t4uUser.userCredit};
+                }else{
+                    maximum = ${requestScope.t4uNumOfSeatsPoints};
+                }
+//                var maximum = ${requestScope.t4uNumOfSeatsPoints}>${requestScope.t4uNumOfSeatsCash}?${requestScope.t4uNumOfSeatsPoints}>:${requestScope.t4uNumOfSeatsCash};
+                $("#demo5").TouchSpin({
+                    min:0,
+                    max: Math.round(maximum),
+                    default: 0
+                });
+                
+                $("#demo5").change(function(){
+                    var value =( ${requestScope.t4uNumOfSeatsCash} ).toFixed(2)- ($("#demo5").val()/10).toFixed(2);
+                    $('#total').html('');
+                    $('#total').html(value);
+                });
+                
+            }else{
+                $("#payCredit").html('');
+                $('#total').html('');
+                $('#total').html('${requestScope.t4uNumOfSeatsCash}');
+            }
+        
         });
     </script>
 </html>
