@@ -85,4 +85,44 @@ public class T4uOrderDAO {
         return orderId;
     }
     
+    public static void changeOrderStatus(Timestamp orderId, int userId, int newStatus, T4uUser operator) {
+        try {
+            Connection conn =  T4uJDBC.connect();
+            // Check whether paid all by credit
+            PreparedStatement pstmt = conn.prepareStatement("SELECT [OrderCash] FROM [T4U_order] WHERE [OrderId]=? AND [UserId]=?");
+            pstmt.setTimestamp(1, orderId);
+            pstmt.setInt(2, userId);
+            ResultSet rs = pstmt.executeQuery();
+            boolean isRefundable = false;
+            if (rs.next()) {
+                double orderCash = rs.getDouble("OrderCash");
+                if (orderCash > 0)
+                    isRefundable = true;
+            }
+            rs.close();
+            pstmt.close();
+            if (isRefundable && (newStatus == 3 && operator.getUserGroup().equals("admin"))) {
+                // Update status
+                pstmt = conn.prepareStatement("UPDATE [T4U_order] SET [OrderStatus]=? WHERE [OrderId]=? AND [UserId]=?");
+                pstmt.setInt(1, newStatus);
+                pstmt.setTimestamp(2, orderId);
+                pstmt.setInt(3, userId);
+                int rows = pstmt.executeUpdate();
+                if (rows > 0) {
+                    // Update succeed
+                } else {
+                    // Error
+                }
+            } else {
+                // Error
+            }
+            T4uJDBC.close(rs, pstmt, conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // Refresh page
+    }
+    
 }
