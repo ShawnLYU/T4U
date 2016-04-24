@@ -157,17 +157,25 @@
             $('td').css("font-family", "monospace");
         });
         $('button[type="button"]').click(function(){
-            if($('#total').html()!=0){
-                if($("#cardNo").val()==''){
-                    showErrorMessage('<fmt:message key="notify.message.provideBankCard"/>');
-                }else if($("#cardPwd").val()==''){
-                    showErrorMessage('<fmt:message key="notify.message.providePwd"/>');
+            if($("#demo5").val()> ${sessionScope.t4uUser.userCredit}){
+                showErrorMessage('<fmt:message key="payment.form.notEnoughPoints"/>');
+            }else if($("#demo5").val()> ${requestScope.t4uNumOfSeatsPoints}){
+                showErrorMessage('<fmt:message key="payment.form.exceed"/>');
+            }else{
+                if($('#total').html()!=0){
+                    if($("#cardNo").val()==''){
+                        showErrorMessage('<fmt:message key="notify.message.provideBankCard"/>');
+                    }else if($("#cardPwd").val()==''){
+                        showErrorMessage('<fmt:message key="notify.message.providePwd"/>');
+                    }else{
+                        $('form').append('<input type="hidden" name="bankcard" value="'+$('#total').html()+'"/>');
+                        $('form').submit();
+                    }
                 }else{
                     $('form').submit();
                 }
-            }else{
-                $('form').submit();
             }
+            
         });
         
         $('input[type="checkbox"]').change(function() {
@@ -176,23 +184,19 @@
                     '<input id="demo5" type="text" class="form-control" name="demo5" value="0">'
                     
                     );
-                var maximum;
-                if( ${requestScope.t4uNumOfSeatsPoints} > ${sessionScope.t4uUser.userCredit} ){
-                    maximum = ${sessionScope.t4uUser.userCredit};
-                }else{
-                    maximum = ${requestScope.t4uNumOfSeatsPoints};
-                }
 //                var maximum = ${requestScope.t4uNumOfSeatsPoints}>${requestScope.t4uNumOfSeatsCash}?${requestScope.t4uNumOfSeatsPoints}>:${requestScope.t4uNumOfSeatsCash};
                 $("#demo5").TouchSpin({
                     min:0,
-                    max: Math.round(maximum),
-                    default: 0
+                    max:100000
                 });
                 
                 $("#demo5").change(function(){
                     var value =( ${requestScope.t4uNumOfSeatsCash} ).toFixed(2)- ($("#demo5").val()/10).toFixed(2);
                     $('#total').html('');
-                    $('#total').html(value);
+                    if(value < 0)
+                        $('#total').html(0);
+                    else
+                        $('#total').html(value);
                 });
                 
             }else{
