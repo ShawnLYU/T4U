@@ -40,6 +40,10 @@
         <servlet-name>T4uConfirmPaymentServlet</servlet-name>
         <servlet-class>com.ss.Controller.T4uConfirmPaymentServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>T4uAddToCartServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uAddToCartServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
         <url-pattern>/user/login.do</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>T4uConfirmPaymentServlet</servlet-name>
         <url-pattern>/confirm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>T4uAddToCartServlet</servlet-name>
+        <url-pattern>/user/myCart</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
