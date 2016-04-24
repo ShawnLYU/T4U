@@ -82,7 +82,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="error-404 text-center">
-                            <c:if test="${sessionScope.error != null}">
+                            <c:if test="${requestScope.error != null}">
                                 <p><fmt:message key="${error}"/></p>
                             </c:if>
                             

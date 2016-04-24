@@ -17,6 +17,7 @@ public class T4uConstants {
     public static String ExUserPasswordNotCorrect = "error.login.e2";
     public static String ExUserRegisterAccountExisted = "error.register.e1";
     public static String ExUserPasswordChanged = "error.update.e1";
+    public static String ExSuccessfullyPaid = "error.payment.success";
     //key of attributes to be shown in jsp pages
     public static String T4uUser = "t4uUser";
     public static String T4uScheduleToBePaid = "t4uScheduleToBePaid";
