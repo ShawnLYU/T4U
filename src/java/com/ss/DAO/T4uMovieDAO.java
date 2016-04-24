@@ -34,13 +34,13 @@ public class T4uMovieDAO {
             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM [T4U_movie]");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                T4uMovie movie = new T4uMovie();
-                movie.setMovieId(rs.getInt("MovieId"));
-                movie.setMovieName(rs.getNString("MovieName"));
-                movie.setMovieDescription(rs.getNString("MovieDescription"));
-                movie.setMovieInfo(rs.getNString("MovieInfo"));
-                movie.setAllVersions(T4uVersionDAO.getAllVersions(movie));
-                allMovies.put(movie.getMovieId(), movie);
+                T4uMovie t4uMovie = new T4uMovie();
+                t4uMovie.setMovieId(rs.getInt("MovieId"));
+                t4uMovie.setMovieName(rs.getNString("MovieName"));
+                t4uMovie.setMovieDescription(rs.getNString("MovieDescription"));
+                t4uMovie.setMovieInfo(rs.getNString("MovieInfo"));
+                t4uMovie.setAllVersions(T4uVersionDAO.getAllVersions(t4uMovie));
+                allMovies.put(t4uMovie.getMovieId(), t4uMovie);
             }
             T4uJDBC.close(rs, pstmt, conn);
         } catch (SQLException ex) {
