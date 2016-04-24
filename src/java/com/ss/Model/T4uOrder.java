@@ -18,7 +18,9 @@ public class T4uOrder {
     private long orderId;
     private Timestamp orderDate;
     private T4uUser user;
+    private int userId;
     private T4uSchedule schedule;
+    private int scheduleId;
     private String orderSeats;
     private int orderStatus;
     private double orderCash;
@@ -46,6 +48,15 @@ public class T4uOrder {
 
     public void setUser(T4uUser user) {
         this.user = user;
+        this.setUserId(user.getUserId());
+    }
+    
+    public int getUserId() {
+        return this.userId;
+    }
+    
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
     
     public T4uSchedule getSchedule() {
@@ -54,6 +65,15 @@ public class T4uOrder {
 
     public void setSchedule(T4uSchedule schedule) {
         this.schedule = schedule;
+        this.setScheduleId(schedule.getScheduleId());
+    }
+    
+    public int getScheduleId() {
+        return this.scheduleId;
+    }
+    
+    public void setScheduleId(int scheduleId) {
+        this.scheduleId = scheduleId;
     }
     
     public String getOrderSeats(){

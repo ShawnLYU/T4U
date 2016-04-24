@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class T4uOrderDAO {
         Map<Long, T4uOrder> allOrders = new HashMap<Long, T4uOrder>();
         try {
             Connection conn =  T4uJDBC.connect();
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM [T4U_order] WHERE [userId]= ? ");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM [T4U_order] WHERE [UserId]= ? ");
             pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -55,6 +56,33 @@ public class T4uOrderDAO {
             Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return allOrders;
+    }
+    
+    public static List<T4uOrder> getWaOrders() {
+        List<T4uOrder> waOrders = new ArrayList<T4uOrder>();
+        try {
+            Connection conn =  T4uJDBC.connect();
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM [T4U_order] WHERE [OrderStatus]=2");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                // Set order
+                T4uOrder order = new T4uOrder();
+                order.setOrderId(rs.getLong("OrderId"));
+                order.setOrderDate(rs.getTimestamp("OrderDate"));
+                order.setUserId(rs.getInt("UserId"));
+                order.setScheduleId(rs.getInt("ScheduleId"));
+                order.setOrderSeats(rs.getNString("OrderSeats"));
+                order.setOrderStatus(rs.getInt("OrderStatus"));
+                order.setOrderCash(rs.getDouble("OrderCash"));
+                order.setOrderCredit(rs.getInt("OrderCredit"));
+                waOrders.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return waOrders;
     }
     
     public static long placeOrder(int userId, int scheduleId, List<String> orderSeats, double orderCash, int orderCredit, String oldOSeats) {

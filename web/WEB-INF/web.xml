@@ -48,6 +48,10 @@
         <servlet-name>T4uGetAllScheduleServlet</servlet-name>
         <servlet-class>com.ss.Controller.T4uGetAllScheduleServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>T4uArrangeSeatServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uArrangeSeatServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
         <url-pattern>/user/login.do</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>T4uGetAllScheduleServlet</servlet-name>
         <url-pattern>/T4uGetAllScheduleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>T4uArrangeSeatServlet</servlet-name>
+        <url-pattern>/arrangeSeat</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
