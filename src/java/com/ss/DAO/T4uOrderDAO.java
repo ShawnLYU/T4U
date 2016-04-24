@@ -41,7 +41,8 @@ public class T4uOrderDAO {
                 order.setSchedule(T4uScheduleDAO.getScheduleById(rs.getInt("ScheduleId")));
                 order.setOrderSeats(rs.getNString("OrderSeats"));
                 order.setOrderStatus(rs.getInt("OrderStatus"));
-                order.setOrderIsRefundable(rs.getBoolean("OrderIsRefundable"));
+                order.setOrderCash(rs.getDouble("OrderCash"));
+                order.setOrderCredit(rs.getInt("OrderCredit"));
                 allOrders.put(orderId, order);
             }
             T4uJDBC.close(rs, pstmt, conn);

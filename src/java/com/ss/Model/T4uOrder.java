@@ -20,7 +20,8 @@ public class T4uOrder {
     private T4uSchedule schedule;
     private String orderSeats;
     private int orderStatus;
-    private boolean orderIsRefundable;
+    private double orderCash;
+    private int orderCredit;
 
     public Timestamp getOrderId() {
         return this.orderId;
@@ -62,12 +63,20 @@ public class T4uOrder {
         this.orderStatus = orderStatus;
     }
     
-    public boolean isOrderIsRefundable() {
-        return this.orderIsRefundable;
+    public double getOrderCash() {
+        return this.orderCash;
     }
-
-    public void setOrderIsRefundable(boolean orderIsRefundable) {
-        this.orderIsRefundable = orderIsRefundable;
+    
+    public void setOrderCash(double orderCash) {
+        this.orderCash = orderCash;
+    }
+    
+    public int getOrderCredit() {
+        return this.orderCredit;
+    }
+    
+    public void setOrderCredit(int orderCredit) {
+        this.orderCredit = orderCredit;
     }
 
 }

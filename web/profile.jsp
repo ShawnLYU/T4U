@@ -300,7 +300,7 @@
                                                             </td>
                                                             <td>
                                                             <c:choose>
-                                                                <c:when test="${(order.value.orderStatus==1) && (order.value.orderIsRefundable)}">
+                                                                <c:when test="${(order.value.orderStatus==1) && (order.value.orderCash==0)}">
                                                                     <fmt:message key="profile.label.applyRefund"/>
                                                                 </c:when>
                                                                 <c:otherwise>
