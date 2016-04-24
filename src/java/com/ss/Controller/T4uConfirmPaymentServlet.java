@@ -101,6 +101,8 @@ public class T4uConfirmPaymentServlet extends HttpServlet {
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(T4uConfirmPaymentServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+        HttpSession session = request.getSession(true);
+        session.setAttribute(T4uConstants.T4uUser, t4uUser);
         String identity = t4uUser.getUserGroup();
         boolean isValid = true;
         if(identity.equals("officer")){
@@ -118,7 +120,7 @@ public class T4uConfirmPaymentServlet extends HttpServlet {
             }else{
                 isValid = false;
                 LOGGER.debug("officer buying tickets: customer account not existed");
-                HttpSession session = request.getSession(true);
+                
                 session.setAttribute("errorNoCustomer",T4uConstants.ExUserRegisterAccountExisted);
                 response.sendRedirect("/T4U/movie/seat?scheduleId="+scheduleId);
             }
