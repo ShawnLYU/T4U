@@ -6,11 +6,13 @@
 
 package com.ss.Controller;
 
+import com.ss.app.T4uConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,10 +44,12 @@ public class T4uPaymentServlet extends HttpServlet {
         try {
             userId = Integer.parseInt(request.getParameter("userId"));
             scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
-            JSONArray jsonSeats = new JSONArray(request.getParameter("seats"));
-            if (jsonSeats.length() > 0)
-                for (int i=0; i<jsonSeats.length(); i++)
-                    seats.add(jsonSeats.getString(i));
+//            JSONArray jsonSeats = new JSONArray(request.getParameter("seats"));
+//            if (jsonSeats.length() > 0)
+//                for (int i=0; i<jsonSeats.length(); i++)
+//                    seats.add(jsonSeats.getString(i));
+            int len = request.getParameter("seats").length();
+            seats = Arrays.asList(request.getParameter("seats").substring(1,len-1).split(","));
             payMethod = Integer.parseInt(request.getParameter("payMethod"));
             if (payMethod != 1 && payMethod != 2)
                 throw new NumberFormatException();
@@ -63,6 +67,12 @@ public class T4uPaymentServlet extends HttpServlet {
         } else {
             // Create a new unrefundable order in table T4U_order
         }
+        
+        //after successful payment
+        request.setAttribute("error", T4uConstants.ExSuccessfullyPaid);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
+        dispatcher.forward(request, response);
+        
         
         
     }

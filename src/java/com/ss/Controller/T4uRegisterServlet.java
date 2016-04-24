@@ -127,7 +127,7 @@ public class T4uRegisterServlet extends HttpServlet {
         session = request.getSession(true);
         if(T4uUserDAO.checkAccountExist(t4uUser) > 0){
             logger.debug("Registration Error: "+T4uConstants.ExUserRegisterAccountExisted);
-            session.setAttribute("error",T4uConstants.ExUserRegisterAccountExisted);
+            request.setAttribute("error",T4uConstants.ExUserRegisterAccountExisted);
             response.sendRedirect(request.getContextPath()+"/error.jsp");
         }else{
             try {
@@ -137,7 +137,7 @@ public class T4uRegisterServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath()+"/index.jsp");
                     
                 }else{
-                    session.setAttribute("error",T4uConstants.ExUserAccountNotExisted);
+                    request.setAttribute("error",T4uConstants.ExUserAccountNotExisted);
                     response.sendRedirect(request.getContextPath()+"/error.jsp");
                 }  
             } catch (SQLException ex) {

@@ -90,9 +90,9 @@
             </table>
 
             <form role="form" method="POST" action="/T4U/pay">
-                <input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}">
-                <input type="hidden" name="scheduleId" value="">
-                <input type="hidden" name="seats" value="">
+                <input type="hidden" name="scheduleId" value="${requestScope.t4uScheduleToBePaid.scheduleId}"/>
+                <input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}"/>
+                <input type="hidden" name="seats" value="${requestScope.t4uSeatsSelected}"/>
                 <div class="form-group">
                     <label for="exampleSelect1"><fmt:message key="payment.form.payWay"/></label>
                     <select class="form-control" id="exampleSelect1" name="payMethod">
@@ -139,26 +139,18 @@
             });
         });
         $('button[type="button"]').click(function(){
-            if($("#exampleSelect1").val()=='Bank Card'||$("#exampleSelect1").val()=='银行卡'||$("#exampleSelect1").val()=='銀行卡'){
+            if($("#exampleSelect1").val()==1){
                 if($("#cardNo").val()==''){
                     showErrorMessage('<fmt:message key="notify.message.provideBankCard"/>');
                 }else if($("#cardPwd").val()==''){
                     showErrorMessage('<fmt:message key="notify.message.providePwd"/>');
                 }else{
-                    $('form').append('<input type="hidden" name="scheduleId" value="${requestScope.t4uScheduleToBePaid.scheduleId}"/>');
-                    $('form').append('<input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}"/>');
-                    $('form').append('<input type="hidden" name="seats" value="${requestScope.t4uSeatsSelected}"/>');
-                    
                     $('form').submit();
                 }
             }else{
                 if(${sessionScope.t4uUser.userCredit}<${requestScope.t4uNumOfSeatsPoints}){
                     showErrorMessage('<fmt:message key="notify.message.pointsNotEnough"/>');
                 }else{
-                    $('form').append('<input type="hidden" name="scheduleId" value="${requestScope.t4uScheduleToBePaid.scheduleId}"/>');
-                    $('form').append('<input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}"/>');
-                    $('form').append('<input type="hidden" name="seats" value="${requestScope.t4uSeatsSelected}"/>');
-                    
                     $('form').submit();
                 }
                 

@@ -105,7 +105,7 @@ HttpSession session = null;
                 birthdate = sourceFormat.parse(request.getParameter("birthdate"));
                 sqlDate = new java.sql.Date(birthdate.getTime());
             } catch (ParseException ex) {
-                session.setAttribute("error",T4uConstants.ExUnknownError);
+                request.setAttribute("error",T4uConstants.ExUnknownError);
                 response.sendRedirect(request.getContextPath()+"/error.jsp");
             }
             t4uUser.setUserBirthdate(sqlDate);
@@ -120,11 +120,11 @@ HttpSession session = null;
                     response.sendRedirect(request.getContextPath()+"/profile.jsp");
                     
                 }else{
-                    session.setAttribute("error",T4uConstants.ExUnknownError);
+                    request.setAttribute("error",T4uConstants.ExUnknownError);
                     response.sendRedirect(request.getContextPath()+"/error.jsp");
                 }
             } catch (SQLException ex) {
-                session.setAttribute("error",T4uConstants.ExUnknownError);
+                request.setAttribute("error",T4uConstants.ExUnknownError);
                 response.sendRedirect(request.getContextPath()+"/error.jsp");
             }
             
@@ -139,16 +139,16 @@ HttpSession session = null;
                     T4uUserDAO.injectT4uUserByAccount(t4uUser);
                     session.invalidate();
                     session = request.getSession(true);
-                    session.setAttribute("error",T4uConstants.ExUserPasswordChanged);
+                    request.setAttribute("error",T4uConstants.ExUserPasswordChanged);
                     
                     response.sendRedirect(request.getContextPath()+"/error.jsp");
                     
                 }else{
-                    session.setAttribute("error",T4uConstants.ExUnknownError);
+                    request.setAttribute("error",T4uConstants.ExUnknownError);
                     response.sendRedirect(request.getContextPath()+"/error.jsp");
                 }
             } catch (SQLException ex) {
-                session.setAttribute("error",T4uConstants.ExUnknownError);
+                request.setAttribute("error",T4uConstants.ExUnknownError);
                 response.sendRedirect(request.getContextPath()+"/error.jsp");
             }
             
