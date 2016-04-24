@@ -271,8 +271,9 @@
                                                             <th><fmt:message key="profile.label.date"/></th>
                                                             <th><fmt:message key="profile.label.movie"/></th>
                                                             <th><fmt:message key="profile.label.cinema"/></th>
-                                                            <th><fmt:message key="profile.label.status"/></th>
-                                                            <th><fmt:message key="profile.label.action"/></th>
+                                                            <th><fmt:message key="profile.label.orderStatus"/></th>
+                                                            <th><fmt:message key="profile.label.orderCash"/></th>
+                                                            <th><fmt:message key="profile.label.orderAction"/></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -298,9 +299,10 @@
                                                                 </c:otherwise>
                                                             </c:choose>    
                                                             </td>
+                                                            <td><c:out value="${order.value.orderCash}"/></td>
                                                             <td>
                                                             <c:choose>
-                                                                <c:when test="${(order.value.orderStatus==1) && (order.value.orderCash==0)}">
+                                                                <c:when test="${(order.value.orderStatus==1) && (order.value.orderCash>0)}">
                                                                     <fmt:message key="profile.label.applyRefund"/>
                                                                 </c:when>
                                                                 <c:otherwise>

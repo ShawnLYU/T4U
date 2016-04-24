@@ -13,8 +13,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,6 +54,35 @@ public class T4uOrderDAO {
             Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return allOrders;
+    }
+    
+    public static Timestamp placeOrder(int userId, int scheduleId, List<String> orderSeats, double orderCash, int orderCredit) {
+        String strOrderSeats = "";
+        Timestamp orderId = null;
+        for (String seat: orderSeats)
+            strOrderSeats += "'" + seat + "',";
+        try {
+            Connection conn =  T4uJDBC.connect();
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO [T4U_order] "
++ "([UserId], [ScheduleId], [OrderSeats], [OrderStatus], [OrderCash], [OrderCredit]) VALUES "
++ "(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, userId);
+            pstmt.setInt(2, scheduleId);
+            pstmt.setNString(3, strOrderSeats);
+            pstmt.setInt(4, 1);
+            pstmt.setDouble(5, orderCash);
+            pstmt.setInt(6, orderCredit);
+            int row = pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if (row > 0 && rs.next())
+                orderId = rs.getTimestamp("OrderId");
+            T4uJDBC.close(rs, pstmt, conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return orderId;
     }
     
 }
