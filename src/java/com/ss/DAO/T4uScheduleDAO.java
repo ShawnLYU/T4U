@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +49,22 @@ public class T4uScheduleDAO {
         } catch (Exception ex) {
             Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public static List<Integer> getAllScheduleIds() {
+        List<Integer> allScheduleIds = new ArrayList<Integer>();
+        try {
+            Connection conn =  T4uJDBC.connect();
+            PreparedStatement pstmt = conn.prepareStatement("SELECT [ScheduleId] FROM [T4U_schedule]");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next())
+                allScheduleIds.add(rs.getInt("ScheduleId"));
+            T4uJDBC.close(rs, pstmt, conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return allScheduleIds;
     }
     
     public static T4uSchedule getScheduleById(int scheduleId) {
