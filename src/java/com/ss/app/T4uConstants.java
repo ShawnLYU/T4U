@@ -19,6 +19,7 @@ public class T4uConstants {
     public static String ExUserPasswordChanged = "error.update.e1";
     public static String ExSuccessfullyPaid = "error.payment.success";
     public static String ExCustomerAccountNotFound = "error.customerAccountNotFount";
+    public static String ExUserNotAuthorised = "error.userNotAuthroised";
     
     //key of attributes to be shown in jsp pages
     public static String T4uUser = "t4uUser";
