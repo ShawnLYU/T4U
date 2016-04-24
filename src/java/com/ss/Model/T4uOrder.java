@@ -15,7 +15,8 @@ import java.sql.Timestamp;
  */
 public class T4uOrder {
 
-    private Timestamp orderId;
+    private long orderId;
+    private Timestamp orderDate;
     private T4uUser user;
     private T4uSchedule schedule;
     private String orderSeats;
@@ -23,12 +24,20 @@ public class T4uOrder {
     private double orderCash;
     private int orderCredit;
 
-    public Timestamp getOrderId() {
+    public long getOrderId() {
         return this.orderId;
     }
     
-    public void setOrderId(Timestamp orderId) {
+    public void setOrderId(long orderId) {
         this.orderId = orderId;
+    }
+    
+    public Timestamp getOrderDate() {
+        return this.orderDate;
+    }
+    
+    public void setOrderDate(Timestamp orderDateorderDate) {
+        this.orderDate = orderDateorderDate;
     }
     public T4uUser getUser() {
         return this.user;

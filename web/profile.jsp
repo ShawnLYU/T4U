@@ -280,7 +280,7 @@
                                                     <c:forEach items="${allOrders}" var="order">
                                                         <tr>
                                                             <td>+</td>
-                                                            <td><c:out value="${order.key}"/></td>
+                                                            <td><c:out value="${order.value.orderDate}"/></td>
                                                             <td><c:out value="${order.value.schedule.version.movie.movieName}"/></td>
                                                             <td><c:out value="${order.value.schedule.house.cinema.cinemaName}"/></td>
                                                             <td>

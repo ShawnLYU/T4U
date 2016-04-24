@@ -26,9 +26,9 @@ import java.util.logging.Logger;
  * @author Steven
  */
 public class T4uOrderDAO {
-    public static Map<Timestamp, T4uOrder> getAllOrdersByUser(T4uUser user) {
+    public static Map<Long, T4uOrder> getAllOrdersByUser(T4uUser user) {
         int userId = user.getUserId();
-        Map<Timestamp, T4uOrder> allOrders = new HashMap<Timestamp, T4uOrder>();
+        Map<Long, T4uOrder> allOrders = new HashMap<Long, T4uOrder>();
         try {
             Connection conn =  T4uJDBC.connect();
             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM [T4U_order] WHERE [userId]= ? ");
@@ -37,8 +37,9 @@ public class T4uOrderDAO {
             while (rs.next()) {
                 // Set order
                 T4uOrder order = new T4uOrder();
-                Timestamp orderId = rs.getTimestamp("OrderId");
-                order.setOrderId(orderId);
+                long orderId = rs.getLong("OrderId");
+                Timestamp orderDate = rs.getTimestamp("OrderDate");
+                order.setOrderDate(orderDate);
                 order.setUser(user);
                 order.setSchedule(T4uScheduleDAO.getScheduleById(rs.getInt("ScheduleId")));
                 order.setOrderSeats(rs.getNString("OrderSeats"));
@@ -56,16 +57,16 @@ public class T4uOrderDAO {
         return allOrders;
     }
     
-    public static Timestamp placeOrder(int userId, int scheduleId, List<String> orderSeats, double orderCash, int orderCredit) {
+    public static long placeOrder(int userId, int scheduleId, List<String> orderSeats, double orderCash, int orderCredit, String oldOSeats) {
         String strOrderSeats = "";
-        Timestamp orderId = null;
+        long orderId = 0;
         for (String seat: orderSeats)
             strOrderSeats += "'" + seat + "',";
         try {
             Connection conn =  T4uJDBC.connect();
             PreparedStatement pstmt = conn.prepareStatement("INSERT INTO [T4U_order] "
-+ "([UserId], [ScheduleId], [OrderSeats], [OrderStatus], [OrderCash], [OrderCredit]) VALUES "
-+ "(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
++ "([UserId], [ScheduleId], [OrderSeats], [OrderStatus], [OrderCash], [OrderCredit]) "
++ "VALUES (?,?,?,?,?,?)");
             pstmt.setInt(1, userId);
             pstmt.setInt(2, scheduleId);
             pstmt.setNString(3, strOrderSeats);
@@ -73,25 +74,33 @@ public class T4uOrderDAO {
             pstmt.setDouble(5, orderCash);
             pstmt.setInt(6, orderCredit);
             int row = pstmt.executeUpdate();
-            ResultSet rs = pstmt.getGeneratedKeys();
-            if (row > 0 && rs.next())
-                orderId = rs.getTimestamp("OrderId");
-            T4uJDBC.close(rs, pstmt, conn);
+            if (row > 0) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT @@IDENTITY AS [@@IDENTITY]");
+                if (rs !=null && rs.next()) {
+                    orderId = rs.getLong(1);
+                    rs.close();
+                }
+            }
+            T4uJDBC.close(pstmt, conn);
         } catch (SQLException ex) {
             Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+            // Revert
+            T4uScheduleDAO.updateOSeatsById(scheduleId, oldOSeats);
         } catch (Exception ex) {
             Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+            // Revert
+            T4uScheduleDAO.updateOSeatsById(scheduleId, oldOSeats);
         }
         return orderId;
     }
     
-    public static void changeOrderStatus(Timestamp orderId, int userId, int newStatus, T4uUser operator) {
+    public static void changeOrderStatus(long orderId, int newStatus, T4uUser operator) {
         try {
             Connection conn =  T4uJDBC.connect();
             // Check whether paid all by credit
-            PreparedStatement pstmt = conn.prepareStatement("SELECT [OrderCash] FROM [T4U_order] WHERE [OrderId]=? AND [UserId]=?");
-            pstmt.setTimestamp(1, orderId);
-            pstmt.setInt(2, userId);
+            PreparedStatement pstmt = conn.prepareStatement("SELECT [OrderCash] FROM [T4U_order] WHERE [OrderId]=?");
+            pstmt.setLong(1, orderId);
             ResultSet rs = pstmt.executeQuery();
             boolean isRefundable = false;
             if (rs.next()) {
@@ -103,10 +112,9 @@ public class T4uOrderDAO {
             pstmt.close();
             if (isRefundable && (newStatus == 3 && operator.getUserGroup().equals("admin"))) {
                 // Update status
-                pstmt = conn.prepareStatement("UPDATE [T4U_order] SET [OrderStatus]=? WHERE [OrderId]=? AND [UserId]=?");
+                pstmt = conn.prepareStatement("UPDATE [T4U_order] SET [OrderStatus]=? WHERE [OrderId]=?");
                 pstmt.setInt(1, newStatus);
-                pstmt.setTimestamp(2, orderId);
-                pstmt.setInt(3, userId);
+                pstmt.setLong(2, orderId);
                 int rows = pstmt.executeUpdate();
                 if (rows > 0) {
                     // Update succeed
