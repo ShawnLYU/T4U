@@ -107,6 +107,38 @@
                                 </div>
                             </div>
                                     <form id="myForm" method="POST" action = "/T4U/confirm"></form>
+                                        <!--modal for customer account input-->
+                                        <div class="modal fade" id="myModal" role="dialog">
+                                                <div class="modal-dialog">
+
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        <h4 class="modal-title"><fmt:message key="seat.label.customerAccount"/></h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                        <input type="text" class="form-control" id="customerAccount" name="customerAccount" maxlength="16">
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" id="add" class="btn btn-primary"><fmt:message key="profile.label.confirm"/></button>
+                                                                    <button type="button" id="cancelCustomer" class="btn btn-warning"><fmt:message key="profile.label.cancel"/></button>
+                                                                </div>
+                                                        </div>
+
+                                                </div>
+                                        </div>
+                            <script>
+                                $("#add").click(function(){
+                                    $('#myModal').modal('toggle');
+                                     $("#pay").click();
+                                });
+                                $("#cancelCustomer").click(function(){
+                                    $("#customerAccount").val('');
+                                    $('#myModal').modal('toggle');
+                                });
+
+                            </script>
                             <script>
                                 function showErrorMessage(msg){
                                         $.notify(msg, {
@@ -114,6 +146,9 @@
                                                         autoHideDelay: 5000});
                                 }
                                 $(document).ready(function() {
+                                    <c:if test="${sessionScope.errorNoCustomer != null}" >
+                                            showErrorMessage('<fmt:message key="error.login.e1"/>');
+                                    </c:if>
                                     var $cart = $('#selected-seats'),
                                         $counter = $('#counter'),
                                         $total = $('#total'),
@@ -206,37 +241,26 @@
                                      });
                                      if(seatsSeleted.length==0){
                                          showErrorMessage('<fmt:message key="seat.error.notSelected"/>');
-                                     }else{
+                                     }
+                                     <c:if test="${sessionScope.t4uUser.userGroup == 'officer'}">
+                                     else if($("#customerAccount").val()==''){
+                                         $('#myModal').modal('toggle');
+                                    }
+                                        
+                                    </c:if>
+
+
+
+                                     else{
                                         $('#myForm').append('<input type="hidden" name="seats" value='+seatsSeleted+' />');
                                         $('#myForm').append('<input type="hidden" name="scheduleId" value="${schedule.scheduleId}" />');
                                         $('#myForm').append('<input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}" />');
+                                        <c:if test="${sessionScope.t4uUser.userGroup == 'officer'}">
+                                        $('#myForm').append('<input type="hidden" name="userAccount" value="'+$("#customerAccount").val()+'" />');
+                                       </c:if>
+                                        
                                         $("#myForm").submit(); 
-//                                         $.ajax({
-//                                            url:'/T4U/confirm',
-//                                            type:"POST",
-//                                            dataType:'json',
-//                                            data:{
-//                                                
-//                                            },
-//                                            success:function(data){
-//    //                                           alert(data);
-//                                               //display post response via ajax
-//                                               
-//                                            },
-//                                            error:function(){
-//                                              alert('error');
-//                                            }
-//                                        });
-//    //                                    $.post("/T4U/confirm",{'seats':seatsSeleted},function(data){},"json");
-//    //                                        $.post("/T4U/confirm",{
-//    //                                            seats:seatsSeleted
-//    //                                        }).done(function( data ) {
-//    //                                             alert( "name: " + data );
-//    //                                        })
                                      }
-                                     
-                                    
-
                                 });
 
                                 function recalculateTotal(sc) {
