@@ -52,6 +52,10 @@
         <servlet-name>T4uArrangeSeatServlet</servlet-name>
         <servlet-class>com.ss.Controller.T4uArrangeSeatServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>T4uGetSeatPlanServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uGetSeatPlanServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
         <url-pattern>/user/login.do</url-pattern>
@@ -110,7 +114,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>T4uArrangeSeatServlet</servlet-name>
-        <url-pattern>/arrangeSeat</url-pattern>
+        <url-pattern>/manage/arrangeSeat</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>T4uGetSeatPlanServlet</servlet-name>
+        <url-pattern>/manage/getSeatPlan</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

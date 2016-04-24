@@ -112,32 +112,7 @@
                                 <button type="button" class="btn btn-default col-sm-4 col-sm-offset-4" onclick="setLocaleHK();">繁</button>
                                 
                             </div>  
-                            <div class="dropdown col-sm-6" style="padding: 0;">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                <c:choose>
-                                    <c:when test="${sessionScope.t4uUser != null}">
-                                       <c:out value="${sessionScope.t4uUser.userName}"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <fmt:message key="index.label.account"/>
-                                    </c:otherwise>
-                                </c:choose>
-                                <span class="caret"></span></button>
-                                <!--<ul class="dropdown-menu">
-                                        <c:choose>
-                                            <c:when test="${sessionScope.t4uUser != null}">
-                                               <li><a href="/T4U/user/profile"><fmt:message key="index.label.profile"/></a></li>
-                                            </c:when>
-                                            <c:otherwise>
-                                               <li><a href="/T4U/login.jsp"><fmt:message key="index.label.login"/></a></li>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    <li><a href="/T4U/register.jsp"><fmt:message key="index.label.register"/></a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="/T4U/user/logout.do"><fmt:message key="index.label.logout"/></a></li>
-                                </ul>-->
-                                <%@include file="userDropDownMenu.jsp" %>
-                            </div>
+                            <%@include file="userDropDownMenu.jsp" %>
                         </div>
                                                 <div class="clearfix"></div>
                                             </div>

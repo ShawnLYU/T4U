@@ -18,7 +18,7 @@
     <%    } else {%>  
         <fmt:setLocale value="zh_HK" scope="session" />  
     <%    } %>
-<c:set var="schedule" value="${requestScope.t4uUserCurSchedule}" />
+<c:set var="allSchedules" value="${requestScope.t4uAllSchedules}" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -61,31 +61,7 @@
                                     <button type="button" class="btn btn-default col-sm-4 col-sm-offset-4" onclick="setLocaleHK();">繁</button>
 
                                 </div>  
-                                <div class="dropdown col-sm-6" style="padding: 0;">
-                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                    <c:choose>
-                                        <c:when test="${sessionScope.t4uUser != null}">
-                                           <c:out value="${sessionScope.t4uUser.userName}"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <fmt:message key="index.label.account"/>
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                        <c:choose>
-                                            <c:when test="${sessionScope.t4uUser != null}">
-                                               <li><a href="/T4U/user/profile"><fmt:message key="index.label.profile"/></a></li>
-                                            </c:when>
-                                            <c:otherwise>
-                                               <li><a href="/T4U/login.jsp"><fmt:message key="index.label.login"/></a></li>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    <li><a href="/T4U/register.jsp"><fmt:message key="index.label.register"/></a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="/T4U/user/logout.do"><fmt:message key="index.label.logout"/></a></li>
-                                    </ul>
-                                </div>
+                                <%@include file="userDropDownMenu.jsp" %>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -101,25 +77,17 @@
                                                 <c:forEach items="${allSchedules}" var="schedule">
                                                     <option value="${schedule.scheduleId}">
                                                         ${schedule.version.movie.movieName}&nbsp;
-                                                        ${schedule.version.versionName}&nbsp;
-                                                        ${schedule.house.houseName}&nbsp;
+                                                        ${schedule.version.versionName}&nbsp;－&nbsp;
                                                         ${schedule.house.cinema.cinemaName}&nbsp;
+                                                        ${schedule.house.houseName}&nbsp;－&nbsp;
+                                                        ${schedule.scheduleTimeslot}
                                                     </option>
                                                 </c:forEach>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
                                               </select>
                                             </div>
                                         </form>
-
                                     </div>
-                                    
-                                    
-                                    
-                                    
-                                    
+
                                     <div class="row">
                                         <div id="seat-map">
                                             <div class="front-indicator"><fmt:message key="seat.label.screen"/></div>
@@ -136,130 +104,28 @@
                                     
                                 </div>
                             </div>
-                                    <form id="myForm" method="POST" action = "/T4U/confirm"></form>  
-                            <script>
-                                $("#sel1").change(function(){
-                                    $.ajax({
-                                            url : 'GetUserServlet',
-                                            data : {
-                                                    scheduleId : $("#sel1").val()
-                                            },
-                                            success : function(responseText) {
-                                                    alert(responseText);
-                                                    
-//                                                    $("#mySeat").attr("plan",responseText.seatPlan);
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                            }
-                                    });
-                                });
-                            </script>
+                            <form id="myForm" method="POST" action = "/T4U/confirm"></form>  
                             <script>
                                 function showErrorMessage(msg){
                                         $.notify(msg, {
                                                         globalPosition: "top left",
                                                         autoHideDelay: 5000});
                                 }
-                                $(document).ready(function() {
-                                    var $cart = $('#selected-seats'),
-                                        $counter = $('#counter'),
-                                        $total = $('#total'),
-                                        sc = $('#seat-map').seatCharts({
-                                        map: <c:out value="${schedule.house.housePlan}" escapeXml="false" />,
-                                        seats: {
-                                            e: {
-                                                price   : <c:out value="${schedule.price}" />,
-                                                classes : 'economy-class', //your custom CSS class
-                                                category: 'Economy Class'
-                                            }                   
-
-                                        },
-                                        naming : {
-                                            top : false,
-                                            rows: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
-                                            getLabel : function (character, row, column) {
-                                                return column;
+                                $("#sel1").change(function(){
+                                    $.ajax({
+                                            url : 'getSeatPlan',
+                                            data : {
+                                                    scheduleId : $("#sel1").val()
                                             },
-                                            getId : function(character, row, column) {
-                                                return row + column;
+                                            error : function(xhr) {
+                                                    alert('Error');
                                             },
-                                        },
-                                        legend : {
-                                            node : $('#legend'),
-                                            items : [
-                                                [ 'e', 'available',   '<fmt:message key="seat.label.available"/>'],
-                                                [ 'e', 'sold',   '<fmt:message key="seat.label.sold"/>'],
-                                                [ 'e', 'unavailable', '<fmt:message key="seat.label.unavailable"/>']
-                                            ]                   
-                                        },
-                                        click: function () {
-                                            if (this.status() == 'available') {
-                                                //let's create a new <li> which we'll add to the cart items
-                                                $('<li class="list-group-item">Seat '+this.settings.id+'&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp;<b>$'+this.data().price+'</b> &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="cancel-cart-item">[cancel]</a></li>')
-                                                    .attr('id', 'cart-item-'+this.settings.id)
-                                                    .data('seatId', this.settings.id)
-                                                    .appendTo($cart);
-
-                                                /*
-                                                 * Lets update the counter and total
-                                                 *
-                                                 * .find function will not find the current seat, because it will change its stauts only after return
-                                                 * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
-                                                 */
-                                                $counter.text(sc.find('selected').length+1);
-                                                $total.text(recalculateTotal(sc)+this.data().price);
-
-                                                return 'selected';
-                                            } else if (this.status() == 'selected') {
-                                                //update the counter
-                                                $counter.text(sc.find('selected').length-1);
-                                                //and total
-                                                $total.text(recalculateTotal(sc)-this.data().price);
-
-                                                //remove the item from our cart
-                                                $('#cart-item-'+this.settings.id).remove();
-
-                                                //seat has been vacated
-                                                return 'available';
-                                            } else if (this.status() == 'sold') {
-                                                //seat has been already booked
-                                                return 'sold';
-                                            } else if (this.status() == 'unavailable') {
-                                                //seat was unavailable
-                                                return 'unavailable';
-                                            } else {
-                                                return this.style();
+                                            success : function(responseText) {
+                                                    alert('Success');
+                                                    //eval(responseText);
                                             }
-                                        }
                                     });
-
-                                    //this will handle "[cancel]" link clicks
-                                    $('#selected-seats').on('click', '.cancel-cart-item', function () {
-                                        //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
-                                        sc.get($(this).parents('li').data('seatId')).click();
-                                        return false;
-                                    });
-
-                                    //let's pretend some seats have already been booked
-                                    sc.get([<c:out value="${schedule.scheduleOSeats}" escapeXml="false" />]).status('sold');
-                                    sc.get([<c:out value="${schedule.scheduleUSeats}" escapeXml="false" />]).status('unavailable');
-
                                 });
-                                
-                                function recalculateTotal(sc) {
-                                    var total = 0;
-
-                                    //basically find every selected seat and sum its price
-                                    sc.find('selected').each(function () {
-                                        total += this.data().price;
-                                    });
-
-                                    return total;
-                                }
-
                             </script>
                         </div>		
                     </div>
