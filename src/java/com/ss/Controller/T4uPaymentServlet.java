@@ -47,9 +47,9 @@ public class T4uPaymentServlet extends HttpServlet {
             userId = Integer.parseInt(request.getParameter("userId"));
             scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
             orderCash = Double.parseDouble(request.getParameter("bankcard"));
-            orderCredit = Integer.parseInt(request.getParameter("demo5"));
+            if (request.getParameter("demo5") != null)
+                orderCredit = Integer.parseInt(request.getParameter("demo5"));
             userCredit = Integer.parseInt(request.getParameter("userCredit"));
-        } catch (NullPointerException ex) {
         } catch (NumberFormatException ex) {
         }
         int len = request.getParameter("seats").length();
