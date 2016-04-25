@@ -7,6 +7,7 @@
 <%@page language="java" contentType="text/html;charset=utf-8" pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="lan" value="com.ss.i18n.T4uUI" scope="application" />
 <%  String varLocal = request.getParameter("locale");  
         if (varLocal == null || varLocal.equals("")) { 
@@ -236,23 +237,24 @@
                                     
                                     <div class="row">
                                         
-                                        <table id="example" class="table display col-sm-8 col-sm-offset-2" cellspacing="0" width="100%">
+                                        <table id="example" class="table table-responsive display col-sm-8 col-sm-offset-2" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
-                                                            <th></th>
-                                                            <th><fmt:message key="profile.orderTable.orderDate"/></th>
-                                                            <th><fmt:message key="profile.orderTable.movieName"/></th>
-                                                            <th><fmt:message key="profile.orderTable.cinemaName"/></th>
-                                                            <th><fmt:message key="profile.orderTable.orderStatus"/></th>
-                                                            <th><fmt:message key="profile.orderTable.orderCash"/></th>
-                                                            <th><fmt:message key="profile.orderTable.orderAction"/></th>
+                                                            <th class="info" />
+                                                            <th class="info"><fmt:message key="profile.orderTable.orderDate"/></th>
+                                                            <th class="info"><fmt:message key="profile.orderTable.movieName"/></th>
+                                                            <th class="info"><fmt:message key="profile.orderTable.cinemaName"/></th>
+                                                            <th class="info"><fmt:message key="profile.orderTable.orderStatus"/></th>
+                                                            <th class="info"><fmt:message key="profile.orderTable.orderCash"/></th>
+                                                            <th class="info"><fmt:message key="profile.orderTable.orderAction"/></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                     <c:forEach items="${allOrders}" var="order">
                                                         <tr>
                                                             <td><input type="button" class="btn btn-link" value="+" data-toggle="collapse" data-target="#order-<c:out value="${order.key}"/>"/></td>
-                                                            <td><c:out value="${order.value.orderDate}"/></td>
+                                                            <fmt:formatDate value="${order.value.orderDate}" var="parsedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                                            <td><c:out value="${parsedDate}"/></td>
                                                             <td><c:out value="${order.value.schedule.version.movie.movieName}"/></td>
                                                             <td><c:out value="${order.value.schedule.house.cinema.cinemaName}"/></td>
                                                             <td>
@@ -286,6 +288,7 @@
                                                         <tr id="order-<c:out value="${order.key}"/>" class="collapse">
                                                             <td colspan="7" class="text-left">
                                                                 <fmt:message key="profile.orderTable.orderId"/>: <c:out value="${order.key}"/><br/>
+                                                                <fmt:message key="profile.orderTable.seat"/>: ${fn:replace(order.value.orderSeats, '\'', '')}<br/>
                                                                 <fmt:message key="profile.orderTable.versionName"/>: <c:out value="${order.value.schedule.version.versionName}"/><br/>
                                                                 <fmt:message key="profile.orderTable.houseName"/>: <c:out value="${order.value.schedule.house.houseName}"/><br/>
                                                                 <fmt:message key="profile.orderTable.scheduleTimeslot"/>: <c:out value="${order.value.schedule.scheduleTimeslot}"/><br/>
