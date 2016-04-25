@@ -56,7 +56,7 @@ label{
 	/*background: rgba(255, 255, 255, 0.47);*/
 }
 .header {
-	background: url('../images/header-bg.jpg') no-repeat 0px 0px;
+	background: url('../images/header-bg.png') no-repeat 0px 0px;
 	background-size:cover;
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
@@ -1216,13 +1216,13 @@ font-weight: 700;
 /*-- responsive-design starts-here --*/
 @media screen and (max-width: 1800px) {
 	.header-info {
-		display: none;
+		/*display: none;*/
 	}
 }
 
 @media screen and (max-width: 1440px) {
 	.header-info {
-		display: none;
+		/*display: none;*/
 	}
 	.header {
 		min-height: 661px;
@@ -1276,7 +1276,7 @@ font-weight: 700;
 }
 @media screen and (max-width: 1366px) {
 	.header-info {
-		display: none;
+		/*display: none;*/
 	}
 	.news {
 		padding: 3em 2em;
@@ -1369,7 +1369,7 @@ font-weight: 700;
 }
 @media screen and (max-width: 1280px) {
 	.header-info {
-		display: none;
+		/*display: none;*/
 	}
 	.footer {
 		padding: 3em 2em;

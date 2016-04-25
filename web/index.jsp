@@ -96,7 +96,7 @@
     
     <fmt:bundle basename="${lan}">
     <body>
-        <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-sm-10 col-sm-offset-1">
 	<!-- header-section-starts -->
 	<div class="full">
             <div class="menu">
@@ -152,20 +152,20 @@
                         <h3><fmt:message key="index.label.ad1"/></h3>
                         <h2><fmt:message key="index.label.ad2"/></h2>
                         <h4><fmt:message key="index.label.ad3"/></h4>
-                        <a href="#"><i class="book"></i><fmt:message key="index.label.bookTicket"/></a>
+                        <a href="#flexiselDemo2"><i class="book"></i><fmt:message key="index.label.bookTicket"/></a>
                         <p><fmt:message key="index.label.ad4"/> <strong>10%</strong> <fmt:message key="index.label.ad5"/></p>
                     </div>
                     <div class="col-md-6 news-right-grid">
                         <h3>News</h3>
                         <div class="news-grid">
-                            <h5>Lorem Ipsum Dolor Sit Amet</h5>
-                            <label>Nov 11 2014</label>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+                            <h5>《優獸》全球勁收24億</h5>
+                            <label>Mar 14 2016</label>
+                            <p>迪士尼動畫電影《優獸大都會》（Zootopia）在美國大收旺場，踏入第二周仍高踞北美票房榜冠軍。該片在內地開畫也同樣錄得票房佳績，截至昨日已累積達7億人民幣，比《功夫熊貓3》（Kung Fu Panda3）成績更加理想。目前《優獸大都會》的全球票房已高達3.11億美元（約24.3億港元），相信各地陸續上映之後，票房仍會繼續飆升，而香港則定於下周四上映。（《蘋果日報》）</p>
                         </div>
                         <div class="news-grid">
-                            <h5>Lorem Ipsum Dolor Sit Amet</h5>
-                            <label>Nov 11 2014</label>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+                            <h5>Captain America goes rogue in Civil War, new Avengers movie</h5>
+                            <label>Mar 9 2016</label>
+                            <p>Captain America might be taken off Iron Man’s Christmas list this year. The two Avengers find themselves on opposite sides of an ideological debate about government oversight, and the rest of the Avengers are forced to take sides and face off in Marvel Studios’ soon-to-be blockbuster Captain America: Civil War. (SCMP)</p>
                         </div>
                         <a class="more" href="#">MORE</a>
                     </div>
