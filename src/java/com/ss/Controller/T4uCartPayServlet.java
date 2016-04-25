@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
  */
 public class T4uCartPayServlet extends HttpServlet {
 
-    private static final Logger LOGGER = Logger.getLogger(T4uCartPay.class);
+    private static final Logger LOGGER = Logger.getLogger(T4uCartPayServlet.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
