@@ -101,6 +101,7 @@
                 <input type="hidden" name="userGroup" value="${sessionScope.t4uUser.userGroup}"/>
                 <input type="hidden" name="userCredit" value="${sessionScope.t4uUser.userCredit}"/>
                     <input type="hidden" name="userId" value="${sessionScope.t4uUser.userId}"/>
+                    <c:if test="${sessionScope.t4uUser.userGroup != 'officer'}" >
                     <div class="form-group">
                       <label for="cardNo"><fmt:message key="payment.form.cardNo"/></label>
                       <input type="text" class="form-control" id="cardNo" name="cardNo" maxlength="16">
@@ -109,6 +110,7 @@
                       <label for="cardPwd"><fmt:message key="payment.form.cardPwd"/></label>
                       <input type="password" class="form-control" id="cardPwd" name="cardPwd" maxlength="3">
                     </div>
+                    </c:if>
                       <c:if test="${sessionScope.t4uUser.userGroup != 'officer'}">
                         <div class="checkbox">
                              <label>
@@ -119,12 +121,14 @@
                              </div>
                          </div>
                       </c:if>
-                   
-                
-                <button type="button" id="buy" class="btn btn-primary"><fmt:message key="payment.form.submit"/></button>
-                <c:if test="${sessionScope.t4uUser.userGroup == 'officer'}" >
-                    <button type="button" id="addToCart" class="btn btn-warning"><fmt:message key="payment.form.addToCart"/></button>        
-                </c:if>
+                <c:choose>
+                    <c:when test="${sessionScope.t4uUser.userGroup == 'officer'}" >
+                        <button type="button" id="addToCart" class="btn btn-warning"><fmt:message key="payment.form.addToCart"/></button>        
+                    </c:when>
+                    <c:otherwise>
+                        <button type="button" id="buy" class="btn btn-primary"><fmt:message key="payment.form.submit"/></button>
+                    </c:otherwise>
+                </c:choose>
               </form>
           </div>
         </div>

@@ -7,6 +7,7 @@
 <%@page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <fmt:setBundle basename="com.ss.i18n" />
 <c:set var="lan" value="com.ss.i18n.T4uUI" scope="application" />
 <%  String varLocal = request.getParameter("locale");  
@@ -91,6 +92,15 @@
 //                    iFrame.load("https://www.youtube.com/embed/"+address);
                     document.getElementById('myFrame').src = "https://www.youtube.com/embed/"+address;
               }
+            function showPosterLandscape(url) {
+                $('.header').css('background-image', 'url(/T4U/resources/images/header-bg.png), url(' + url + ')');
+            }
+            function showIntroduction(movieId, movieName, movieClass, movieGenre) {
+                $('.header-info h1').html(movieName);
+                $('.header-info .age a').html(movieClass);
+                $('.header-info .review span').html(movieGenre);
+                $('.header-info .book').attr("href", "<c:out value="${pageContext.request.contextPath}"/>/movie/detail?movieId=" + movieId);
+            }
         </script>
     </head>
     
@@ -122,30 +132,37 @@
                         </div>
                     </div>
                     <div class="header-info">
-                        <h1>BIG HERO 6</h1>
-                        <p class="age"><a href="#">All Age</a> Don Hall, Chris Williams</p>
-                        <p class="review">Rating	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;  8,5/10</p>
-                        <p class="review reviewgo">Genre	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp; Animation, Action, Comedy</p>
+                        <c:forEach items="${allMovies}" var="movie">
+                            <c:if test="${empty firstMovie}">
+                                <c:set var="firstMovie" scope="request" value="${movie}"/>
+                            </c:if>
+                        </c:forEach>
+                        <h1>${firstMovie.value.movieName}</h1>
+                        <p class="age"><fmt:message key="movieDetail.label.class"/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">${firstMovie.value.movieInfo.Class}</a></p>
+                        <p class="review"><fmt:message key="movieDetail.label.genre"/>&nbsp;&nbsp;&nbsp;&nbsp;<span>${firstMovie.value.movieInfo.Genre}</span></p>
+                        <!-- <p class="review reviewgo">Genre	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp; Animation, Action, Comedy</p>
                         <p class="review">Release &nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp; 7 November 2014</p>
-                        <p class="special">The special bond that develops between plus-sized inflatable robot Baymax, and prodigy Hiro Hamada, who team up with a group of friends to form a band of high-tech heroes.</p>
-                        <a class="video" href="#"><i class="video1"></i><fmt:message key="index.label.watchTrailer"/></a>
-                        <a class="book" href="#"><i class="book1"></i><fmt:message key="index.label.bookTicket"/></a>
+                        <p class="special">The special bond that develops between plus-sized inflatable robot Baymax, and prodigy Hiro Hamada, who team up with a group of friends to form a band of high-tech heroes.</p>-->
+                        <a class="video" href="#myFrame"><i class="video1"></i><fmt:message key="index.label.watchTrailer"/></a>
+                        <a class="book" href='<c:out value="${pageContext.request.contextPath}"/>/movie/detail?movieId=<c:out value="${firstMovie.key}"/>'><i class="book1"></i><fmt:message key="index.label.bookTicket"/></a>
                     </div>
                 </div>
                 <div class="review-slider">
                     <ul id="flexiselDemo1">
                         <c:forEach items="${allMovies}" var="movie">
-                            <c:if test="${empty firstEle}">
-                                <c:set var="firstTrailer" scope="request" value="${movie.value.movieInfo.Trailer}"/>
-                            </c:if>
-                            <li><img class="trailerToBePlayed" src="<c:out value="${movie.value.movieInfo.Poster}"/>" onclick="showTrailer('<c:out value="${movie.value.movieInfo.Trailer}"/>')"></img></li>
+                            <c:set var="singleQuote" value="'" />
+                            <c:set var="escapedSingleQuote" value="\'" />
+                            <c:set var="movieName" value="${movie.value.movieName}" />
+                            <c:set var="movieClass" value="${movie.value.movieInfo.Class}" />
+                            <c:set var="movieGenre" value="${movie.value.movieInfo.Genre}" />
+                            <li><img class="trailerToBePlayed" src="<c:out value="${movie.value.movieInfo.Poster}"/>" onclick="showTrailer('<c:out value="${movie.value.movieInfo.Trailer}"/>');showPosterLandscape('<c:out value="${movie.value.movieInfo.PosterLandscape}" />');showIntroduction(${movie.key}, '<c:out value="${fn:replace(movieName, singleQuote, escapedSingleQuote)}"/>', '<c:out value="${fn:replace(movieClass, singleQuote, escapedSingleQuote)}"/>', '<c:out value="${fn:replace(movieGenre, singleQuote, escapedSingleQuote)}"/>');"></img></li>
                         </c:forEach>
                     </ul>
 
 
                 </div>
                 <div class="video">
-                    <iframe  id="myFrame" src="https://www.youtube.com/embed/${firstTrailer}" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="myFrame" src="https://www.youtube.com/embed/${firstMovie.value.movieInfo.Trailer}" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <div class="news">
                     <div class="col-md-6 news-left-grid">

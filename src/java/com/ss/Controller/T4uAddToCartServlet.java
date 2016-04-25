@@ -47,11 +47,13 @@ public class T4uAddToCartServlet extends HttpServlet {
         int len = request.getParameter("seats").length();
         List<String> allSeats = Arrays.asList(request.getParameter("seats").substring(1,len-1).replaceAll(" ","").split(","));
         StringBuilder sb = new StringBuilder();
+        sb.append("[");
         for (String s : allSeats)
         {
             sb.append(s);
             sb.append(",");
         }
+        sb.append("]");
         order.setOrderSeats(sb.toString());
         order.setOrderCash(allSeats.size()*order.getSchedule().getPrice());
         HttpSession session = request.getSession(true);
