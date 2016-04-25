@@ -83,37 +83,6 @@
                                 </div>
                             </div>
                                     <form id="myForm" method="POST" action = "/T4U/confirm"></form>
-                                        <!--modal for customer account input-->
-                                        <div class="modal fade" id="myModal" role="dialog">
-                                                <div class="modal-dialog">
-
-                                                        <!-- Modal content-->
-                                                        <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                        <h4 class="modal-title"><fmt:message key="seat.label.customerAccount"/></h4>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                        <input type="text" class="form-control" id="customerAccount" name="customerAccount" maxlength="16">
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" id="add" class="btn btn-primary"><fmt:message key="profile.label.confirm"/></button>
-                                                                    <button type="button" id="cancelCustomer" class="btn btn-warning"><fmt:message key="profile.label.cancel"/></button>
-                                                                </div>
-                                                        </div>
-
-                                                </div>
-                                        </div>
-                            <script>
-                                $("#add").click(function(){
-                                    $('#myModal').modal('toggle');
-                                     $("#pay").click();
-                                });
-                                $("#cancelCustomer").click(function(){
-                                    $("#customerAccount").val('');
-                                    $('#myModal').modal('toggle');
-                                });
-                            </script>
                             <script>
                                 function showErrorMessage(msg){
                                         $.notify(msg, {
@@ -121,9 +90,6 @@
                                                         autoHideDelay: 5000});
                                 }
                                 $(document).ready(function() {
-                                    <c:if test="${sessionScope.errorNoCustomer != null}" >
-                                            showErrorMessage('<fmt:message key="error.login.e1"/>');
-                                    </c:if>
                                     <c:if test="${sessionScope.errorSeatOccupied == true}">
                                         showErrorMessage('<fmt:message key="error.payment.seatOccupied"/>');
                                         <c:remove var="errorSeatOccupied" />
