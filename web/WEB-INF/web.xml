@@ -64,6 +64,10 @@
         <servlet-name>T4uGetWAOrdersServlet</servlet-name>
         <servlet-class>com.ss.Controller.T4uGetWAOrdersServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>T4uApproveRefund</servlet-name>
+        <servlet-class>com.ss.Controller.T4uApproveRefund</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
         <url-pattern>/user/login.do</url-pattern>
@@ -135,6 +139,10 @@
     <servlet-mapping>
         <servlet-name>T4uGetWAOrdersServlet</servlet-name>
         <url-pattern>/manage/refundList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>T4uApproveRefund</servlet-name>
+        <url-pattern>/T4uApproveRefund</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

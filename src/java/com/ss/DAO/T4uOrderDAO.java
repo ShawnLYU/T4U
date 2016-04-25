@@ -100,6 +100,8 @@ public class T4uOrderDAO {
                 order.setOrderId(rs.getLong("OrderId"));
                 order.setOrderDate(rs.getTimestamp("OrderDate"));
                 order.setUser(T4uUserDAO.getUserById(rs.getInt("UserId")));
+                order.setUserId(rs.getInt("UserId"));
+                order.setScheduleId(rs.getInt("ScheduleId"));
                 order.setSchedule(T4uScheduleDAO.getScheduleById(rs.getInt("ScheduleId")));
                 order.setOrderSeats(rs.getNString("OrderSeats"));
                 order.setOrderStatus(rs.getInt("OrderStatus"));
@@ -171,6 +173,10 @@ public class T4uOrderDAO {
             Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return success;
+    }
+
+    public static T4uOrder getOrderByUserId(int userId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
