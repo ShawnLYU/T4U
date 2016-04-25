@@ -35,6 +35,7 @@
         <script src="/T4U/resources/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
         <script src="/T4U/resources/js/md5.js" type="text/javascript"></script>
         <script src="/T4U/resources/js/notify.min.js"></script>
+        <script src="/T4U/resources/js/jquery.dataTables.min.js"></script>
         
         <link href="/T4U/resources/css/style_profile.css" rel="stylesheet" type="text/css" media="all" />
         <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:100,200,300,400,500,600,700,800,900' rel='stylesheet' type='text/css'>
@@ -43,8 +44,12 @@
         <link href="/T4U/resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
         <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
         <link href="/T4U/resources/css/style_error.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="/T4U/resources/css/jquery.dataTables.min.css" rel="stylesheet"/>
         <script>
         $(document).ready(function(){
+            $('#example').DataTable({
+                    "oSearch": {"bSmart": false}
+                });
             $('input[type="checkbox"]').bootstrapSwitch('onText',"M",'M');
             $('input[type="checkbox"]').bootstrapSwitch('offText',"F",'F');
             $('input[type="checkbox"]').bootstrapSwitch('offColor',"warning",'warning');
@@ -231,16 +236,7 @@
                                     </div>
                                     
                                     <div class="row">
-                                      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
-                                        <div class="panel panel-info">
-                                          <div class="panel-heading">
-                                            <h3 class="panel-title">Sheena Kristin A.Eschor</h3>
-                                          </div>
-                                          <div class="panel-body">
-                                            <div class="row">
-
-                                             <div class=" col-md-9 col-lg-9 "> 
-                                                <table class="table">
+                                        <table id="example" class="table display" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th></th>
@@ -282,7 +278,7 @@
                                                                 <input type="button" class="btn btn-success" value="<fmt:message key="profile.orderTable.applyRefund"/>" title="Apply Refund" onclick="location.href='<c:out value="${pageContext.request.contextPath}"/>/user/applyRefund?orderId=<c:out value="${order.key}"/>';" />
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                <input type="button" class="btn btn-danger disabled" value="<fmt:message key="profile.orderTable.noAction"/>" title="No Action" />
+                                                                <input type="button" class="btn btn-default disabled" value="<fmt:message key="profile.orderTable.noAction"/>" title="No Action" />
                                                                 </c:otherwise>
                                                             </c:choose>
                                                             </td>
@@ -299,12 +295,7 @@
                                                     </c:forEach>
                                                     </tbody>
                                                 </table>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                        </div>
-                                      </div>
+                                      
                                     </div>
                                   </div>
                                     
