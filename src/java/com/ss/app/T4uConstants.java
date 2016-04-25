@@ -31,6 +31,7 @@ public class T4uConstants {
     public static String T4uPriceToBePaidCash = "t4uNumOfSeatsCash";
     public static String T4uPriceToBePaidPoints = "t4uNumOfSeatsPoints";
     public static String T4uCustomer = "t4uCustomer";
+    public static String T4uCart = "T4uCart";
 
     public static final String T4U_ALLMOVIES = "t4uAllMovies";
     public static final String T4U_CURMOVIE = "t4uCurMovie";

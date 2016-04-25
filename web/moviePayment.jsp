@@ -60,10 +60,6 @@
          <div class=" col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 table-responsive"> 
             <table class="table table-user-information">
               <tbody>
-                 <c:if test="${sessionScope.t4uUser.userGroup == 'officer'}">
-                    <td><fmt:message key="register.label.account"/>:</td>
-                  <td>${userBuying.userName}</td>
-                </c:if>
                 <tr>
                   <td><fmt:message key="payment.form.version"/>:</td>
                   <td>${requestScope.t4uScheduleToBePaid.version.versionName}</td>
@@ -109,7 +105,7 @@
                 
               </tbody>
             </table>
-                
+                <form id="cart" action="T4U/user/myCart" method ="POST"></form>
             <form role="form" method="POST" action="/T4U/pay">
                 <input type="hidden" name="scheduleId" value="${requestScope.t4uScheduleToBePaid.scheduleId}"/>
                 <input type="hidden" name="seats" value="${requestScope.t4uSeatsSelected}"/>
@@ -180,8 +176,11 @@
         });
         $('#addToCart').click(function(){
             
-            $('form').attr('action', '/T4U/user/myCart');
-            $('form').submit();
+            $('#cart').append(
+                    '<input type="hidden" name="scheduleId" value="${requestScope.t4uScheduleToBePaid.scheduleId}"/>'+
+                    '<input type="hidden" name="seats" value="${requestScope.t4uSeatsSelected}"/>'
+                    );
+            $('#cart').submit();
             
             
         });
