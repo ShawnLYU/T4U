@@ -5,19 +5,24 @@
  */
 package com.ss.Controller;
 
+import com.google.gson.Gson;
+import com.ss.Model.T4uOrder;
+import com.ss.app.T4uConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author user
+ * @author mengxualv2
  */
-public class GoToCartServlet extends HttpServlet {
+public class T4uCartPayServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,8 +35,30 @@ public class GoToCartServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/cart.jsp");
-        dispatcher.forward(request, response);
+        int index = Integer.parseInt(request.getParameter("index"));
+        String action = request.getParameter("action");
+        HttpSession session = request.getSession(true);
+        List<T4uOrder> listOfOrder;
+        if(session.getAttribute(T4uConstants.T4uCart)==null){
+            listOfOrder = new ArrayList<T4uOrder>();
+        }
+        else{
+            listOfOrder = (List<T4uOrder>) session.getAttribute(T4uConstants.T4uCart);
+        }
+        if(action.equals("single")){
+            listOfOrder.remove(index);
+        }else{
+            listOfOrder.clear();
+        }
+        session.setAttribute(T4uConstants.T4uCart, listOfOrder);
+        
+        String json = new Gson().toJson(index);
+        response.setContentType("application/json");
+        // Get the printwriter object from response to write the required json object to the output stream      
+        PrintWriter out = response.getWriter();
+        // Assuming your json object is **jsonObject**, perform the following, it will return your json object  
+        out.print(json);
+        out.flush();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
