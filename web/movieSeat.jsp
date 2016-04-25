@@ -1,4 +1,4 @@
-f<%-- 
+<%-- 
     Document   : seatPlan
     Created on : Apr 11, 2016, 8:41:10 PM
     Author     : Steven
@@ -43,7 +43,7 @@ f<%--
         
     </head>
     <body>
-        <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-sm-10 col-sm-offset-1">
             <fmt:bundle basename="${lan}">
             <!-- header-section-starts -->
             <div class="full">

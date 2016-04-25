@@ -43,7 +43,7 @@
         
     </head>
     <body>
-        <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-sm-10 col-sm-offset-1">
             <fmt:bundle basename="${lan}">
             <!-- header-section-starts -->
             <div class="full">
@@ -73,7 +73,7 @@
                                         <form role="form">
                                             <div class="form-group">
                                               <label for="sel1"><fmt:message key="seatPlan.selectSchedule"/>:</label>
-                                              <select class="form-control" id="sel1">
+                                              <select class="form-control input-sm" id="sel1">
                                                 <c:forEach items="${allSchedules}" var="schedule">
                                                     <option value="${schedule.scheduleId}">
                                                         ${schedule.version.movie.movieName}&nbsp;
