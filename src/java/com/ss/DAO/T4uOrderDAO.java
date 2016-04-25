@@ -88,7 +88,7 @@ public class T4uOrderDAO {
         return order;
     }
     
-    public static List<T4uOrder> getWaOrders() {
+    public static List<T4uOrder> getWAOrders() {
         List<T4uOrder> waOrders = new ArrayList<T4uOrder>();
         try {
             Connection conn =  T4uJDBC.connect();
