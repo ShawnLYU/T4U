@@ -103,40 +103,15 @@ public class T4uConfirmPaymentServlet extends HttpServlet {
         }
         HttpSession session = request.getSession(true);
         session.setAttribute(T4uConstants.T4uUser, t4uUser);
-        String identity = t4uUser.getUserGroup();
-        boolean isValid = true;
-        if(identity.equals("officer")){
-            String userAccount = request.getParameter("userAccount");
-            T4uUser t4uCustomer = new T4uUser();
-            t4uCustomer.setUserAccount(userAccount);
-            if(T4uUserDAO.checkAccountExist(t4uCustomer)>0){
-                try {
-                    T4uUserDAO.injectT4uUserByAccount(t4uCustomer);
-                } catch (SQLException ex) {
-                    java.util.logging.Logger.getLogger(T4uConfirmPaymentServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                request.setAttribute(T4uConstants.T4uCustomer, t4uCustomer);
-                
-            }else{
-                isValid = false;
-                LOGGER.debug("officer buying tickets: customer account not existed");
-                
-                session.setAttribute("errorNoCustomer",T4uConstants.ExUserRegisterAccountExisted);
-                response.sendRedirect("/T4U/movie/seat?scheduleId="+scheduleId);
-            }
-        }
-        if(isValid){
-            
-            LOGGER.debug("Schedule id (to be paid) detail: " + scheduleId);
-        
-            request.setAttribute(T4uConstants.T4uScheduleToBePaid, schedule);
-            request.setAttribute(T4uConstants.T4uSeats, seatsVar);
-            double price = seatsVar.size() * schedule.getPrice();
-            request.setAttribute(T4uConstants.T4uPriceToBePaidCash, price);
-            request.setAttribute(T4uConstants.T4uPriceToBePaidPoints, price*10);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/moviePayment.jsp");
-            dispatcher.forward(request, response);
-        }
+        LOGGER.debug("Schedule id (to be paid) detail: " + scheduleId);
+
+        request.setAttribute(T4uConstants.T4uScheduleToBePaid, schedule);
+        request.setAttribute(T4uConstants.T4uSeats, seatsVar);
+        double price = seatsVar.size() * schedule.getPrice();
+        request.setAttribute(T4uConstants.T4uPriceToBePaidCash, price);
+        request.setAttribute(T4uConstants.T4uPriceToBePaidPoints, price*10);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/moviePayment.jsp");
+        dispatcher.forward(request, response);
         
         
         

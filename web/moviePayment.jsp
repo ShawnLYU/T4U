@@ -8,14 +8,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="lan" value="com.ss.i18n.T4uUI" scope="application" />
-<c:choose>
-  <c:when test="${sessionScope.t4uUser.userGroup == 'officer'}">
-    <c:set var="userBuying" value="${requestScope.t4uCustomer}" scope="session" />
-  </c:when>
-  <c:otherwise>
-    <c:set var="userBuying" value="${sessionScope.t4uUser}" scope="session" />
-  </c:otherwise>
-</c:choose>
 <fmt:setBundle basename="com.ss.i18n" />
 <%  String varLocal = request.getParameter("locale");  
         if (varLocal == null || varLocal.equals("")) { 
@@ -60,10 +52,6 @@
          <div class=" col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 table-responsive"> 
             <table class="table table-user-information">
               <tbody>
-                 <c:if test="${sessionScope.t4uUser.userGroup == 'officer'}">
-                    <td><fmt:message key="register.label.account"/>:</td>
-                  <td>${userBuying.userName}</td>
-                </c:if>
                 <tr>
                   <td><fmt:message key="payment.form.version"/>:</td>
                   <td>${requestScope.t4uScheduleToBePaid.version.versionName}</td>
@@ -96,20 +84,17 @@
                   <td><fmt:message key="payment.form.total"/>:</td>
                   <td id="total">${requestScope.t4uNumOfSeatsCash}</td>
                 </tr>
-<!--                
-                <tr>
-                  <td><fmt:message key="payment.form.pricePoints"/>:</td>
-                  <td>${requestScope.t4uNumOfSeatsPoints}</td>
-                </tr>
--->
-                <tr>
-                  <td><fmt:message key="payment.form.userPoints"/>:</td>
-                  <td>${userBuying.userCredit}</td>
-                </tr>
+                <c:if test="${sessionScope.t4uUser.userGroup != 'officer'}">
+                    <tr>
+                    <td><fmt:message key="payment.form.userPoints"/>:</td>
+                    <td>${userBuying.userCredit}</td>
+                  </tr>
+                </c:if>
+                
                 
               </tbody>
             </table>
-                
+                <form id="cart" action="/T4U/user/myCart" method ="POST"></form>
             <form role="form" method="POST" action="/T4U/pay">
                 <input type="hidden" name="scheduleId" value="${requestScope.t4uScheduleToBePaid.scheduleId}"/>
                 <input type="hidden" name="seats" value="${requestScope.t4uSeatsSelected}"/>
@@ -124,14 +109,17 @@
                       <label for="cardPwd"><fmt:message key="payment.form.cardPwd"/></label>
                       <input type="password" class="form-control" id="cardPwd" name="cardPwd" maxlength="3">
                     </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox"> <fmt:message key="payment.form.useCredit"/>
-                        </label>
-                        <div id="payCredit">
-                            
-                        </div>
-                    </div>
+                      <c:if test="${sessionScope.t4uUser.userGroup != 'officer'}">
+                        <div class="checkbox">
+                             <label>
+                                 <input type="checkbox"> <fmt:message key="payment.form.useCredit"/>
+                             </label>
+                             <div id="payCredit">
+
+                             </div>
+                         </div>
+                      </c:if>
+                   
                 
                 <button type="button" id="buy" class="btn btn-primary"><fmt:message key="payment.form.submit"/></button>
                 <c:if test="${sessionScope.t4uUser.userGroup == 'officer'}" >
@@ -158,7 +146,7 @@
             $('td').css("font-family", "monospace");
         });
         $('#buy').click(function(){
-            if($("#demo5").val()> ${userBuying.userCredit}){
+            if($("#demo5").val()> ${sessionScope.t4uUser.userCredit}){
                 showErrorMessage('<fmt:message key="payment.form.notEnoughPoints"/>');
             }else if($("#demo5").val()> ${requestScope.t4uNumOfSeatsPoints}){
                 showErrorMessage('<fmt:message key="payment.form.exceed"/>');
@@ -180,8 +168,11 @@
         });
         $('#addToCart').click(function(){
             
-            $('form').attr('action', '/T4U/user/myCart');
-            $('form').submit();
+            $('#cart').append(
+                    '<input type="hidden" name="scheduleId" value="${requestScope.t4uScheduleToBePaid.scheduleId}"/>'+
+                    '<input type="hidden" name="seats" value="${requestScope.t4uSeatsSelected}"/>'
+                    );
+            $('#cart').submit();
             
             
         });
