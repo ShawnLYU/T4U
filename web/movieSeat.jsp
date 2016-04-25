@@ -1,4 +1,4 @@
-<%-- 
+f<%-- 
     Document   : seatPlan
     Created on : Apr 11, 2016, 8:41:10 PM
     Author     : Steven
@@ -123,6 +123,10 @@
                                 $(document).ready(function() {
                                     <c:if test="${sessionScope.errorNoCustomer != null}" >
                                             showErrorMessage('<fmt:message key="error.login.e1"/>');
+                                    </c:if>
+                                    <c:if test="${sessionScope.errorSeatOccupied == true}">
+                                        showErrorMessage('<fmt:message key="error.payment.seatOccupied"/>');
+                                        <c:remove var="errorSeatOccupied" />
                                     </c:if>
                                     var $cart = $('#selected-seats'),
                                         $counter = $('#counter'),

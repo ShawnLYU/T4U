@@ -18,6 +18,7 @@ public class T4uConstants {
     public static String ExUserRegisterAccountExisted = "error.register.e1";
     public static String ExUserPasswordChanged = "error.update.e1";
     public static String ExSuccessfullyPaid = "error.payment.success";
+    public static String ExSeatOccupied = "errorSeatOccupied";
     public static String ExCustomerAccountNotFound = "error.customerAccountNotFount";
     public static String ExUserNotAuthorised = "error.userNotAuthorised";
     public static String ExUserNotRefundable = "error.userNotRefundable";

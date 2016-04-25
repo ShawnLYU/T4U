@@ -38,16 +38,29 @@ public class T4uArrangeSeatPlanServlet extends HttpServlet {
         try {
             scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
             List<String> allUSeats = Arrays.asList(request.getParameterValues("seats[]"));
-            String uSeats = "";
+            // Check whether the seats are occupied or unavailable in table T4U_schedule
+            String oSeats = T4uScheduleDAO.getOSeatsById(scheduleId);
+            boolean occupied = false;
             for (String seat: allUSeats)
-                uSeats += "'" + seat + "',";
-            if (allUSeats != null && T4uScheduleDAO.updateUSeatsById(scheduleId, uSeats)) {
-                response.setHeader("Content-Type", "text/plain");
-                // Get the printwriter object from response to write the required json object to the output stream      
+                if (oSeats.contains(seat)) {
+                    occupied = true;
+                    break;
+                }
+            if (occupied) {
+                // Seat occupied, need to buy again
                 PrintWriter out = response.getWriter();
-                // Assuming your json object is **jsonObject**, perform the following, it will return your json object  
-                out.print("success");
+                out.print("occupied");
                 out.flush();
+            } else {
+                String uSeats = "";
+                for (String seat: allUSeats)
+                    uSeats += "'" + seat + "',";
+                if (allUSeats != null && T4uScheduleDAO.updateUSeatsById(scheduleId, uSeats)) {
+                    response.setHeader("Content-Type", "text/plain");
+                    PrintWriter out = response.getWriter();
+                    out.print("success");
+                    out.flush();
+                }
             }
         } catch (NumberFormatException ex) {
         }
