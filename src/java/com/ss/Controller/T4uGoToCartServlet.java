@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author user
  */
-public class GoToCartServlet extends HttpServlet {
+public class T4uGoToCartServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

@@ -109,10 +109,6 @@
 							<div class="col-md-12 reviews-grids">
 								<div class="review">
 								<div class="single">
-								</div>
-								<div class="best-review">
-									
-								</div>
 				  			</div>
 
 							<div class="clearfix"></div>

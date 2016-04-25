@@ -28,7 +28,7 @@ import org.apache.log4j.Logger;
  *
  * @author mengxualv2
  */
-public class T4uCartPay extends HttpServlet {
+public class T4uCartPayServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(T4uCartPay.class);
     /**

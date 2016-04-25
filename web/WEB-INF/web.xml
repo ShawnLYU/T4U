@@ -70,11 +70,19 @@
     </servlet>
     <servlet>
         <servlet-name>CartPay</servlet-name>
-        <servlet-class>com.ss.Controller.T4uCartPay</servlet-class>
+        <servlet-class>com.ss.Controller.T4uCartPayServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>GoToCartServlet</servlet-name>
-        <servlet-class>com.ss.Controller.GoToCartServlet</servlet-class>
+        <servlet-class>com.ss.Controller.T4uGoToCartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>T4uGoToSchedule</servlet-name>
+        <servlet-class>com.ss.Controller.T4uGoToScheduleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>T4uCURDScheduleServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uCURDScheduleServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
@@ -159,6 +167,14 @@
     <servlet-mapping>
         <servlet-name>GoToCartServlet</servlet-name>
         <url-pattern>/GoToCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>T4uGoToSchedule</servlet-name>
+        <url-pattern>/T4uGoToSchedule</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>T4uCURDScheduleServlet</servlet-name>
+        <url-pattern>/T4uCURDScheduleServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
