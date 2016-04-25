@@ -206,4 +206,34 @@ public class T4uUserDAO {
         }
         return success;
     }
+    
+    public static T4uUser getUserById(int userId) {
+        T4uUser user = null;
+        try {
+            Connection conn =  T4uJDBC.connect();
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM [T4U_user] WHERE [UserId] = ?");
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs != null && rs.next()){
+                user = new T4uUser();
+                user.setUserId(userId);
+                user.setUserAccount(rs.getNString("UserAccount"));
+                user.setUserPassword(rs.getNString("UserPassword"));
+                user.setUserName(rs.getNString("UserName"));
+                user.setUserGender(rs.getNString("UserGender"));
+                Date birthdate = rs.getDate("UserBirthdate");
+                user.setUserBirthdate(birthdate);
+                user.setUserPhone(rs.getNString("UserPhone"));
+                user.setUserEmail(rs.getNString("UserEmail"));
+                user.setUserCredit(rs.getInt("UserCredit"));
+                user.setUserGroup(rs.getNString("UserGroup"));
+            }
+            T4uJDBC.close(rs, pstmt, conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
 }

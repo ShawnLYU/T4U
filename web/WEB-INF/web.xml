@@ -56,6 +56,10 @@
         <servlet-name>T4uGetSeatPlanServlet</servlet-name>
         <servlet-class>com.ss.Controller.T4uGetSeatPlanServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>T4uApplyRefundServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uApplyRefundServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
         <url-pattern>/user/login.do</url-pattern>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>T4uGetSeatPlanServlet</servlet-name>
         <url-pattern>/manage/getSeatPlan</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>T4uApplyRefundServlet</servlet-name>
+        <url-pattern>/user/applyRefund</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
