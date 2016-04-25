@@ -65,7 +65,7 @@ public class T4uApplyRefundServlet extends HttpServlet {
             } else {
                 // Get current time
                 Date now = Calendar.getInstance().getTime();
-                Timestamp leadTime = new Timestamp(order.getSchedule().getScheduleTimeslot().getTime()-3*24*60*60*1000);
+                Timestamp leadTime = new Timestamp(order.getSchedule().getScheduleTimeslot().getTime()-3*60*60*1000);
                 if (now.after(leadTime)) {
                     // Lead time expired, not refundable
                     request.setAttribute("error", T4uConstants.ExUserNotRefundable);
