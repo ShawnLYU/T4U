@@ -161,4 +161,22 @@ public class T4uScheduleDAO {
         }
         return success;
     }
+    
+    public static boolean updateUSeatsById(int scheduleId, String uSeats) {
+        boolean success = false;
+        try {
+            Connection conn =  T4uJDBC.connect();
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE [T4U_schedule] SET [ScheduleUSeats] = ? WHERE [ScheduleId] = ?");
+            pstmt.setNString(1, uSeats);
+            pstmt.setInt(2, scheduleId);
+            int rows = pstmt.executeUpdate();
+            success = rows > 0;
+            T4uJDBC.close(pstmt, conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return success;
+    }
 }

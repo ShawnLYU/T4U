@@ -34,22 +34,23 @@ public class T4uArrangeSeatPlanServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
-        T4uSchedule t4uSchedule = null;
-        t4uSchedule = T4uScheduleDAO.getScheduleById(scheduleId);
-        List<String> seatsVar = Arrays.asList(request.getParameterValues("seats[]"));
-        
-        
-        
-        
-        
-//        response.setContentType("application/json");
-        response.setHeader("Content-Type", "text/plain");
-        // Get the printwriter object from response to write the required json object to the output stream      
-        PrintWriter out = response.getWriter();
-        // Assuming your json object is **jsonObject**, perform the following, it will return your json object  
-        out.print("sueccessful");
-        out.flush();
+        int scheduleId = 0;
+        try {
+            scheduleId = Integer.parseInt(request.getParameter("scheduleId"));
+            List<String> allUSeats = Arrays.asList(request.getParameterValues("seats[]"));
+            String uSeats = "";
+            for (String seat: allUSeats)
+                uSeats += "'" + seat + "',";
+            if (allUSeats != null && T4uScheduleDAO.updateUSeatsById(scheduleId, uSeats)) {
+                response.setHeader("Content-Type", "text/plain");
+                // Get the printwriter object from response to write the required json object to the output stream      
+                PrintWriter out = response.getWriter();
+                // Assuming your json object is **jsonObject**, perform the following, it will return your json object  
+                out.print("success");
+                out.flush();
+            }
+        } catch (NumberFormatException ex) {
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
