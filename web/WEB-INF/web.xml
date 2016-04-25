@@ -53,8 +53,8 @@
         <servlet-class>com.ss.Controller.T4uArrangeSeatServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>T4uGetSeatPlanServlet</servlet-name>
-        <servlet-class>com.ss.Controller.T4uGetSeatPlanServlet</servlet-class>
+        <servlet-name>ArrangeSeatPlanServlet</servlet-name>
+        <servlet-class>com.ss.Controller.T4uArrangeSeatPlanServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>T4uApplyRefundServlet</servlet-name>
@@ -121,8 +121,8 @@
         <url-pattern>/manage/arrangeSeat</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>T4uGetSeatPlanServlet</servlet-name>
-        <url-pattern>/manage/getSeatPlan</url-pattern>
+        <servlet-name>ArrangeSeatPlanServlet</servlet-name>
+        <url-pattern>/ArrangeSeatPlanServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>T4uApplyRefundServlet</servlet-name>
