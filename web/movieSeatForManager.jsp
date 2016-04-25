@@ -108,9 +108,15 @@
                                                         globalPosition: "top left",
                                                         autoHideDelay: 5000});
                                 }
+                                function showSuccessMessage(msg){
+                                        $.notify(msg, {
+                                                        globalPosition: "top left",
+                                                        autoHideDelay: 5000,
+                                                    className: 'success',});
+                                }
                                 $(document).on('click', '#confirm', function(){
                                     var seatsSeleted = [];
-                                    $('.unavailable').each(function () {
+                                    $('.selected').each(function () {
                                         seatsSeleted.push($(this).attr("id"));
                                      });
                                      $.ajax({
@@ -124,6 +130,7 @@
                                             
                                             error : function(data) {
                                                     $("#sel1").change();
+                                                    showSuccessMessage('<fmt:message key="notify.message.seatPlanSueeccede"/>');
                                             },
                                             success : function(xhr) {
                                                 $("#sel1").change();
@@ -168,24 +175,20 @@
                                                     .attr('id', 'cart-item-'+this.settings.id)
                                                     .data('seatId', this.settings.id)
                                                     .appendTo($cart);
-
                                                 /*
                                                  * Lets update the counter and total
                                                  *
                                                  * .find function will not find the current seat, because it will change its stauts only after return
                                                  * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
                                                  */
-                                                $counter.text(sc.find('selected').length+1);
-
+                                                $counter.text(sc.find('unavailable').length+1);
                                                 return 'unavailable';
                                             } else if (this.status() == 'selected') {
                                                 //update the counter
                                                 $counter.text(sc.find('selected').length-1);
                                                 //and total
-
                                                 //remove the item from our cart
                                                 $('#cart-item-'+this.settings.id).remove();
-
                                                 //seat has been vacated
                                                 return 'available';
                                             } else if (this.status() == 'sold') {
@@ -194,9 +197,8 @@
                                             } else if (this.status() == 'unavailable') {
                                                 //seat was unavailable
                                                 //update the counter
-                                                $counter.text(sc.find('selected').length-1);
+                                                $counter.text(sc.find('unavailable').length-1);
                                                 //and total
-
                                                 //remove the item from our cart
                                                 $('#cart-item-'+this.settings.id).remove();
                                                 return 'available';
@@ -212,11 +214,20 @@
                                         sc.get($(this).parents('li').data('seatId')).click();
                                         return false;
                                     });
-
+                                    
                                     //let's pretend some seats have already been booked
                                     sc.get([<c:out value="${allSchedules[0].scheduleOSeats}" escapeXml="false" />]).status('sold');
                                     sc.get([<c:out value="${allSchedules[0].scheduleUSeats}" escapeXml="false" />]).status('unavailable');
-
+                                    $counter.text(sc.find('unavailable').length);
+                                     $("div").find(".unavailable").each(function(){
+                                                        if(this.id!=''){
+                                                            $('<li class="list-group-item">Seat '+this.id+'&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<b></b> &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="cancel-cart-item">[cancel]</a></li>')
+                                                            .attr('id', 'cart-item-'+this.id)
+                                                            .data('seatId', this.id)
+                                                            .appendTo($cart);
+                                                        }
+                                                        
+                                                    });
                                 });
                                 $("#sel1").change(function(){
                                     $.ajax({
@@ -309,47 +320,42 @@
                                                             ]                   
                                                         },
                                                         click: function () {
-                                                            if (this.status() == 'available') {
-                                                //let's create a new <li> which we'll add to the cart items
-                                                $('<li class="list-group-item">Seat '+this.settings.id+'&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<b></b> &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="cancel-cart-item">[cancel]</a></li>')
-                                                    .attr('id', 'cart-item-'+this.settings.id)
-                                                    .data('seatId', this.settings.id)
-                                                    .appendTo($cart);
-
-                                                /*
-                                                 * Lets update the counter and total
-                                                 *
-                                                 * .find function will not find the current seat, because it will change its stauts only after return
-                                                 * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
-                                                 */
-                                                $counter.text(sc.find('selected').length+1);
-
-                                                return 'unavailable';
-                                            } else if (this.status() == 'selected') {
-                                                //update the counter
-                                                $counter.text(sc.find('selected').length-1);
-                                                //and total
-
-                                                //remove the item from our cart
-                                                $('#cart-item-'+this.settings.id).remove();
-
-                                                //seat has been vacated
-                                                return 'available';
-                                            } else if (this.status() == 'sold') {
-                                                //seat has been already booked
-                                                return 'sold';
-                                            } else if (this.status() == 'unavailable') {
-                                                //seat was unavailable
-                                                //update the counter
-                                                $counter.text(sc.find('selected').length-1);
-                                                //and total
-
-                                                //remove the item from our cart
-                                                $('#cart-item-'+this.settings.id).remove();
-                                                return 'available';
-                                            } else {
-                                                return this.style();
-                                            }
+                                                                if (this.status() == 'available') {
+                                                                    //let's create a new <li> which we'll add to the cart items
+                                                                    $('<li class="list-group-item">Seat '+this.settings.id+'&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<b></b> &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="cancel-cart-item">[cancel]</a></li>')
+                                                                        .attr('id', 'cart-item-'+this.settings.id)
+                                                                        .data('seatId', this.settings.id)
+                                                                        .appendTo($cart);
+                                                                    /*
+                                                                     * Lets update the counter and total
+                                                                     *
+                                                                     * .find function will not find the current seat, because it will change its stauts only after return
+                                                                     * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
+                                                                     */
+                                                                    $counter.text(sc.find('unavailable').length+1);
+                                                                    return 'unavailable';
+                                                                } else if (this.status() == 'selected') {
+                                                                    //update the counter
+                                                                    $counter.text(sc.find('selected').length-1);
+                                                                    //and total
+                                                                    //remove the item from our cart
+                                                                    $('#cart-item-'+this.settings.id).remove();
+                                                                    //seat has been vacated
+                                                                    return 'available';
+                                                                } else if (this.status() == 'sold') {
+                                                                    //seat has been already booked
+                                                                    return 'sold';
+                                                                } else if (this.status() == 'unavailable') {
+                                                                    //seat was unavailable
+                                                                    //update the counter
+                                                                    $counter.text(sc.find('unavailable').length-1);
+                                                                    //and total
+                                                                    //remove the item from our cart
+                                                                    $('#cart-item-'+this.settings.id).remove();
+                                                                    return 'available';
+                                                                } else {
+                                                                    return this.style();
+                                                                }
                                                         }
                                                     });
 
@@ -364,6 +370,17 @@
                                                    
                                                     sc.get(Oseats).status('sold');
                                                     sc.get(Useats).status('unavailable');
+                                                    $counter.text(sc.find('unavailable').length);
+                                                    $("div").find(".unavailable").each(function(){
+                                                        if(this.id!=''){
+                                                            $('<li class="list-group-item">Seat '+this.id+'&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<b></b> &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="cancel-cart-item">[cancel]</a></li>')
+                                                            .attr('id', 'cart-item-'+this.id)
+                                                            .data('seatId', this.id)
+                                                            .appendTo($cart);
+                                                        }
+                                                        
+                                                    });
+                                                    
 
                                             }
                                     });
