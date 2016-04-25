@@ -99,8 +99,8 @@ public class T4uOrderDAO {
                 T4uOrder order = new T4uOrder();
                 order.setOrderId(rs.getLong("OrderId"));
                 order.setOrderDate(rs.getTimestamp("OrderDate"));
-                order.setUserId(rs.getInt("UserId"));
-                order.setScheduleId(rs.getInt("ScheduleId"));
+                order.setUser(T4uUserDAO.getUserById(rs.getInt("UserId")));
+                order.setSchedule(T4uScheduleDAO.getScheduleById(rs.getInt("ScheduleId")));
                 order.setOrderSeats(rs.getNString("OrderSeats"));
                 order.setOrderStatus(rs.getInt("OrderStatus"));
                 order.setOrderCash(rs.getDouble("OrderCash"));
