@@ -288,6 +288,7 @@
                                                                 <fmt:message key="profile.orderTable.orderId"/>: <c:out value="${order.key}"/><br/>
                                                                 <fmt:message key="profile.orderTable.versionName"/>: <c:out value="${order.value.schedule.version.versionName}"/><br/>
                                                                 <fmt:message key="profile.orderTable.houseName"/>: <c:out value="${order.value.schedule.house.houseName}"/><br/>
+                                                                <fmt:message key="profile.orderTable.scheduleTimeslot"/>: <c:out value="${order.value.schedule.scheduleTimeslot}"/><br/>
                                                                 <fmt:message key="profile.orderTable.cinemaLocation"/>: <c:out value="${order.value.schedule.house.cinema.cinemaLocation}"/><br/>
                                                                 <fmt:message key="profile.orderTable.orderCredit"/>: <c:out value="${order.value.orderCredit}"/>
                                                             </td>
