@@ -86,7 +86,7 @@ public class T4uApplyRefundServlet extends HttpServlet {
                 }
             }
         } catch (NumberFormatException ex) {
-            // Error
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "NumberFormatException");
         }
     }
 

@@ -66,7 +66,7 @@
     </servlet>
     <servlet>
         <servlet-name>T4uApproveRefund</servlet-name>
-        <servlet-class>com.ss.Controller.T4uApproveRefund</servlet-class>
+        <servlet-class>com.ss.Controller.T4uApproveRefundServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>

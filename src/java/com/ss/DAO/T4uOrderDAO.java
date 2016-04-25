@@ -162,7 +162,7 @@ public class T4uOrderDAO {
             PreparedStatement pstmt = conn.prepareStatement("UPDATE [T4U_order] SET [OrderStatus]=? WHERE [OrderId]=?");
             pstmt.setInt(1, newStatus);
             pstmt.setLong(2, orderId);
-            if (newStatus != 3 || (newStatus == 3 && operator.getUserGroup().equals("admin"))) {
+            if (newStatus != 3 || (newStatus == 3 && operator.getUserGroup().equals("officer"))) {
                 int rows = pstmt.executeUpdate();
                 success = rows > 0;
             }
