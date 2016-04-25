@@ -116,7 +116,7 @@
                                 }
                                 $(document).on('click', '#confirm', function(){
                                     var seatsSeleted = [];
-                                    $('.selected').each(function () {
+                                    $('.unavailable').each(function () {
                                         seatsSeleted.push($(this).attr("id"));
                                      });
                                      $.ajax({

@@ -148,7 +148,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <table class="table">
+                                                                        <table class="table table-responsive">
                                                                             <tr><td class="info"><fmt:message key="movieDetail.label.genre"/></td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Genre}"/></td></tr>
                                                                             <tr><td class="info"><fmt:message key="movieDetail.label.class"/></td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Class}"/></td></tr>
                                                                             <tr><td class="info"><fmt:message key="movieDetail.label.duration"/></td><td><c:out value="${requestScope.t4uCurMovie.movieInfo.Length}"/></td></tr>
@@ -164,7 +164,7 @@
 								</div>
 								<div class="best-review">
 									<h4><fmt:message key="movieDetail.label.info"/></h4>
-                                                                        <table id="example" class="display" cellspacing="0" width="100%">
+                                                                        <table id="example" class="display col-sm-8 col-sm-offset-2" cellspacing="0" width="100%">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th><fmt:message key="movieDetail.table.head.cinemaName"/></th>

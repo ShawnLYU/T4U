@@ -161,7 +161,7 @@
                                     <a href="${pageContext.request.contextPath}/index"><img src="/T4U/resources/images/logo.png" alt="" /></a>
                                     <p>Movie Theater</p>
                             </div>
-                            <div class="search" style="width:30%">
+                            <div class="search" style="width:40%">
                                 <div  class="btn-group col-sm-6" role="group">
                                     <button type="button" class="btn btn-default col-sm-4" onclick="setLocaleEN();">En</button>
                                     <button type="button" class="btn btn-default col-sm-4 col-sm-offset-4" onclick="setLocaleCN();">简</button>
@@ -179,9 +179,8 @@
                                    <a class="b-home" href="/T4U/login.jsp"><fmt:message key="index.label.login" /></a>
                                 </c:when>
                                 <c:otherwise>
-                                   <div class="container">
                                     <div class="row">
-                                      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+                                      <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2 toppad" >
                                         <div class="panel panel-info">
                                           <div class="panel-heading">
                                             <h3 class="panel-title"><c:out value="${sessionScope.t4uUser.userName}"/></h3>
@@ -236,7 +235,8 @@
                                     </div>
                                     
                                     <div class="row">
-                                        <table id="example" class="table display" cellspacing="0" width="100%">
+                                        
+                                        <table id="example" class="table display col-sm-8 col-sm-offset-2" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th></th>
@@ -295,9 +295,8 @@
                                                     </c:forEach>
                                                     </tbody>
                                                 </table>
-                                      
                                     </div>
-                                  </div>
+                                   
                                     
                                     
                                     
