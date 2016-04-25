@@ -19,7 +19,6 @@
     <%    } else {%>  
         <fmt:setLocale value="zh_HK" scope="session" />  
     <%    } %>
-<c:set var="allWAOrders" value="${sessionScope.t4uAllWAOrders}"/>
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -71,41 +70,39 @@
                                                                         <table id="example" class="display col-sm-8 col-sm-offset-2" cellspacing="0" width="100%">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th><fmt:message key="cart.label.userId"/></th>
                                                                                     <th><fmt:message key="movieDetail.table.head.cinemaName"/></th>
                                                                                     <th><fmt:message key="movieDetail.table.head.houseName"/></th>
                                                                                     <th><fmt:message key="movieDetail.table.head.versionName"/></th>
                                                                                     <th><fmt:message key="movieDetail.table.head.scheduleTimeslot"/></th>
-                                                                                    <th><fmt:message key="movieDetail.table.head.cinemaLocation"/></th>
+                                                                                    <th><fmt:message key="profile.orderTable.orderCash"/></th>
                                                                                     <th><fmt:message key="movieDetail.button.ticketing"/></th>
                                                                                 </tr>
                                                                             </thead>
                                                                             
                                                                             <tbody>
-                                                                                <c:forEach items="${selSchedules}" var="order" varStatus="loop">
+                                                                                <c:forEach items="${sessionScope.T4uCart}" var="order" varStatus="loop">
                                                                                     <tr id='${loop.index}'>
-                                                                                        <td><c:out value="${order.user.userId}"/></td>
-                                                                                        <td><c:out value="${order.schedule.value.house.cinema.cinemaName}"/></td>
-                                                                                        <td><c:out value="${order.schedule.value.house.houseName}"/></td>
-                                                                                        <td><c:out value="${order.schedule.value.version.versionName}"/></td>
-                                                                                        <td><c:out value="${order.schedule.value.scheduleTimeslot}"/></td>
+                                                                                        <td><c:out value="${order.schedule.house.cinema.cinemaName}"/></td>
+                                                                                        <td><c:out value="${order.schedule.house.houseName}"/></td>
+                                                                                        <td><c:out value="${order.schedule.version.versionName}"/></td>
+                                                                                        <td><c:out value="${order.schedule.scheduleTimeslot}"/></td>
                                                                                         <td><c:out value="${order.orderCash}" /></td>
-                                                                                        <td><input type="button" class="btn btn-primary" value="<fmt:message key="movieDetail.button.ticketing"/>" title="Ticketing" onclick=onclick="paySingle(${loop.index})" /></td>
+                                                                                        <td><input type="button" class="btn btn-primary" value="<fmt:message key="movieDetail.button.ticketing"/>" title="Ticketing" onclick="paySingle(${loop.index})" /></td>
                                                                                     </tr>
                                                                                 </c:forEach>
                                                                             </tbody>
                                                                             <tfoot>
                                                                                 <tr>
-                                                                                    <th><fmt:message key="cart.label.userId"/></th>
                                                                                     <th><fmt:message key="movieDetail.table.head.cinemaName"/></th>
                                                                                     <th><fmt:message key="movieDetail.table.head.houseName"/></th>
                                                                                     <th><fmt:message key="movieDetail.table.head.versionName"/></th>
                                                                                     <th><fmt:message key="movieDetail.table.head.scheduleTimeslot"/></th>
-                                                                                    <th><fmt:message key="movieDetail.table.head.versionPrice"/></th>
+                                                                                    <th><fmt:message key="profile.orderTable.orderCash"/></th>
                                                                                     <th><fmt:message key="movieDetail.button.ticketing"/></th>
                                                                                 </tr>
                                                                             </tfoot>
                                                                         </table>
+                                                                                <button type="button" id="all" class="btn btn-warning"><fmt:message key="cart.payAll"/></button>        
 							<div class="col-md-12 reviews-grids">
 								<div class="review">
 								<div class="single">
@@ -125,7 +122,22 @@ $(document).ready(function(){
     $('#example').DataTable({
                     "oSearch": {"bSmart": false}
                 });
-    
+    $("#all").click(function(){
+        $.ajax({
+        url : '/T4U/CartPay',
+        type: "POST",
+        data : {
+                action: 'all'
+       },
+
+        error : function(data) {
+                $("td").remove();
+        },
+        success : function(xhr) {
+                $("td").remove();
+        }
+    });
+    });
     
 });
 function showErrorMessage(msg){
@@ -152,8 +164,8 @@ function paySingle(aIndex){
                 alert(data);
         },
         success : function(xhr) {
-//                var id = xhr.orderId;
-//                $("body").find('#' + id).remove();
+                var id = xhr;
+                $("body").find('#' + id).remove();
                 showSuccessMessage('<fmt:message key="cart.label.paySueecss"/>');
         }
     });

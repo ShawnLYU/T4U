@@ -72,6 +72,10 @@
         <servlet-name>CartPay</servlet-name>
         <servlet-class>com.ss.Controller.T4uCartPay</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GoToCartServlet</servlet-name>
+        <servlet-class>com.ss.Controller.GoToCartServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>T4uUserLoginServlet</servlet-name>
         <url-pattern>/user/login.do</url-pattern>
@@ -151,6 +155,10 @@
     <servlet-mapping>
         <servlet-name>CartPay</servlet-name>
         <url-pattern>/CartPay</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GoToCartServlet</servlet-name>
+        <url-pattern>/GoToCartServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

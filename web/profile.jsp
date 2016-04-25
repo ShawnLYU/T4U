@@ -236,8 +236,8 @@
                                     </div>
                                     
                                     <div class="row">
-                                        
-                                        <table id="example" class="table table-responsive display col-sm-8 col-sm-offset-2" cellspacing="0" width="100%">
+                                        <c:if test="${sessionScope.t4uUser.userGroup != 'officer'}">  
+                                            <table id="example" class="table table-responsive display col-sm-8 col-sm-offset-2" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th class="info" />
@@ -299,6 +299,8 @@
                                                     </c:forEach>
                                                     </tbody>
                                                 </table>
+                                    </c:if>
+                                        
                                     </div>
                                    
                                     
