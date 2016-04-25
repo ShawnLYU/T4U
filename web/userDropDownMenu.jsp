@@ -27,7 +27,7 @@
                                     <li><a href="/T4U/manage/arrangeSeat"><fmt:message key="index.label.arrangeSeat"/></a></li>    
                                     </c:if>
                                     <c:if test="${sessionScope.t4uUser.userGroup == 'officer'}">
-                                    <li><a href="/T4U/manage/approveRefund"><fmt:message key="index.label.approveRefund"/></a></li>    
+                                    <li><a href="/T4U/manage/refundList"><fmt:message key="index.label.approveRefund"/></a></li>    
                                     </c:if>
                                     <li><a href="/T4U/register.jsp"><fmt:message key="index.label.register"/></a></li>
                                     <li class="divider"></li>

@@ -5,27 +5,24 @@
  */
 package com.ss.Controller;
 
+import com.google.gson.Gson;
 import com.ss.DAO.T4uOrderDAO;
-import com.ss.DAO.T4uUserDAO;
 import com.ss.Model.T4uOrder;
-import com.ss.Model.T4uUser;
-import com.ss.app.T4uConstants;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.apache.log4j.Logger;
+import org.json.JSONObject;
 
 /**
  *
- * @author Steven
+ * @author mengxualv2
  */
-public class T4uGetWAOrdersServlet extends HttpServlet {
-    private static final Logger LOGGER = Logger.getLogger(T4uGetWAOrdersServlet.class);
+public class T4uApproveRefund extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,27 +34,18 @@ public class T4uGetWAOrdersServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(true);
-        T4uUser user = (T4uUser)session.getAttribute(T4uConstants.T4uUser);
-        if (user == null) { // User not logged in
-            LOGGER.debug("User has not yet logged in.");
-            String requestUri = request.getRequestURI();
-            LOGGER.debug(String.format("Redirecting to /login.jsp?redirect=%s.", requestUri));
-            request.setAttribute(T4uConstants.T4U_LOGINREDIRECT, requestUri);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
-            dispatcher.forward(request, response);
-        } else if (!user.getUserGroup().equals("officer")) {
-            // Not authorised
-            request.setAttribute("error", T4uConstants.ExUserNotAuthorised);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
-            dispatcher.forward(request, response);
-        } else {
-            // Officer logged in
-            List<T4uOrder> waOrders = T4uOrderDAO.getWAOrders();
-            session.setAttribute(T4uConstants.T4U_ALLWAORDERS, waOrders);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/approveRefund.jsp");
-            dispatcher.forward(request, response);
-        }
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        //you can work here
+        
+        T4uOrder t4uOrder = new T4uOrder();
+        t4uOrder.setOrderId(orderId);
+        String json = new Gson().toJson(t4uOrder);
+        response.setContentType("application/json");
+        // Get the printwriter object from response to write the required json object to the output stream      
+        PrintWriter out = response.getWriter();
+        // Assuming your json object is **jsonObject**, perform the following, it will return your json object  
+        out.print(json);
+        out.flush();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
