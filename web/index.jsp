@@ -108,7 +108,7 @@
                             <a href="${pageContext.request.contextPath}/index"><img src="resources/images/logo.png" alt="" /></a>
                             <p>Movie Theater</p>
                         </div>
-                        <div class="search" style="width:30%">
+                        <div class="search" style="width:40%">
                             <div  class="btn-group col-sm-6" role="group">
                                 <button type="button" class="btn btn-default col-sm-4" onclick="setLocaleEN();">En</button>
                                 <button type="button" class="btn btn-default col-sm-4 col-sm-offset-4" onclick="setLocaleCN();">简</button>

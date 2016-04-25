@@ -130,7 +130,10 @@
                                             
                                             error : function(data) {
                                                     $("#sel1").change();
-                                                    showSuccessMessage('<fmt:message key="notify.message.seatUpdateSuccess"/>');
+                                                    if(data.responseText == 'success')
+                                                        showSuccessMessage('<fmt:message key="notify.message.seatUpdateSuccess"/>');
+                                                    else
+                                                        showErrorMessage('<fmt:message key="notify.message.seatUpdateFailed"/>');
                                             },
                                             success : function(xhr) {
                                                     $("#sel1").change();
