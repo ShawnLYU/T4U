@@ -42,6 +42,7 @@ public class T4uPaymentServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
+        HttpSession session = request.getSession(true);
         // Get request query
         int userId = 0;
         int scheduleId = 0;
@@ -72,6 +73,8 @@ public class T4uPaymentServlet extends HttpServlet {
             }
         if (occupied) {
             // Seat occupied, need to buy again
+            session.setAttribute(T4uConstants.ExSeatOccupied, true);
+            response.sendRedirect(request.getContextPath() + "/movie/seat?scheduleId=" + scheduleId);
         } else {
             long orderId;
             // Add the seats to the Occupied List in table T4U_schedule
@@ -87,7 +90,6 @@ public class T4uPaymentServlet extends HttpServlet {
             T4uUser user = new T4uUser();
             user.setUserId(userId);
             T4uUserDAO.injectT4uUserById(user);
-            HttpSession session = request.getSession(true);
             session.setAttribute(T4uConstants.T4uUser, user);
              //after successful payment
             request.setAttribute("error", T4uConstants.ExSuccessfullyPaid);

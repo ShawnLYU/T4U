@@ -133,7 +133,7 @@
                                                     showSuccessMessage('<fmt:message key="notify.message.seatUpdateSuccess"/>');
                                             },
                                             success : function(xhr) {
-                                                $("#sel1").change();
+                                                    $("#sel1").change();
                                             }
                                         });
                                 });
