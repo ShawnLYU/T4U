@@ -9,16 +9,21 @@ package com.ss.Controller;
 import com.ss.DAO.T4uOrderDAO;
 import com.ss.DAO.T4uScheduleDAO;
 import com.ss.DAO.T4uUserDAO;
+import com.ss.Model.T4uUser;
 import com.ss.app.T4uConstants;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,7 +41,7 @@ public class T4uPaymentServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         // Get request query
         int userId = 0;
         int scheduleId = 0;
@@ -77,14 +82,20 @@ public class T4uPaymentServlet extends HttpServlet {
                 // Create a new order in table T4U_order
                 orderId = T4uOrderDAO.placeOrder(userId, scheduleId, allSeats, orderCash, orderCredit, oldOSeats);
                 // Deduct user's credit
-                T4uUserDAO.deductUserCredit(userId, userCredit - orderCredit + (int)orderCash * 5);
+                T4uUserDAO.deductUserCredit(userId, userCredit - orderCredit + (int)orderCash);
             }
+            T4uUser user = new T4uUser();
+            user.setUserId(userId);
+            T4uUserDAO.injectT4uUserById(user);
+            HttpSession session = request.getSession(true);
+            session.setAttribute(T4uConstants.T4uUser, user);
+             //after successful payment
+            request.setAttribute("error", T4uConstants.ExSuccessfullyPaid);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
         }
         
-        //after successful payment
-        request.setAttribute("error", T4uConstants.ExSuccessfullyPaid);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
-        dispatcher.forward(request, response);
+       
         
         
         
@@ -102,7 +113,11 @@ public class T4uPaymentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uPaymentServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -116,7 +131,11 @@ public class T4uPaymentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uPaymentServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
