@@ -87,42 +87,284 @@
                                             </div>
                                         </form>
                                     </div>
-
-                                    <div class="row">
+                                    <div class="row" id="mySeatChart">
                                         <div id="seat-map">
                                             <div class="front-indicator"><fmt:message key="seat.label.screen"/></div>
                                         </div>
                                         <div class="booking-details">
                                             <div id="legend"></div>
-                                            <h2><fmt:message key="seat.label.detail"/></h2>
-                                            <h3> <fmt:message key="seat.label.selected"/> (<span id="counter">0</span>):</h3>
+                                            <h2><fmt:message key="seatPlan.unavailableDetails"/></h2>
+                                            <h3> <fmt:message key="seatPlan.unavailableSeat"/> (<span id="counter">0</span>):</h3>
                                             <ul id="selected-seats" class="list-group"></ul>
-                                            <fmt:message key="seat.label.total"/>: <b>$<span id="total">0</span></b>
-                                            <button id="pay" class="btn btn-info checkout-button"><fmt:message key="seat.label.checkout"/> &raquo;</button>
+                                            <button id="confirm" class="btn btn-info checkout-button"><fmt:message key="seatPlan.confirm"/> &raquo;</button>
                                         </div>
                                     </div>
                                     
                                 </div>
                             </div>
-                            <form id="myForm" method="POST" action = "/T4U/confirm"></form>  
                             <script>
                                 function showErrorMessage(msg){
                                         $.notify(msg, {
                                                         globalPosition: "top left",
                                                         autoHideDelay: 5000});
                                 }
+                                $(document).on('click', '#confirm', function(){
+                                    var seatsSeleted = [];
+                                    $('.unavailable').each(function () {
+                                        seatsSeleted.push($(this).attr("id"));
+                                     });
+                                     $.ajax({
+                                            url : '/T4U/ArrangeSeatPlanServlet',
+                                            type: "POST",
+                                            dataType:'json',
+                                            data : {
+                                                    seats: seatsSeleted ,
+                                                    scheduleId : $("#sel1").val()
+                                           },
+                                            
+                                            error : function(data) {
+                                                    $("#sel1").change();
+                                            },
+                                            success : function(xhr) {
+                                                $("#sel1").change();
+                                            }
+                                        });
+                                });
+                                $(document).ready(function(){
+                                    var $cart = $('#selected-seats'),
+                                        $counter = $('#counter'),
+                                        sc = $('#seat-map').seatCharts({
+                                        map: <c:out value="${allSchedules[0].house.housePlan}" escapeXml="false" />,
+                                        seats: {
+                                            e: {
+                                                price   : <c:out value="${allSchedules[0].price}" />,
+                                                classes : 'economy-class', //your custom CSS class
+                                                category: 'Economy Class'
+                                            }                   
+
+                                        },
+                                        naming : {
+                                            top : false,
+                                            rows: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
+                                            getLabel : function (character, row, column) {
+                                                return column;
+                                            },
+                                            getId : function(character, row, column) {
+                                                return row + column;
+                                            },
+                                        },
+                                        legend : {
+                                            node : $('#legend'),
+                                            items : [
+                                                [ 'e', 'available',   '<fmt:message key="seat.label.available"/>'],
+                                                [ 'e', 'sold',   '<fmt:message key="seat.label.sold"/>'],
+                                                [ 'e', 'unavailable', '<fmt:message key="seat.label.unavailable"/>']
+                                            ]                   
+                                        },
+                                        click: function () {
+                                            if (this.status() == 'available') {
+                                                //let's create a new <li> which we'll add to the cart items
+                                                $('<li class="list-group-item">Seat '+this.settings.id+'&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<b></b> &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="cancel-cart-item">[cancel]</a></li>')
+                                                    .attr('id', 'cart-item-'+this.settings.id)
+                                                    .data('seatId', this.settings.id)
+                                                    .appendTo($cart);
+
+                                                /*
+                                                 * Lets update the counter and total
+                                                 *
+                                                 * .find function will not find the current seat, because it will change its stauts only after return
+                                                 * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
+                                                 */
+                                                $counter.text(sc.find('selected').length+1);
+
+                                                return 'unavailable';
+                                            } else if (this.status() == 'selected') {
+                                                //update the counter
+                                                $counter.text(sc.find('selected').length-1);
+                                                //and total
+
+                                                //remove the item from our cart
+                                                $('#cart-item-'+this.settings.id).remove();
+
+                                                //seat has been vacated
+                                                return 'available';
+                                            } else if (this.status() == 'sold') {
+                                                //seat has been already booked
+                                                return 'sold';
+                                            } else if (this.status() == 'unavailable') {
+                                                //seat was unavailable
+                                                //update the counter
+                                                $counter.text(sc.find('selected').length-1);
+                                                //and total
+
+                                                //remove the item from our cart
+                                                $('#cart-item-'+this.settings.id).remove();
+                                                return 'available';
+                                            } else {
+                                                return this.style();
+                                            }
+                                        }
+                                    });
+
+                                    //this will handle "[cancel]" link clicks
+                                    $('#selected-seats').on('click', '.cancel-cart-item', function () {
+                                        //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+                                        sc.get($(this).parents('li').data('seatId')).click();
+                                        return false;
+                                    });
+
+                                    //let's pretend some seats have already been booked
+                                    sc.get([<c:out value="${allSchedules[0].scheduleOSeats}" escapeXml="false" />]).status('sold');
+                                    sc.get([<c:out value="${allSchedules[0].scheduleUSeats}" escapeXml="false" />]).status('unavailable');
+
+                                });
                                 $("#sel1").change(function(){
                                     $.ajax({
-                                            url : 'getSeatPlan',
+                                            url : '/T4U/T4uGetAllScheduleServlet',
                                             data : {
                                                     scheduleId : $("#sel1").val()
                                             },
                                             error : function(xhr) {
                                                     alert('Error');
                                             },
-                                            success : function(responseText) {
-                                                    alert('Success');
-                                                    //eval(responseText);
+                                            success : function(jsonObject) {
+//                                                    alert('Success');
+                                                    var price = jsonObject['price'];
+                                                    var housePlan_tmp = jsonObject['house']['housePlan'];
+                                                    var Oseats_tmp = jsonObject['scheduleOSeats'];
+                                                    var Useats_tmp = jsonObject['scheduleUSeats'];
+//                                                    alert(housePlan);
+//                                                    alert(price);
+//                                                    alert(Oseats);
+//                                                    alert(Oseats);
+//                                                    var seats = ['eeee_eeeeeeeeeee_ee','eeee_eeeeeeeeeee_ee','eeee_eeeeeeeeeee_ee','eeee_eeeeeeeeeee_ee','eeee_eeeeeeeeeee_ee','eee__eeeeeeeeeee_ee','_ee__eeeeeeeeeee_ee'];
+                                                    
+                                                    var housePlan = housePlan_tmp.split(",");
+                                                    var Oseats = Oseats_tmp.split(",");
+                                                    var Useats = Useats_tmp.split(",");
+                                                    housePlan.splice(housePlan.length-1,1);
+                                                    Oseats.splice(Oseats.length-1,1);
+                                                    Useats.splice(Useats.length-1,1);
+                                                    var arrayLength = Oseats.length;
+                                                    for (var i = 0; i < arrayLength; i++) {
+                                                        Oseats[i] = Oseats[i].substring(1,Oseats[i].length-1);
+                                                    }
+                                                    var useatsLength = Useats.length;
+                                                    for (var i = 0; i < useatsLength; i++) {
+                                                        Useats[i] = Useats[i].substring(1,Useats[i].length-1);
+                                                    }
+                                                    var housePlanLength = housePlan.length;
+                                                    housePlan[0] = housePlan[0].substring(2,housePlan[0].length-1);
+                                                    for (var i = 1; i < housePlanLength; i++) {
+                                                        housePlan[i] = housePlan[i].substring(1,housePlan[i].length-1);
+                                                    }
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    //jsonObject['house']['housePlan']
+                                                    //clear original
+                                                    $("#mySeatChart").html('');
+                                                    $("#mySeatChart").append(
+                                                            '<div id="seat-map">'+
+                                                                '<div class="front-indicator"><fmt:message key="seat.label.screen"/></div>'+
+                                                            '</div>'+
+                                                            '<div class="booking-details">'+
+                                                                '<div id="legend"></div>'+
+                                                                '<h2><fmt:message key="seatPlan.unavailableDetails"/></h2>'+
+                                                                '<h3> <fmt:message key="seatPlan.unavailableSeat"/> (<span id="counter">0</span>):</h3>'+
+                                                                '<ul id="selected-seats" class="list-group"></ul>'+
+                                                                '<button id="confirm" class="btn btn-info checkout-button"><fmt:message key="seatPlan.confirm"/> &raquo;</button>'+
+                                                            '</div>'
+                                                    );  
+                                                    var $cart = $('#selected-seats'),
+                                                        $counter = $('#counter'),
+                                                        sc = $('#seat-map').seatCharts({
+                                                        map: housePlan,
+                                                        seats: {
+                                                            e: {
+                                                                price   : jsonObject['price'],
+                                                                classes : 'economy-class', //your custom CSS class
+                                                                category: 'Economy Class'
+                                                            }                   
+
+                                                        },
+                                                        naming : {
+                                                            top : false,
+                                                            rows: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
+                                                            getLabel : function (character, row, column) {
+                                                                return column;
+                                                            },
+                                                            getId : function(character, row, column) {
+                                                                return row + column;
+                                                            },
+                                                        },
+                                                        legend : {
+                                                            node : $('#legend'),
+                                                            items : [
+                                                                [ 'e', 'available',   '<fmt:message key="seat.label.available"/>'],
+                                                                [ 'e', 'sold',   '<fmt:message key="seat.label.sold"/>'],
+                                                                [ 'e', 'unavailable', '<fmt:message key="seat.label.unavailable"/>']
+                                                            ]                   
+                                                        },
+                                                        click: function () {
+                                                            if (this.status() == 'available') {
+                                                //let's create a new <li> which we'll add to the cart items
+                                                $('<li class="list-group-item">Seat '+this.settings.id+'&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<b></b> &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="cancel-cart-item">[cancel]</a></li>')
+                                                    .attr('id', 'cart-item-'+this.settings.id)
+                                                    .data('seatId', this.settings.id)
+                                                    .appendTo($cart);
+
+                                                /*
+                                                 * Lets update the counter and total
+                                                 *
+                                                 * .find function will not find the current seat, because it will change its stauts only after return
+                                                 * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
+                                                 */
+                                                $counter.text(sc.find('selected').length+1);
+
+                                                return 'unavailable';
+                                            } else if (this.status() == 'selected') {
+                                                //update the counter
+                                                $counter.text(sc.find('selected').length-1);
+                                                //and total
+
+                                                //remove the item from our cart
+                                                $('#cart-item-'+this.settings.id).remove();
+
+                                                //seat has been vacated
+                                                return 'available';
+                                            } else if (this.status() == 'sold') {
+                                                //seat has been already booked
+                                                return 'sold';
+                                            } else if (this.status() == 'unavailable') {
+                                                //seat was unavailable
+                                                //update the counter
+                                                $counter.text(sc.find('selected').length-1);
+                                                //and total
+
+                                                //remove the item from our cart
+                                                $('#cart-item-'+this.settings.id).remove();
+                                                return 'available';
+                                            } else {
+                                                return this.style();
+                                            }
+                                                        }
+                                                    });
+
+                                                    //this will handle "[cancel]" link clicks
+                                                    $('#selected-seats').on('click', '.cancel-cart-item', function () {
+                                                        //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+                                                        sc.get($(this).parents('li').data('seatId')).click();
+                                                        return false;
+                                                    });
+
+                                                    //let's pretend some seats have already been booked
+                                                   
+                                                    sc.get(Oseats).status('sold');
+                                                    sc.get(Useats).status('unavailable');
+
                                             }
                                     });
                                 });

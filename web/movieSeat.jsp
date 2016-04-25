@@ -113,7 +113,6 @@
                                     $("#customerAccount").val('');
                                     $('#myModal').modal('toggle');
                                 });
-
                             </script>
                             <script>
                                 function showErrorMessage(msg){
@@ -136,7 +135,6 @@
                                                 classes : 'economy-class', //your custom CSS class
                                                 category: 'Economy Class'
                                             }                   
-
                                         },
                                         naming : {
                                             top : false,
@@ -163,7 +161,6 @@
                                                     .attr('id', 'cart-item-'+this.settings.id)
                                                     .data('seatId', this.settings.id)
                                                     .appendTo($cart);
-
                                                 /*
                                                  * Lets update the counter and total
                                                  *
@@ -172,17 +169,14 @@
                                                  */
                                                 $counter.text(sc.find('selected').length+1);
                                                 $total.text(recalculateTotal(sc)+this.data().price);
-
                                                 return 'selected';
                                             } else if (this.status() == 'selected') {
                                                 //update the counter
                                                 $counter.text(sc.find('selected').length-1);
                                                 //and total
                                                 $total.text(recalculateTotal(sc)-this.data().price);
-
                                                 //remove the item from our cart
                                                 $('#cart-item-'+this.settings.id).remove();
-
                                                 //seat has been vacated
                                                 return 'available';
                                             } else if (this.status() == 'sold') {
@@ -196,18 +190,15 @@
                                             }
                                         }
                                     });
-
                                     //this will handle "[cancel]" link clicks
                                     $('#selected-seats').on('click', '.cancel-cart-item', function () {
                                         //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
                                         sc.get($(this).parents('li').data('seatId')).click();
                                         return false;
                                     });
-
                                     //let's pretend some seats have already been booked
                                     sc.get([<c:out value="${schedule.scheduleOSeats}" escapeXml="false" />]).status('sold');
                                     sc.get([<c:out value="${schedule.scheduleUSeats}" escapeXml="false" />]).status('unavailable');
-
                                 });
                                 
                                 $("#pay").click(function(){
@@ -224,9 +215,6 @@
                                     }
                                         
                                     </c:if>
-
-
-
                                      else{
                                         $('#myForm').append('<input type="hidden" name="seats" value='+seatsSeleted+' />');
                                         $('#myForm').append('<input type="hidden" name="scheduleId" value="${schedule.scheduleId}" />');
@@ -238,18 +226,14 @@
                                         $("#myForm").submit(); 
                                      }
                                 });
-
                                 function recalculateTotal(sc) {
                                     var total = 0;
-
                                     //basically find every selected seat and sum its price
                                     sc.find('selected').each(function () {
                                         total += this.data().price;
                                     });
-
                                     return total;
                                 }
-
                             </script>
                         </div>		
                     </div>
