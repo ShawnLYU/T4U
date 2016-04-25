@@ -116,7 +116,7 @@
                                 }
                                 $(document).on('click', '#confirm', function(){
                                     var seatsSeleted = [];
-                                    $('.selected').each(function () {
+                                    $('.unavailable').each(function () {
                                         seatsSeleted.push($(this).attr("id"));
                                      });
                                      $.ajax({
@@ -130,7 +130,7 @@
                                             
                                             error : function(data) {
                                                     $("#sel1").change();
-                                                    showSuccessMessage('<fmt:message key="notify.message.seatPlanSueeccede"/>');
+                                                    showSuccessMessage('<fmt:message key="notify.message.seatUpdateSuccess"/>');
                                             },
                                             success : function(xhr) {
                                                 $("#sel1").change();
