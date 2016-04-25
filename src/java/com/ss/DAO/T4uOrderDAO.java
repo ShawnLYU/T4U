@@ -39,6 +39,7 @@ public class T4uOrderDAO {
                 // Set order
                 T4uOrder order = new T4uOrder();
                 long orderId = rs.getLong("OrderId");
+                order.setOrderId(orderId);
                 Timestamp orderDate = rs.getTimestamp("OrderDate");
                 order.setOrderDate(orderDate);
                 order.setUser(user);
@@ -56,6 +57,35 @@ public class T4uOrderDAO {
             Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return allOrders;
+    }
+    
+    public static T4uOrder getOrderById(long orderId) {
+        T4uOrder order = null;
+        try {
+            Connection conn =  T4uJDBC.connect();
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM [T4U_order] WHERE [OrderId]= ? ");
+            pstmt.setLong(1, orderId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                // Set order
+                order = new T4uOrder();
+                order.setOrderId(orderId);
+                Timestamp orderDate = rs.getTimestamp("OrderDate");
+                order.setOrderDate(orderDate);
+                order.setUser(T4uUserDAO.getUserById(rs.getInt("UserId")));
+                order.setSchedule(T4uScheduleDAO.getScheduleById(rs.getInt("ScheduleId")));
+                order.setOrderSeats(rs.getNString("OrderSeats"));
+                order.setOrderStatus(rs.getInt("OrderStatus"));
+                order.setOrderCash(rs.getDouble("OrderCash"));
+                order.setOrderCredit(rs.getInt("OrderCredit"));
+            }
+            T4uJDBC.close(rs, pstmt, conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return order;
     }
     
     public static List<T4uOrder> getWaOrders() {
@@ -123,42 +153,24 @@ public class T4uOrderDAO {
         return orderId;
     }
     
-    public static void changeOrderStatus(long orderId, int newStatus, T4uUser operator) {
+    public static boolean changeOrderStatus(long orderId, int newStatus, T4uUser operator) {
+        boolean success = false;
         try {
             Connection conn =  T4uJDBC.connect();
-            // Check whether paid all by credit
-            PreparedStatement pstmt = conn.prepareStatement("SELECT [OrderCash] FROM [T4U_order] WHERE [OrderId]=?");
-            pstmt.setLong(1, orderId);
-            ResultSet rs = pstmt.executeQuery();
-            boolean isRefundable = false;
-            if (rs.next()) {
-                double orderCash = rs.getDouble("OrderCash");
-                if (orderCash > 0)
-                    isRefundable = true;
-            }
-            rs.close();
-            pstmt.close();
-            if (isRefundable && (newStatus == 3 && operator.getUserGroup().equals("admin"))) {
-                // Update status
-                pstmt = conn.prepareStatement("UPDATE [T4U_order] SET [OrderStatus]=? WHERE [OrderId]=?");
-                pstmt.setInt(1, newStatus);
-                pstmt.setLong(2, orderId);
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE [T4U_order] SET [OrderStatus]=? WHERE [OrderId]=?");
+            pstmt.setInt(1, newStatus);
+            pstmt.setLong(2, orderId);
+            if (newStatus != 3 || (newStatus == 3 && operator.getUserGroup().equals("admin"))) {
                 int rows = pstmt.executeUpdate();
-                if (rows > 0) {
-                    // Update succeed
-                } else {
-                    // Error
-                }
-            } else {
-                // Error
+                success = rows > 0;
             }
-            T4uJDBC.close(rs, pstmt, conn);
+            T4uJDBC.close(pstmt, conn);
         } catch (SQLException ex) {
             Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(T4uOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // Refresh page
+        return success;
     }
     
 }

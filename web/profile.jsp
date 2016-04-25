@@ -244,55 +244,61 @@
                                                     <thead>
                                                         <tr>
                                                             <th></th>
-                                                            <th><fmt:message key="profile.label.date"/></th>
-                                                            <th><fmt:message key="profile.label.movie"/></th>
-                                                            <th><fmt:message key="profile.label.cinema"/></th>
-                                                            <th><fmt:message key="profile.label.orderStatus"/></th>
-                                                            <th><fmt:message key="profile.label.orderCash"/></th>
-                                                            <th><fmt:message key="profile.label.orderAction"/></th>
+                                                            <th><fmt:message key="profile.orderTable.orderDate"/></th>
+                                                            <th><fmt:message key="profile.orderTable.movieName"/></th>
+                                                            <th><fmt:message key="profile.orderTable.cinemaName"/></th>
+                                                            <th><fmt:message key="profile.orderTable.orderStatus"/></th>
+                                                            <th><fmt:message key="profile.orderTable.orderCash"/></th>
+                                                            <th><fmt:message key="profile.orderTable.orderAction"/></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                     <c:forEach items="${allOrders}" var="order">
                                                         <tr>
-                                                            <td>+</td>
+                                                            <td><input type="button" class="btn btn-link" value="+" data-toggle="collapse" data-target="#order-<c:out value="${order.key}"/>"/></td>
                                                             <td><c:out value="${order.value.orderDate}"/></td>
                                                             <td><c:out value="${order.value.schedule.version.movie.movieName}"/></td>
                                                             <td><c:out value="${order.value.schedule.house.cinema.cinemaName}"/></td>
                                                             <td>
                                                             <c:choose>
                                                                 <c:when test="${(order.value.orderStatus==1)}">
-                                                                    <fmt:message key="profile.label.statusPaid"/>
+                                                                    <fmt:message key="profile.orderTable.statusPaid"/>
                                                                 </c:when>
                                                                 <c:when test="${(order.value.orderStatus==2)}">
-                                                                    <fmt:message key="profile.label.statusPending"/>
+                                                                    <fmt:message key="profile.orderTable.statusPending"/>
                                                                 </c:when>
                                                                 <c:when test="${(order.value.orderStatus==3)}">
-                                                                    <fmt:message key="profile.label.statusRefunded"/>
+                                                                    <fmt:message key="profile.orderTable.statusRefunded"/>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <fmt:message key="profile.label.statusUnmanaged"/>
+                                                                    <fmt:message key="profile.orderTable.statusUnmanaged"/>
                                                                 </c:otherwise>
                                                             </c:choose>    
                                                             </td>
                                                             <td><c:out value="${order.value.orderCash}"/></td>
                                                             <td>
                                                             <c:choose>
-                                                                <c:when test="${(order.value.orderStatus==1) && (order.value.orderCash>0)}">
-                                                                    <fmt:message key="profile.label.applyRefund"/>
+                                                                <c:when test="${(order.value.orderStatus==1) && (order.value.orderCredit<=0)}">
+                                                                <input type="button" class="btn btn-success" value="<fmt:message key="profile.orderTable.applyRefund"/>" title="Apply Refund" onclick="location.href='<c:out value="${pageContext.request.contextPath}"/>/user/applyRefund?orderId=<c:out value="${order.key}"/>';" />
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <fmt:message key="profile.label.noAction"/>
+                                                                <input type="button" class="btn btn-danger disabled" value="<fmt:message key="profile.orderTable.noAction"/>" title="No Action" />
                                                                 </c:otherwise>
                                                             </c:choose>
+                                                            </td>
+                                                        </tr>
+                                                        <tr id="order-<c:out value="${order.key}"/>" class="collapse">
+                                                            <td colspan="7" class="text-left">
+                                                                <fmt:message key="profile.orderTable.orderId"/>: <c:out value="${order.key}"/><br/>
+                                                                <fmt:message key="profile.orderTable.versionName"/>: <c:out value="${order.value.schedule.version.versionName}"/><br/>
+                                                                <fmt:message key="profile.orderTable.houseName"/>: <c:out value="${order.value.schedule.house.houseName}"/><br/>
+                                                                <fmt:message key="profile.orderTable.cinemaLocation"/>: <c:out value="${order.value.schedule.house.cinema.cinemaLocation}"/><br/>
+                                                                <fmt:message key="profile.orderTable.orderCredit"/>: <c:out value="${order.value.orderCredit}"/>
                                                             </td>
                                                         </tr>
                                                     </c:forEach>
                                                     </tbody>
                                                 </table>
-
-                                                <a href="#" class="btn btn-primary">My Sales Performance</a>
-                                                <a href="#" class="btn btn-primary">Team Sales Performance</a>
                                               </div>
                                             </div>
                                           </div>
