@@ -6,14 +6,11 @@
 package com.ss.Controller;
 
 import com.ss.DAO.T4uOrderDAO;
-import com.ss.DAO.T4uScheduleDAO;
 import com.ss.Model.T4uOrder;
 import com.ss.Model.T4uUser;
 import com.ss.app.T4uConstants;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,9 +23,8 @@ import org.apache.log4j.Logger;
  *
  * @author Steven
  */
-public class T4uApplyRefundServlet extends HttpServlet {
-
-    private static final Logger LOGGER = Logger.getLogger(T4uApplyRefundServlet.class);
+public class T4uGetWAOrdersServlet extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(T4uGetWAOrdersServlet.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,44 +45,17 @@ public class T4uApplyRefundServlet extends HttpServlet {
             request.setAttribute(T4uConstants.T4U_LOGINREDIRECT, requestUri);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
-        } else try { // User logged in
-            long orderId = Long.parseLong(request.getParameter("orderId"));
-            T4uOrder order = T4uOrderDAO.getOrderById(orderId);
-            if (order.getUserId() != user.getUserId()) {
-                // Not authorised, only user himself can cancel order
-                request.setAttribute("error", T4uConstants.ExUserNotAuthorised);
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
-                dispatcher.forward(request, response);
-            } else if (order.getOrderCredit() > 0) {
-                // Credit used, not refundable
-                request.setAttribute("error", T4uConstants.ExUserNotRefundable);
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
-                dispatcher.forward(request, response);
-            } else {
-                // Get current time
-                Date now = Calendar.getInstance().getTime();
-                Timestamp leadTime = new Timestamp(order.getSchedule().getScheduleTimeslot().getTime()-3*24*60*60*1000);
-                if (now.after(leadTime)) {
-                    // Lead time expired, not refundable
-                    request.setAttribute("error", T4uConstants.ExUserNotRefundable);
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
-                    dispatcher.forward(request, response);
-                } else {
-                    if (T4uOrderDAO.changeOrderStatus(orderId, 2, user)) { // Refund
-                        // Release Seats
-                        String releaseSeats = order.getOrderSeats();
-                        String allSeats = order.getSchedule().getScheduleOSeats();
-                        String newSeats = allSeats.replace(releaseSeats, "");
-                        T4uScheduleDAO.updateOSeatsById(order.getScheduleId(), newSeats);
-                        // Success
-                        request.setAttribute("error", T4uConstants.ExSuccessfullyApplyRefund);
-                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
-                        dispatcher.forward(request, response);
-                    }
-                }
-            }
-        } catch (NumberFormatException ex) {
-            // Error
+        } else if (!user.getUserGroup().equals("officer")) {
+            // Not authorised
+            request.setAttribute("error", T4uConstants.ExUserNotAuthorised);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            // Officer logged in
+            List<T4uOrder> waOrders = T4uOrderDAO.getWAOrders();
+            request.setAttribute(T4uConstants.T4U_ALLWAORDERS, waOrders);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/approveRefund.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
