@@ -94,6 +94,16 @@ public class T4uCURDScheduleServlet extends HttpServlet {
                         }
                         break;
                     case "update":
+                        String dateUpdate = request.getParameter("scheduleTimeslot");
+                        SimpleDateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+                        Date date = null;
+                        java.sql.Date sqlDate = null;
+                        try {
+                            date = sourceFormat.parse(dateUpdate);
+                            sqlDate = new java.sql.Date(date.getTime());
+                        } catch (ParseException ex) {
+                            java.util.logging.Logger.getLogger(T4uRegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         break;
                     case "delete":
                         break;
