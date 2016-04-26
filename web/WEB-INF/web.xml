@@ -174,7 +174,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>T4uCURDScheduleServlet</servlet-name>
-        <url-pattern>/T4uCURDScheduleServlet</url-pattern>
+        <url-pattern>/manage/updateSchedule</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
