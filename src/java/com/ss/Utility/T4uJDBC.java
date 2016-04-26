@@ -23,7 +23,7 @@ public class T4uJDBC {
         Connection conn = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection(T4uConstants.DBURL, T4uConstants.DBUSER, T4uConstants.DBPWD);//no need anymore since JDBC API 4.0
+            conn = DriverManager.getConnection(DBURL, DBUSER, DBPWD);//no need anymore since JDBC API 4.0
         } catch (SQLException ex) {
             Logger.getLogger(T4uJDBC.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Cannot connect to database:\n" + ex.getMessage());
