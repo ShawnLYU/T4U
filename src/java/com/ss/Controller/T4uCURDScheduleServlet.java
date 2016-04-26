@@ -66,50 +66,109 @@ public class T4uCURDScheduleServlet extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
             dispatcher.forward(request, response);
         } else { // Logged in as admin
+            // Get request
             String action = request.getParameter("action");
+            String oSeats = null;
+            int versionId = 0;
+            int houseId = 0;
+            SimpleDateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+            Date date = null;
+            java.sql.Date sqlDate = null;
+            Timestamp scheduleTimeslot = null;
+            //
             if (action != null) {
                 switch (action) {
                     case "insert":
-                        int versionId = Integer.parseInt(request.getParameter("versionId"));
-                        int houseId = Integer.parseInt(request.getParameter("houseId"));
-                        SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-                        Date uDate = null;
-                        java.sql.Date sqlDate = null;
+                        versionId = Integer.parseInt(request.getParameter("versionId"));
+                        houseId = Integer.parseInt(request.getParameter("houseId"));
+                        String dateInsert = request.getParameter("scheduleTimeslot");
                         try {
-                            uDate = sourceFormat.parse(request.getParameter("scheduleTimeslot"));
-                            sqlDate = new java.sql.Date(uDate.getTime());
+                            date = sourceFormat.parse(dateInsert);
+                            scheduleTimeslot = new Timestamp(date.getTime());
                         } catch (ParseException ex) {
-                            java.util.logging.Logger.getLogger(T4uCURDScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            java.util.logging.Logger.getLogger(T4uRegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        double price = Double.parseDouble(request.getParameter("price"));
-                        if (T4uScheduleDAO.insertSchedule(versionId, houseId, sqlDate, price)) {
+                        if (T4uScheduleDAO.insertSchedule(versionId, houseId, scheduleTimeslot) > 0) {
                             // Successfully insert
                             List<Integer> allScheduleIds = T4uScheduleDAO.getAllScheduleIds();
                             List<T4uSchedule> allSchedules = new ArrayList<T4uSchedule>();
+                            for (int scheduleId: allScheduleIds)
+                                allSchedules.add(T4uScheduleDAO.getScheduleById(scheduleId));
                             session.setAttribute(T4uConstants.T4uAllSchedules,allSchedules);
-                            request.setAttribute("success", T4uConstants.ExScheduleInsertSuccess);
+                            request.setAttribute("success", T4uConstants.ExScheduleSuccess);
                             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/schedules.jsp");
                             dispatcher.forward(request, response);
                         } else {
                             // Error
-                            request.setAttribute("error", T4uConstants.ExScheduleInsertError);
+                            request.setAttribute("error", T4uConstants.ExScheduleError);
                             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
                             dispatcher.forward(request, response);
                         }
                         break;
                     case "update":
-                        String dateUpdate = request.getParameter("scheduleTimeslot");
-                        SimpleDateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-                        Date date = null;
-                        java.sql.Date sqlDate = null;
-                        try {
-                            date = sourceFormat.parse(dateUpdate);
-                            sqlDate = new java.sql.Date(date.getTime());
-                        } catch (ParseException ex) {
-                            java.util.logging.Logger.getLogger(T4uRegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        int scheduleIdUpdate = Integer.parseInt(request.getParameter("scheduleIdUpdate"));
+                        oSeats = T4uScheduleDAO.getOSeatsById(scheduleIdUpdate);
+                        if (oSeats == null || oSeats.equals("")) {
+                            // No seats occupied, allow update
+                            versionId = Integer.parseInt(request.getParameter("versionId"));
+                            houseId = Integer.parseInt(request.getParameter("houseId"));
+                            String dateUpdate = request.getParameter("scheduleTimeslot");
+                            try {
+                                date = sourceFormat.parse(dateUpdate);
+                                scheduleTimeslot = new Timestamp(date.getTime());
+                            } catch (ParseException ex) {
+                                java.util.logging.Logger.getLogger(T4uRegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if (T4uScheduleDAO.updateSchedule(scheduleIdUpdate, versionId, houseId, scheduleTimeslot)) {
+                                // Successfully insert
+                                List<Integer> allScheduleIds = T4uScheduleDAO.getAllScheduleIds();
+                                List<T4uSchedule> allSchedules = new ArrayList<T4uSchedule>();
+                                for (int scheduleId: allScheduleIds)
+                                    allSchedules.add(T4uScheduleDAO.getScheduleById(scheduleId));
+                                session.setAttribute(T4uConstants.T4uAllSchedules,allSchedules);
+                                request.setAttribute("success", T4uConstants.ExScheduleSuccess);
+                                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/schedules.jsp");
+                                dispatcher.forward(request, response);
+                            } else {
+                                // Error
+                                request.setAttribute("error", T4uConstants.ExScheduleError);
+                                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
+                                dispatcher.forward(request, response);
+                            }
+                        } else {
+                            // Not allow update
+                            request.setAttribute("error", T4uConstants.ExScheduleAlreadyOccupied);
+                            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/schedules.jsp");
+                            dispatcher.forward(request, response);
                         }
                         break;
                     case "delete":
+                        int scheduleIdDelete = Integer.parseInt(request.getParameter("scheduleIdDelete"));
+                        oSeats = T4uScheduleDAO.getOSeatsById(scheduleIdDelete);
+                        if (oSeats == null || oSeats.equals("")) {
+                            // No seats occupied, allow delete
+                            if (T4uScheduleDAO.deleteSchedule(scheduleIdDelete)) {
+                                // Successfully insert
+                                List<Integer> allScheduleIds = T4uScheduleDAO.getAllScheduleIds();
+                                List<T4uSchedule> allSchedules = new ArrayList<T4uSchedule>();
+                                for (int scheduleId: allScheduleIds)
+                                    allSchedules.add(T4uScheduleDAO.getScheduleById(scheduleId));
+                                session.setAttribute(T4uConstants.T4uAllSchedules,allSchedules);
+                                request.setAttribute("success", T4uConstants.ExScheduleSuccess);
+                                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/schedules.jsp");
+                                dispatcher.forward(request, response);
+                            } else {
+                                // Error
+                                request.setAttribute("error", T4uConstants.ExScheduleError);
+                                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
+                                dispatcher.forward(request, response);
+                            }
+                        } else {
+                            // Not allow update
+                            request.setAttribute("error", T4uConstants.ExScheduleAlreadyOccupied);
+                            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/schedules.jsp");
+                            dispatcher.forward(request, response);
+                        }
                         break;
                 }
             }
