@@ -50,9 +50,9 @@ public class T4uConstants {
     public static final String T4U_ALLWAORDERS = "t4uAllWAOrders";
     
     //configuration
-    public static final String DBURL = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad049_db;";
-    public static final String DBUSER = "aiad049";
-    public static final String DBPWD = "aiad049";
+    public static final String DBURL = "jdbc:sqlserver://...;";
+    public static final String DBUSER = "usrName";
+    public static final String DBPWD = "usrPwd";
  
 
 }
