@@ -23,10 +23,10 @@
                                     <li><a href="/T4U/login.jsp"><fmt:message key="index.label.login"/></a></li>
                                         </c:otherwise>
                                     </c:choose>
-                                    <li><a href="/T4U/T4uGoToSchedule"><fmt:message key="index.label.schedule"/></a></li>    
+                                    
                                     <c:if test="${sessionScope.t4uUser.userGroup == 'admin'}">
                                     <li><a href="/T4U/manage/arrangeSeat"><fmt:message key="index.label.arrangeSeat"/></a></li>    
-                                    
+                                    <li><a href="/T4U/T4uGoToSchedule"><fmt:message key="index.label.schedule"/></a></li>    
                                     </c:if>
                                     <c:if test="${sessionScope.t4uUser.userGroup == 'officer'}">
                                     <li><a href="/T4U/manage/refundList"><fmt:message key="index.label.approveRefund"/></a></li>    

@@ -184,7 +184,6 @@
                             <label>Mar 9 2016</label>
                             <p>Captain America might be taken off Iron Man’s Christmas list this year. The two Avengers find themselves on opposite sides of an ideological debate about government oversight, and the rest of the Avengers are forced to take sides and face off in Marvel Studios’ soon-to-be blockbuster Captain America: Civil War. (SCMP)</p>
                         </div>
-                        <a class="more" href="#">MORE</a>
                     </div>
                     <div class="clearfix">
 
