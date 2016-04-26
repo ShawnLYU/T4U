@@ -25,6 +25,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="Disclaimer:This web site exists to fulfill the coursework requirement of CS4280.Do not use your real personal data as input.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Cinema</title>
         <!-- start plugins -->
