@@ -50,14 +50,20 @@
         <link href="resources/css/jquery.bootstrap-touchspin.css" rel="stylesheet" type='text/css' />
         <script>
         $(document).ready(function(){
+            <c:if test="${not empty requestScope.error}" >
+                    showErrorMessage('<fmt:message key="schedule.msg.error" />');
+            </c:if>
+                <c:if test="${not empty requestScope.success}" >
+                    showSuccessMessage('<fmt:message key="schedule.msg.success" />');
+            </c:if>
             var allHouses = [];
             var allCinemas = [];
             var aCinemaName;
             <c:forEach items="${sessionScope.T4uAllHouses}" var="house">
-                   allHouses.push('${house.value.houseId}');
+                allHouses.push('${house.value.houseId}');
             </c:forEach>
             <c:forEach items="${sessionScope.T4uAllHouses}" var="house">
-               allCinemas.push('${house.value.cinema.cinemaName}');
+                allCinemas.push('${house.value.cinema.cinemaName}');
             </c:forEach>
             var table = $('#example').DataTable( {
                 "oSearch": {"bSmart": false}
@@ -127,6 +133,13 @@
                     }).attr('selected', true);
                     $("#versionNameUpdate").val($("tr.selected").find("td").eq(2).text());
                     $("#priceUpdate").val($("tr.selected").find("td").eq(5).text());
+                    if($("#form2").find("input[name='scheduleIdUpdate']").size()!=0){
+                        $("#form2").find("input[name='scheduleIdUpdate']").remove();
+                    }
+                    $("#form2").append(
+                        '<input name="scheduleIdUpdate" type="hidden" value="'+ $("tr.selected").attr('id') +'" />'
+                    );
+                    
                     
                 }
                 
@@ -144,6 +157,13 @@
                     $("#versionNameDelete").val($("tr.selected").find("td").eq(2).text());
                     $("#scheduleTimeslotDelete").val($("tr.selected").find("td").eq(3).text());
                     $("#priceDelete").val($("tr.selected").find("td").eq(5).text());
+                    if($("#form3").find("input[name='scheduleIdDelete']").size()!=0){
+                        $("#form3").find("input[name='scheduleIdDelete']").remove();
+                    }
+                    $("#form3").append(
+                        '<input name="scheduleIdDelete" type="hidden" value="'+ $("tr.selected").attr('id') +'" />'
+                    );
+                    
                 }
             });
             $(document).on("click", "#doInsert", function(event){
@@ -215,7 +235,7 @@
                               </select>
                             </div>
                             <div class="form-group">
-                              <label for="email"><fmt:message key="movieDetail.table.head.scheduleTimeslot"/><label>*</label></label>
+                              <label for="date1"><fmt:message key="movieDetail.table.head.scheduleTimeslot"/><label>*</label></label>
                                 <div class="input-group date" id="datetimepicker1" data-date-format="yyyy/mm/dd hh:ii:ss">
                                     <input type='text' name="scheduleTimeslot" class="form-control" id="date1"/>
                                     <span class="input-group-addon">
@@ -274,8 +294,8 @@
                               </select>
                             </div>
                             <div class="form-group">
-                              <label for="email"><fmt:message key="movieDetail.table.head.scheduleTimeslot"/><label>*</label></label>
-                                <div class="input-group" id="datetimepicker1">
+                              <label for="date2"><fmt:message key="movieDetail.table.head.scheduleTimeslot"/><label>*</label></label>
+                                <div class="input-group" id="datetimepicker2">
                                     <input type='text' name="scheduleTimeslot" class="form-control" id="date2"/>
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
@@ -336,7 +356,7 @@
                         </form>
                       </div>
                       <div class="modal-footer">
-                        <button id="updateProfileConfirm" type="button" class="btn btn-primary"><fmt:message key="profile.label.confirm"/></button>
+                        <button id="doDelete" type="button" class="btn btn-primary"><fmt:message key="profile.label.confirm"/></button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal"><fmt:message key="profile.label.cancel"/></button>
                       </div>
                     </div>
@@ -382,7 +402,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <c:forEach items="${sessionScope.T4uAllSchedules}" var="schedule">
-                                                                        <tr>
+                                                                        <tr id="${schedule.scheduleId}">
                                                                             <td><c:out value="${schedule.house.cinema.cinemaName}"/></td>
                                                                             <td><c:out value="${schedule.house.houseName}"/></td>
                                                                             <td><c:out value="${schedule.version.versionName}"/></td>
