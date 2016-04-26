@@ -72,18 +72,22 @@ public class T4uCURDScheduleServlet extends HttpServlet {
                     case "insert":
                         int versionId = Integer.parseInt(request.getParameter("versionId"));
                         int houseId = Integer.parseInt(request.getParameter("houseId"));
-                        Date scheduleTimeslot = null;
+                        SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                        Date uDate = null;
+                        java.sql.Date sqlDate = null;
                         try {
-                            scheduleTimeslot = new SimpleDateFormat(request.getParameter("scheduleTimeslot")).parse("yyyy/MM/dd hh:mm:ss");
+                            uDate = sourceFormat.parse(request.getParameter("scheduleTimeslot"));
+                            sqlDate = new java.sql.Date(uDate.getTime());
                         } catch (ParseException ex) {
                             java.util.logging.Logger.getLogger(T4uCURDScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         double price = Double.parseDouble(request.getParameter("price"));
-                        if (T4uScheduleDAO.insertSchedule(versionId, houseId, scheduleTimeslot, price)) {
+                        if (T4uScheduleDAO.insertSchedule(versionId, houseId, sqlDate, price)) {
                             // Successfully insert
                             List<Integer> allScheduleIds = T4uScheduleDAO.getAllScheduleIds();
                             List<T4uSchedule> allSchedules = new ArrayList<T4uSchedule>();
                             session.setAttribute(T4uConstants.T4uAllSchedules,allSchedules);
+                            request.setAttribute("success", T4uConstants.ExScheduleInsertSuccess);
                             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/schedules.jsp");
                             dispatcher.forward(request, response);
                         } else {

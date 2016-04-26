@@ -180,7 +180,7 @@ public class T4uScheduleDAO {
         return success;
     }
     
-    public static boolean insertSchedule(int versionId, int houseId, java.util.Date scheduleTimeslot, double price) {
+    public static boolean insertSchedule(int versionId, int houseId, java.sql.Date scheduleTimeslot, double price) {
         boolean success = false;
         try {
             Connection conn =  T4uJDBC.connect();
