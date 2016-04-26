@@ -13,17 +13,25 @@ import com.ss.DAO.T4uVersionDAO;
 import com.ss.Model.T4uHouse;
 import com.ss.Model.T4uMovie;
 import com.ss.Model.T4uSchedule;
+import com.ss.Model.T4uUser;
 import com.ss.app.T4uConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
 /**
@@ -32,6 +40,7 @@ import org.json.JSONObject;
  */
 public class T4uCURDScheduleServlet extends HttpServlet {
 
+    private static final Logger LOGGER = Logger.getLogger(T4uCURDScheduleServlet.class);
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,30 +52,67 @@ public class T4uCURDScheduleServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Integer> allScheduleIds = T4uScheduleDAO.getAllScheduleIds();
-        List<T4uSchedule> allSchedules = new ArrayList<T4uSchedule>();
-        for (int scheduleId: allScheduleIds)
-            allSchedules.add(T4uScheduleDAO.getScheduleById(scheduleId));
-        Map<Integer, T4uHouse> allHouses = T4uHouseDAO.getAllHouses();
-        Map<Integer, T4uMovie> allMovies = T4uMovieDAO.getAllMovies();
-        for(Map.Entry<Integer, T4uMovie> entry : allMovies.entrySet()) {
-            Integer key = entry.getKey();
-            T4uMovie value = entry.getValue();
-            value.setAllVersions(T4uVersionDAO.getAllVersions(value));
+        HttpSession session = request.getSession(true);
+        T4uUser user = (T4uUser)session.getAttribute(T4uConstants.T4uUser);
+        if (user == null) { // User not logged in
+            LOGGER.debug("User has not yet logged in.");
+            String requestUri = request.getRequestURI();
+            LOGGER.debug(String.format("Redirecting to /login.jsp?redirect=%s.", requestUri));
+            request.setAttribute(T4uConstants.T4U_LOGINREDIRECT, requestUri);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+            dispatcher.forward(request, response);
+        } else if (!user.getUserGroup().equals("admin")){ // Logged in as a normal user
+            request.setAttribute("error", T4uConstants.ExUserNotAuthorised);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
+        } else { // Logged in as admin
+            String action = request.getParameter("action");
+            if (action != null) {
+                switch (action) {
+                    case "insert":
+                        int versionId = Integer.parseInt(request.getParameter("versionId"));
+                        int houseId = Integer.parseInt(request.getParameter("houseId"));
+                        Date scheduleTimeslot = null;
+                        try {
+                            scheduleTimeslot = new SimpleDateFormat(request.getParameter("scheduleTimeslot")).parse("yyyy/MM/dd hh:mm:ss");
+                        } catch (ParseException ex) {
+                            java.util.logging.Logger.getLogger(T4uCURDScheduleServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        double price = Double.parseDouble(request.getParameter("price"));
+                        if (T4uScheduleDAO.insertSchedule(versionId, houseId, scheduleTimeslot, price)) {
+                            // Successfully insert
+                            List<Integer> allScheduleIds = T4uScheduleDAO.getAllScheduleIds();
+                            List<T4uSchedule> allSchedules = new ArrayList<T4uSchedule>();
+                            session.setAttribute(T4uConstants.T4uAllSchedules,allSchedules);
+                            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/schedules.jsp");
+                            dispatcher.forward(request, response);
+                        } else {
+                            // Error
+                            request.setAttribute("error", T4uConstants.ExScheduleInsertError);
+                            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/error.jsp");
+                            dispatcher.forward(request, response);
+                        }
+                        break;
+                    case "update":
+                        break;
+                    case "delete":
+                        break;
+                }
+            }
         }
+        
+        
+        
+        
+        
+        
+        
 //        HttpSession session = request.getSession(true);
 //        session.setAttribute(T4uConstants.T4uAllSchedules,allSchedules );
 //        session.setAttribute(T4uConstants.T4uAllHouses, allHouses);
 //        session.setAttribute(T4uConstants.T4uAllMovies, allMovies);
-        JSONObject json = new JSONObject();
 //        json.put("allMovies", allMovies);
 //        json.put("allHouses", allHouses);
-        json.put("allSchedules", allSchedules);
-        
-        response.setContentType("application/json");
-        PrintWriter pw = response.getWriter(); 
-        pw.print(json.toString());
-        pw.close();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

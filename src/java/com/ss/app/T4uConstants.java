@@ -23,6 +23,9 @@ public class T4uConstants {
     public static String ExUserNotAuthorised = "error.userNotAuthorised";
     public static String ExUserNotRefundable = "error.userNotRefundable";
     public static String ExSuccessfullyApplyRefund = "error.applyRefund.success";
+    public static String ExScheduleInsertError = "error.updateSchedule.insert";
+    public static String ExScheduleUpdateError = "error.updateSchedule.update";
+    public static String ExScheduleDeleteError = "error.updateSchedule.delete";
     
     //key of attributes to be shown in jsp pages
     public static String T4uUser = "t4uUser";

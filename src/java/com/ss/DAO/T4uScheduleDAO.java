@@ -179,4 +179,32 @@ public class T4uScheduleDAO {
         }
         return success;
     }
+    
+    public static boolean insertSchedule(int versionId, int houseId, java.util.Date scheduleTimeslot, double price) {
+        boolean success = false;
+        try {
+            Connection conn =  T4uJDBC.connect();
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO [T4U_schedule] "
++ "([VersionId], [houseId], [ScheduleTimeslot], [ScheduleOSeats], [ScheduleUSeats], [price]) "
++ "VALUES (?,?,?,?,?,?)");
+            pstmt.setInt(1, versionId);
+            pstmt.setInt(2, houseId);
+            pstmt.setDate(3, new java.sql.Date(scheduleTimeslot.getTime()));
+            pstmt.setNString(4, "");
+            pstmt.setNString(5, "");
+            pstmt.setDouble(6, price);
+            int rows = pstmt.executeUpdate();
+            success = rows > 0;
+            T4uJDBC.close(pstmt, conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(T4uScheduleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return success;
+    }
+    
+    public static boolean updateSchedule(int scheduleId, int versionId, int houseId, String scheduleTimesolt, double price) {
+        return false;
+    }
 }

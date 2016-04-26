@@ -190,11 +190,11 @@
                         <h4 class="modal-title"><fmt:message key="schedule.button.insert"/></h4>
                       </div>
                       <div class="modal-body">
-                        <form id="form1" action="/T4U/T4uCURDScheduleServlet" method="POST" role="form">
+                        <form id="form1" action="/T4U/manage/updateSchedule" method="POST" role="form">
                             <input name='action' type='hidden' value='insert' />
                             <div class="form-group">
                               <label for="houseNameInsert"><fmt:message key="movieDetail.table.head.houseName"/><label>*</label></label>
-                              <select class="form-control" id="houseNameInsert">
+                              <select class="form-control" id="houseNameInsert" name="houseId">
                                   <c:forEach items="${sessionScope.T4uAllHouses}" var="houses">
                                       <option value="${houses.value.houseId}">${houses.value.houseName}</option>
                                     </c:forEach>
@@ -206,7 +206,7 @@
                             </div>
                             <div class="form-group">
                               <label for="houseNameInsert"><fmt:message key="movieDetail.table.head.versionName"/></label>
-                              <select class="form-control" id="houseNameInsert">
+                              <select class="form-control" id="versionNameInsert" name="versionId">
                               <c:forEach items="${sessionScope.T4uAllMovies}" var="movie">
                                       <c:forEach items="${movie.value.allVersions}" var="version">
                                         <option value="${version.value.versionId}">${version.value.versionName}</option>
@@ -216,7 +216,7 @@
                             </div>
                             <div class="form-group">
                               <label for="email"><fmt:message key="movieDetail.table.head.scheduleTimeslot"/><label>*</label></label>
-                                <div class="input-group" id="datetimepicker1">
+                                <div class="input-group date" id="datetimepicker1" data-date-format="yyyy/mm/dd hh:ii:ss">
                                     <input type='text' name="scheduleTimeslot" class="form-control" id="date1"/>
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
@@ -249,11 +249,11 @@
                         <h4 class="modal-title"><fmt:message key="schedule.button.update"/></h4>
                       </div>
                       <div class="modal-body">
-                        <form id="form1" action="/T4U/T4uCURDScheduleServlet" method="POST" role="form">
+                        <form id="form2" action="/T4U/manage/updateSchedule" method="POST" role="form">
                             <input name='action' type='hidden' value='update' />
                             <div class="form-group">
                               <label for="houseNameUpdate"><fmt:message key="movieDetail.table.head.houseName"/><label>*</label></label>
-                              <select class="form-control" id="houseNameUpdate">
+                              <select class="form-control" id="houseNameUpdate" name="houseId">
                                   <c:forEach items="${sessionScope.T4uAllHouses}" var="houses">
                                       <option value="${houses.value.houseId}">${houses.value.houseName}</option>
                                     </c:forEach>
@@ -265,7 +265,7 @@
                             </div>
                             <div class="form-group">
                               <label for="houseNameUpdate"><fmt:message key="movieDetail.table.head.versionName"/></label>
-                              <select class="form-control" id="houseNameUpdate">
+                              <select class="form-control" id="versionNameUpdate" name="versionId">
                               <c:forEach items="${sessionScope.T4uAllMovies}" var="movie">
                                       <c:forEach items="${movie.value.allVersions}" var="version">
                                         <option value="${version.value.versionId}">${version.value.versionName}</option>
@@ -309,8 +309,9 @@
                         <h4 class="modal-title"><fmt:message key="schedule.button.delete"/></h4>
                       </div>
                       <div class="modal-body">
-                        <form id="form3" action="/T4U/T4uCURDScheduleServlet" method="POST" role="form">
+                        <form id="form3" action="/T4U/manage/updateSchedule" method="POST" role="form">
                             <input name='action' type='hidden' value='delete' />
+                            <input name="scheduleId" type="hidden" />
                             <div class="form-group">
                               <label for="cinemaNameDelete"><fmt:message key="movieDetail.table.head.cinemaName"/><label>*</label></label>
                               <input type="text" class="form-control" readonly id="cinemaNameDelete" name="cinemaName">

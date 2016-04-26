@@ -57,7 +57,7 @@ public class T4uGoToScheduleServlet extends HttpServlet {
             value.setAllVersions(T4uVersionDAO.getAllVersions(value));
         }
         HttpSession session = request.getSession(true);
-        session.setAttribute(T4uConstants.T4uAllSchedules,allSchedules );
+        session.setAttribute(T4uConstants.T4uAllSchedules,allSchedules);
         session.setAttribute(T4uConstants.T4uAllHouses, allHouses);
         session.setAttribute(T4uConstants.T4uAllMovies, allMovies);
 
