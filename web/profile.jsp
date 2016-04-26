@@ -19,12 +19,13 @@
     <%    } else {%>  
         <fmt:setLocale value="zh_HK" scope="session" />  
     <%    } %>
-<c:set var="allOrders" value="${requestScope.t4uUserAllOrders}"/>
+<c:set var="allOrders" value="${sessionScope.t4uUserAllOrders}"/>
 <!DOCTYPE html>
 <html>
     <fmt:bundle basename="${lan}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="Disclaimer:This web site exists to fulfill the coursework requirement of CS4280.Do not use your real personal data as input.">
         <title>Cinema</title>
         <!-- start plugins -->
         <script src="/T4U/resources/js/jquery-1.11.1.min.js"></script>
@@ -36,7 +37,7 @@
         <script src="/T4U/resources/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
         <script src="/T4U/resources/js/md5.js" type="text/javascript"></script>
         <script src="/T4U/resources/js/notify.min.js"></script>
-        <script src="/T4U/resources/js/jquery.dataTables.min.js"></script>
+        <!--<script src="/T4U/resources/js/jquery.dataTables.min.js"></script>-->
         
         <link href="/T4U/resources/css/style_profile.css" rel="stylesheet" type="text/css" media="all" />
         <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:100,200,300,400,500,600,700,800,900' rel='stylesheet' type='text/css'>
@@ -45,12 +46,12 @@
         <link href="/T4U/resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
         <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
         <link href="/T4U/resources/css/style_error.css" rel="stylesheet" type="text/css" media="all" />
-        <link href="/T4U/resources/css/jquery.dataTables.min.css" rel="stylesheet"/>
+        <!--<link href="/T4U/resources/css/jquery.dataTables.min.css" rel="stylesheet"/>-->
         <script>
         $(document).ready(function(){
-            $('#example').DataTable({
-                    "oSearch": {"bSmart": false}
-                });
+//            $('#example').DataTable({
+//                    "oSearch": {"bSmart": false}
+//                });
             $('input[type="checkbox"]').bootstrapSwitch('onText',"M",'M');
             $('input[type="checkbox"]').bootstrapSwitch('offText',"F",'F');
             $('input[type="checkbox"]').bootstrapSwitch('offColor',"warning",'warning');
@@ -237,7 +238,7 @@
                                     
                                     <div class="row">
                                         <c:if test="${sessionScope.t4uUser.userGroup != 'officer'}">  
-                                            <table id="example" class="table table-responsive display col-sm-8 col-sm-offset-2" cellspacing="0" width="100%">
+                                            <table id="example" class="table col-sm-6"width="60%">
                                                     <thead>
                                                         <tr>
                                                             <th class="info" />
