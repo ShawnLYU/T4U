@@ -72,7 +72,7 @@ public class T4uCURDScheduleServlet extends HttpServlet {
                 String oSeats = null;
             int versionId = 0;
             int houseId = 0;
-            SimpleDateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+            SimpleDateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
             Date date = null;
             java.sql.Date sqlDate = null;
             Timestamp scheduleTimeslot = null;
