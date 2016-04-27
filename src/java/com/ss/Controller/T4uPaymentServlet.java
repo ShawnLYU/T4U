@@ -57,6 +57,7 @@ public class T4uPaymentServlet extends HttpServlet {
                 orderCredit = Integer.parseInt(request.getParameter("demo5"));
             userCredit = Integer.parseInt(request.getParameter("userCredit"));
         } catch (NumberFormatException ex) {
+        } catch (NullPointerException ex) {
         }
         int len = request.getParameter("seats").length();
         List<String> allSeats = Arrays.asList(request.getParameter("seats").substring(1,len-1).replaceAll(" ","").split(","));

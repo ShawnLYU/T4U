@@ -109,6 +109,14 @@
                     
                     
                 }
+                $("#houseNameUpdate option").filter(function() {
+                    //may want to use $.trim in here
+                    return $(this).attr("value") == $(".selected").children().eq(1).attr("id"); 
+                }).prop('selected', true);
+                $("#versionNameUpdate option").filter(function() {
+                    //may want to use $.trim in here
+                    return $(this).attr("value") == $(".selected").children().eq(2).attr("id"); 
+                }).prop('selected', true);
                 
                 
                 
@@ -165,6 +173,7 @@
                 }
             });
             $(document).on("click", "#doUpdate", function(event){
+                
                 var num = $("tbody>tr").length;
                 var isValid = true; 
                 var now = moment();
@@ -414,7 +423,7 @@
                                                                         <tr id="${schedule.scheduleId}">
                                                                             <td><c:out value="${schedule.house.cinema.cinemaName}"/></td>
                                                                             <td id="${schedule.house.houseId}"><c:out value="${schedule.house.houseName}"/></td>
-                                                                            <td><c:out value="${schedule.version.movie.movieName} : ${schedule.version.versionName}"/></td>
+                                                                            <td id="${schedule.version.versionId}"><c:out value="${schedule.version.movie.movieName} : ${schedule.version.versionName}"/></td>
                                                                             <td><c:out value="${schedule.scheduleTimeslot}"/></td>
                                                                             <td><c:out value="${schedule.version.movie.movieInfo.Length}"/></td>
                                                                             <td><c:out value="${schedule.house.cinema.cinemaLocation}"/></td>
