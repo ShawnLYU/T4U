@@ -74,7 +74,7 @@ public class T4uScheduleDAO {
         try {
             Connection conn =  T4uJDBC.connect();
             PreparedStatement pstmt = conn.prepareStatement("SELECT " +
-"m.MovieId, m.MovieName, " +
+"m.MovieId, m.MovieName, m.MovieInfo," +
 "v.VersionId, v.VersionName, v.VersionBasePrice, " +
 "c.CinemaId, c.CinemaName, c.CinemaLocation, " +
 "h.HouseId, h.HouseName, h.HousePlan, " +
@@ -92,6 +92,7 @@ public class T4uScheduleDAO {
                 T4uMovie movie = new T4uMovie();
                 movie.setMovieId(rs.getInt("MovieId"));
                 movie.setMovieName(rs.getNString("MovieName"));
+                movie.setMovieInfo(rs.getNString("MovieInfo"));
                 // Set version
                 T4uVersion version = new T4uVersion();
                 version.setVersionId(rs.getInt("VersionId"));
