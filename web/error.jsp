@@ -22,6 +22,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="Disclaimer:This web site exists to fulfill the coursework requirement of CS4280.Do not use your real personal data as input.">
         <title>Cinema</title>
         <!-- start plugins -->
         <script src="/T4U/resources/js/jquery-1.11.1.min.js"></script>

@@ -26,12 +26,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Disclaimer:This web site exists to fulfill the coursework requirement of CS4280.Do not use your real personal data as input.">
         <title>Cinema</title>
         <!-- start plugins -->
         <script src="/T4U/resources/js/jquery-1.11.1.min.js"></script>
         <script src="/T4U/resources/js/common.js"></script>
         <script type="text/javascript" src="/T4U/resources/bootstrap-3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/T4U/resources/js/jquery.flexisel.js"></script>	
+        <script type="text/javascript" src="/T4U/resources/js/jquery.scrollTo.min.js"></script>	
         
         <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
         <link href="/T4U/resources/css/style_index.css" rel="stylesheet" type="text/css" media="all" />
@@ -138,12 +140,12 @@
                             </c:if>
                         </c:forEach>
                         <h1>${firstMovie.value.movieName}</h1>
-                        <p class="age"><fmt:message key="movieDetail.label.class"/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">${firstMovie.value.movieInfo.Class}</a></p>
+                        <p class="age"><fmt:message key="movieDetail.label.class"/>&nbsp;&nbsp;&nbsp;&nbsp;<a>${firstMovie.value.movieInfo.Class}</a></p>
                         <p class="review"><fmt:message key="movieDetail.label.genre"/>&nbsp;&nbsp;&nbsp;&nbsp;<span>${firstMovie.value.movieInfo.Genre}</span></p>
                         <!-- <p class="review reviewgo">Genre	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp; Animation, Action, Comedy</p>
                         <p class="review">Release &nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp; 7 November 2014</p>
                         <p class="special">The special bond that develops between plus-sized inflatable robot Baymax, and prodigy Hiro Hamada, who team up with a group of friends to form a band of high-tech heroes.</p>-->
-                        <a class="video" href="#myFrame"><i class="video1"></i><fmt:message key="index.label.watchTrailer"/></a>
+                        <a class="video scrollLink" href="#myFrame" ><i class="video1"></i><fmt:message key="index.label.watchTrailer"/></a>
                         <a class="book" href='<c:out value="${pageContext.request.contextPath}"/>/movie/detail?movieId=<c:out value="${firstMovie.key}"/>'><i class="book1"></i><fmt:message key="index.label.bookTicket"/></a>
                     </div>
                 </div>
@@ -198,5 +200,17 @@
                     </ul>
                 </div>	
             </div>
+                    
+                    <script>
+                        $(document).ready(function(){
+                            $(".scrollLink").click(function(e) {
+
+                                $.scrollTo($(this).attr("href"));    
+                                e.preventDefault();
+
+                            });
+                            
+                        });
+                    </script>
     </fmt:bundle>
     <jsp:include page="footer_normal.jsp" />

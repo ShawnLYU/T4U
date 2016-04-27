@@ -25,6 +25,7 @@
     <fmt:bundle basename="${lan}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="Disclaimer:This web site exists to fulfill the coursework requirement of CS4280.Do not use your real personal data as input.">
         <title>Cinema</title>
         <!-- start plugins -->
         <script src="/T4U/resources/js/jquery-1.11.1.min.js"></script>
@@ -87,52 +88,27 @@
              $('#datetimepicker2').datetimepicker({
                 viewMode: 'years'
              });
-             $(document).on("change", "#houseNameInsert", function(event){
-                 var aHouseId = $("#houseNameInsert").val();
-                    for(var i=0;i<allHouses.length;i++){
-                        if(allHouses[i]==aHouseId){
-                            aCinemaName = allCinemas[i];
-                            break;
-                        }
-                    }
-                $("#cinemaNameInsert").val(aCinemaName);
-                 
-             });
+             
              $("#insert").click(function(){
                 $('#modalForInsert').modal('toggle');
-                 var aHouseId = $("#houseNameInsert").val();
-                    for(var i=0;i<allHouses.length;i++){
-                        if(allHouses[i]==aHouseId){
-                            aCinemaName = allCinemas[i];
-                            break;
-                        }
-                    }
-                $("#cinemaNameInsert").val(aCinemaName);
+                 
                 
             });
-            $(document).on("change", "#houseNameUpdate", function(event){
-                   var aHouseId = $("#houseNameUpdate").val();
-                    for(var i=0;i<allHouses.length;i++){
-                        if(allHouses[i]==aHouseId){
-                            aCinemaName = allCinemas[i];
-                            break;
-                        }
-                    }
-                $("#cinemaNameUpdate").val(aCinemaName);
-            });
+            
             $("#update").click(function(){
                 if($("tr.selected").size()==0)
                     showErrorMessage('<fmt:message key="schedule.msg.notSelect" />');
                 else{
                     $('#modalForUpdate').modal('toggle');
-                    $("#cinemaNameUpdate").val($("tr.selected").find("td").eq(0).text());
 //                    $("#houseNameUpdate").val($("tr.selected").find("td").eq(1).text());
                     $("#houseNameUpdate").filter(function() {
                         //may want to use $.trim in here
                         return $(this).text() == $("tr.selected").find("td").eq(1).text(); 
                     }).attr('selected', true);
-                    $("#versionNameUpdate").val($("tr.selected").find("td").eq(2).text());
-                    $("#priceUpdate").val($("tr.selected").find("td").eq(5).text());
+                    $("#versionNameUpdate").filter(function() {
+                        //may want to use $.trim in here
+                        return $(this).text() == $("tr.selected").find("td").eq(2).text(); 
+                    }).attr('selected', true);
                     if($("#form2").find("input[name='scheduleIdUpdate']").size()!=0){
                         $("#form2").find("input[name='scheduleIdUpdate']").remove();
                     }
@@ -216,20 +192,16 @@
                               <label for="houseNameInsert"><fmt:message key="movieDetail.table.head.houseName"/><label>*</label></label>
                               <select class="form-control" id="houseNameInsert" name="houseId">
                                   <c:forEach items="${sessionScope.T4uAllHouses}" var="houses">
-                                      <option value="${houses.value.houseId}">${houses.value.houseName}</option>
+                                      <option value="${houses.value.houseId}">${houses.value.houseName}&nbsp;&nbsp;${houses.value.cinema.cinemaName}</option>
                                     </c:forEach>
                               </select>
-                            </div>
-                            <div class="form-group">
-                              <label for="cinemaNameInsert"><fmt:message key="movieDetail.table.head.cinemaName"/><label>*</label></label>
-                              <input type="text" class="form-control" readonly id="cinemaNameInsert" name="cinemaName">
                             </div>
                             <div class="form-group">
                               <label for="houseNameInsert"><fmt:message key="movieDetail.table.head.versionName"/></label>
                               <select class="form-control" id="versionNameInsert" name="versionId">
                               <c:forEach items="${sessionScope.T4uAllMovies}" var="movie">
                                       <c:forEach items="${movie.value.allVersions}" var="version">
-                                        <option value="${version.value.versionId}">${version.value.versionName}</option>
+                                        <option value="${version.value.versionId}">${version.value.movie.movieName}&nbsp;&nbsp;${version.value.versionName}</option>
                                         </c:forEach>
                                 </c:forEach>
                               </select>
@@ -243,10 +215,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label><fmt:message key="movieDetail.table.head.versionPrice"/><label>*</label></label>
-                                <input type="text" class="form-control priceInput" name="price" id="priceInsert" value="0">
-                            </div>
+                              
                             
                         </form>
                       </div>
@@ -275,20 +244,16 @@
                               <label for="houseNameUpdate"><fmt:message key="movieDetail.table.head.houseName"/><label>*</label></label>
                               <select class="form-control" id="houseNameUpdate" name="houseId">
                                   <c:forEach items="${sessionScope.T4uAllHouses}" var="houses">
-                                      <option value="${houses.value.houseId}">${houses.value.houseName}</option>
+                                      <option value="${houses.value.houseId}">${houses.value.houseName}&nbsp;&nbsp;${houses.value.cinema.cinemaName}</option>
                                     </c:forEach>
                               </select>
-                            </div>
-                            <div class="form-group">
-                              <label for="cinemaNameUpdate"><fmt:message key="movieDetail.table.head.cinemaName"/><label>*</label></label>
-                              <input type="text" class="form-control" readonly id="cinemaNameUpdate" name="cinemaName">
                             </div>
                             <div class="form-group">
                               <label for="houseNameUpdate"><fmt:message key="movieDetail.table.head.versionName"/></label>
                               <select class="form-control" id="versionNameUpdate" name="versionId">
                               <c:forEach items="${sessionScope.T4uAllMovies}" var="movie">
                                       <c:forEach items="${movie.value.allVersions}" var="version">
-                                        <option value="${version.value.versionId}">${version.value.versionName}</option>
+                                        <option value="${version.value.versionId}">${version.value.movie.movieName}&nbsp;&nbsp;${version.value.versionName}</option>
                                         </c:forEach>
                                 </c:forEach>
                               </select>
@@ -301,10 +266,6 @@
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label><fmt:message key="movieDetail.table.head.versionPrice"/><label>*</label></label>
-                                <input type="text" class="form-control priceInput" name="price" id="priceUpdate" value="0">
                             </div>
                             
                         </form>
@@ -337,7 +298,7 @@
                               <input type="text" class="form-control" readonly id="cinemaNameDelete" name="cinemaName">
                             </div>
                             <div class="form-group">
-                              <label for="houseNameDelete"><fmt:message key="movieDetail.table.head.versionName"/></label>
+                              <label for="houseNameDelete"><fmt:message key="movieDetail.table.head.houseName"/></label>
                               <input type="text" class="form-control" readonly id="houseNameDelete" name="houseName">
                             </div>
                               <div class="form-group">
@@ -405,7 +366,7 @@
                                                                         <tr id="${schedule.scheduleId}">
                                                                             <td><c:out value="${schedule.house.cinema.cinemaName}"/></td>
                                                                             <td><c:out value="${schedule.house.houseName}"/></td>
-                                                                            <td><c:out value="${schedule.version.versionName}"/></td>
+                                                                            <td><c:out value="${schedule.version.movie.movieName} : ${schedule.version.versionName}"/></td>
                                                                             <td><c:out value="${schedule.scheduleTimeslot}"/></td>
                                                                             <td><c:out value="${schedule.house.cinema.cinemaLocation}"/></td>
                                                                             <td><c:out value="${schedule.price}" /></td>

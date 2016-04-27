@@ -48,6 +48,4 @@ public class T4uConstants {
     public static final String T4U_USERALLORDERS = "t4uUserAllOrders";
     public static final String T4U_ALLSCHEDULES = "t4uAllSchedules";
     public static final String T4U_ALLWAORDERS = "t4uAllWAOrders";
- 
-
 }

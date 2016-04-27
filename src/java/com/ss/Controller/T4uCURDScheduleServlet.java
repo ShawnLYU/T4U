@@ -68,7 +68,8 @@ public class T4uCURDScheduleServlet extends HttpServlet {
         } else { // Logged in as admin
             // Get request
             String action = request.getParameter("action");
-            String oSeats = null;
+            if(action!=null){
+                String oSeats = null;
             int versionId = 0;
             int houseId = 0;
             SimpleDateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
@@ -172,6 +173,11 @@ public class T4uCURDScheduleServlet extends HttpServlet {
                         break;
                 }
             }
+            }else{
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/schedules.jsp");
+                dispatcher.forward(request, response);
+            }
+            
         }
         
         

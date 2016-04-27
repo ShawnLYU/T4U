@@ -60,7 +60,7 @@ public class T4uUserProfileServlet extends HttpServlet {
             LOGGER.debug(String.format("%s has logged in.", user.getUserAccount()));
             // Retrive all orders for this user
             Map<Long ,T4uOrder> allOrders = T4uOrderDAO.getAllOrdersByUser(user);
-            request.setAttribute(T4uConstants.T4U_USERALLORDERS, allOrders);
+            session.setAttribute(T4uConstants.T4U_USERALLORDERS, allOrders);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profile.jsp");
             dispatcher.forward(request, response);
         }
