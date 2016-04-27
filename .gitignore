@@ -2,4 +2,4 @@
 /dist/
 /nbproject/private/
 /web/WEB-INF/classes/log4j.properties
-/src/java/com/ss/Utility/T4uJDBC.java
+/src/java/com/ss/Utility/*
