@@ -1,1 +1,5 @@
-"/src/java/com/ss/Utiility/T4uJDBC.java" 
+/build/
+/dist/
+/nbproject/private/
+/web/WEB-INF/classes/log4j/properties
+/src/java/com/ss/Utility/*
