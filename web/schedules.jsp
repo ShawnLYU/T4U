@@ -171,7 +171,7 @@
                 if( now.add(30, 'minutes') > moment($("#date2").val(), 'MM/DD/YYYY h:mm a', true)){isValid = false; $('#modalForUpdate').modal('toggle');showErrorMessage('<fmt:message key="schedule.error.late" />');}
                 if(isValid){
                     for(var i=0;i<num;i++){
-                        if($("#houseNameUpdate").val() == $("tbody>tr").eq(i).children().eq(1).attr("id")){
+                        if($("#houseNameUpdate").val() == $("tbody>tr").eq(i).children().eq(1).attr("id") && $(".selected").children().eq(1).attr("id")!=$("tbody>tr").eq(i).children().eq(1).attr("id") ){
                             var oriStart = moment($("tbody>tr").eq(i).children().eq(3).html(), 'YYYY-MM-DD hh:mm:ss.s', true);
                             var oriEnd = moment($("tbody>tr").eq(i).children().eq(3).html(), 'YYYY-MM-DD hh:mm:ss.s', true).add($("tbody>tr").eq(i).children().eq(4).html(), 'minutes').add(30, 'minutes');
                             var newStart = moment($("#date2").val(), 'MM/DD/YYYY h:mm a', true);

@@ -88,7 +88,7 @@
                 <c:if test="${sessionScope.t4uUser.userGroup != 'officer'}">
                     <tr>
                     <td><fmt:message key="payment.form.userPoints"/>:</td>
-                    <td>${userBuying.userCredit}</td>
+                    <td>${sessionScope.t4uUser.userCredit}</td>
                   </tr>
                 </c:if>
                 
