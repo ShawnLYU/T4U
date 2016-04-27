@@ -48,7 +48,7 @@
         <link href="/T4U/resources/bootstrap-3.3.6/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
         <link href="/T4U/resources/css/style_error.css" rel="stylesheet" type="text/css" media="all" />
         <link href="/T4U/resources/css/jquery.dataTables.min.css" rel="stylesheet"/>
-        <link href="resources/css/jquery.bootstrap-touchspin.css" rel="stylesheet" type='text/css' />
+        <link href="/T4U/resources/css/jquery.bootstrap-touchspin.css" rel="stylesheet" type='text/css' />
         <script>
         $(document).ready(function(){
             <c:if test="${not empty requestScope.error}" >
@@ -57,15 +57,6 @@
                 <c:if test="${not empty requestScope.success}" >
                     showSuccessMessage('<fmt:message key="schedule.msg.success" />');
             </c:if>
-            var allHouses = [];
-            var allCinemas = [];
-            var aCinemaName;
-            <c:forEach items="${sessionScope.T4uAllHouses}" var="house">
-                allHouses.push('${house.value.houseId}');
-            </c:forEach>
-            <c:forEach items="${sessionScope.T4uAllHouses}" var="house">
-                allCinemas.push('${house.value.cinema.cinemaName}');
-            </c:forEach>
             var table = $('#example').DataTable( {
                 "oSearch": {"bSmart": false}
             });
@@ -143,12 +134,67 @@
                 }
             });
             $(document).on("click", "#doInsert", function(event){
-                $("#form1").submit();
-                $('#modalForInsert').modal('toggle');
+                var num = $("tbody>tr").length;
+                var isValid = true; 
+                var now = moment();
+                if( now.add(30, 'minutes') > moment($("#date1").val(), 'MM/DD/YYYY h:mm a', true)){isValid = false; $('#modalForInsert').modal('toggle');showErrorMessage('<fmt:message key="schedule.error.late" />');}
+                if(isValid){
+                    for(var i=0;i<num;i++){
+                        if($("#houseNameInsert").val() == $("tbody>tr").eq(i).children().eq(1).attr("id")){
+                            var oriStart = moment($("tbody>tr").eq(i).children().eq(3).html(), 'YYYY-MM-DD hh:mm:ss.s', true);
+                            var oriEnd = moment($("tbody>tr").eq(i).children().eq(3).html(), 'YYYY-MM-DD hh:mm:ss.s', true).add($("tbody>tr").eq(i).children().eq(4).html(), 'minutes').add(30, 'minutes');
+                            var newStart = moment($("#date1").val(), 'MM/DD/YYYY h:mm a', true);
+                            var newEnd = moment($("#date1").val(), 'MM/DD/YYYY h:mm a', true).add($("#versionNameInsert option:selected" ).text().split(',')[1].split(' ')[0], 'minutes').add(30, 'minutes');
+
+                            if( newStart > oriEnd || oriStart > newEnd ){
+
+                            }else{
+                                $('#modalForInsert').modal('toggle');
+                                showErrorMessage("Time conflict with "+$("tbody>tr").eq(i).children().eq(2).html()+" played in "+$("tbody>tr").eq(i).children().eq(0).html()+' '+$("tbody>tr").eq(i).children().eq(0).html());
+                                isValid = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                   
+                if(isValid){
+                    $("#form1").submit();
+                    $('#modalForInsert').modal('toggle');
+                }
             });
             $(document).on("click", "#doUpdate", function(event){
-                $("#form2").submit();
-                $('#modalForUpdate').modal('toggle');
+                var num = $("tbody>tr").length;
+                var isValid = true; 
+                var now = moment();
+                if( now.add(30, 'minutes') > moment($("#date2").val(), 'MM/DD/YYYY h:mm a', true)){isValid = false; $('#modalForUpdate').modal('toggle');showErrorMessage('<fmt:message key="schedule.error.late" />');}
+                if(isValid){
+                    for(var i=0;i<num;i++){
+                        if($("#houseNameUpdate").val() == $("tbody>tr").eq(i).children().eq(1).attr("id")){
+                            var oriStart = moment($("tbody>tr").eq(i).children().eq(3).html(), 'YYYY-MM-DD hh:mm:ss.s', true);
+                            var oriEnd = moment($("tbody>tr").eq(i).children().eq(3).html(), 'YYYY-MM-DD hh:mm:ss.s', true).add($("tbody>tr").eq(i).children().eq(4).html(), 'minutes').add(30, 'minutes');
+                            var newStart = moment($("#date2").val(), 'MM/DD/YYYY h:mm a', true);
+                            var newEnd = moment($("#date2").val(), 'MM/DD/YYYY h:mm a', true).add($("#versionNameUpdate option:selected" ).text().split(',')[1].split(' ')[0], 'minutes').add(30, 'minutes');
+
+                            if( newStart > oriEnd || oriStart > newEnd ){
+
+                            }else{
+                                $('#modalForUpdate').modal('toggle');
+                                showErrorMessage("Time conflict with "+$("tbody>tr").eq(i).children().eq(2).html()+" played in "+$("tbody>tr").eq(i).children().eq(0).html()+' '+$("tbody>tr").eq(i).children().eq(0).html());
+                                isValid = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+
+                if(isValid){                
+                    $("#form2").submit();
+                    $('#modalForUpdate').modal('toggle');
+                }
+                
 
             });
             $(document).on("click", "#doDelete", function(event){
@@ -192,7 +238,7 @@
                               <label for="houseNameInsert"><fmt:message key="movieDetail.table.head.houseName"/><label>*</label></label>
                               <select class="form-control" id="houseNameInsert" name="houseId">
                                   <c:forEach items="${sessionScope.T4uAllHouses}" var="houses">
-                                      <option value="${houses.value.houseId}">${houses.value.houseName}&nbsp;&nbsp;${houses.value.cinema.cinemaName}</option>
+                                      <option value="${houses.value.houseId}">${houses.value.houseName} ${houses.value.cinema.cinemaName}</option>
                                     </c:forEach>
                               </select>
                             </div>
@@ -200,9 +246,10 @@
                               <label for="houseNameInsert"><fmt:message key="movieDetail.table.head.versionName"/></label>
                               <select class="form-control" id="versionNameInsert" name="versionId">
                               <c:forEach items="${sessionScope.T4uAllMovies}" var="movie">
-                                      <c:forEach items="${movie.value.allVersions}" var="version">
-                                        <option value="${version.value.versionId}">${version.value.movie.movieName}&nbsp;&nbsp;${version.value.versionName}</option>
-                                        </c:forEach>
+                                  <c:set var="info" scope="request" value="${movie.value.movieInfo}"/>
+                                    <c:forEach items="${movie.value.allVersions}" var="version">
+                                      <option value="${version.value.versionId}">${version.value.movie.movieName}&nbsp;&nbsp;${version.value.versionName},${info.Length} mins</option>
+                                      </c:forEach>
                                 </c:forEach>
                               </select>
                             </div>
@@ -253,7 +300,7 @@
                               <select class="form-control" id="versionNameUpdate" name="versionId">
                               <c:forEach items="${sessionScope.T4uAllMovies}" var="movie">
                                       <c:forEach items="${movie.value.allVersions}" var="version">
-                                        <option value="${version.value.versionId}">${version.value.movie.movieName}&nbsp;&nbsp;${version.value.versionName}</option>
+                                        <option value="${version.value.versionId}">${version.value.movie.movieName}&nbsp;&nbsp;${version.value.versionName},${info.Length} mins</option>
                                         </c:forEach>
                                 </c:forEach>
                               </select>
@@ -357,6 +404,7 @@
                                                                         <th><fmt:message key="movieDetail.table.head.houseName"/></th>
                                                                         <th><fmt:message key="movieDetail.table.head.versionName"/></th>
                                                                         <th><fmt:message key="movieDetail.table.head.scheduleTimeslot"/></th>
+                                                                        <th><fmt:message key="schedule.table.lengh"/></th>
                                                                         <th><fmt:message key="movieDetail.table.head.cinemaLocation"/></th>
                                                                         <th><fmt:message key="movieDetail.table.head.versionPrice"/></th>
                                                                     </tr>
@@ -365,9 +413,10 @@
                                                                     <c:forEach items="${sessionScope.T4uAllSchedules}" var="schedule">
                                                                         <tr id="${schedule.scheduleId}">
                                                                             <td><c:out value="${schedule.house.cinema.cinemaName}"/></td>
-                                                                            <td><c:out value="${schedule.house.houseName}"/></td>
+                                                                            <td id="${schedule.house.houseId}"><c:out value="${schedule.house.houseName}"/></td>
                                                                             <td><c:out value="${schedule.version.movie.movieName} : ${schedule.version.versionName}"/></td>
                                                                             <td><c:out value="${schedule.scheduleTimeslot}"/></td>
+                                                                            <td><c:out value="${schedule.version.movie.movieInfo.Length}"/></td>
                                                                             <td><c:out value="${schedule.house.cinema.cinemaLocation}"/></td>
                                                                             <td><c:out value="${schedule.price}" /></td>
                                                                         </tr>
