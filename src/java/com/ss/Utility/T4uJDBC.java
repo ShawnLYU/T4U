@@ -23,7 +23,7 @@ public class T4uJDBC {
         Connection conn = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad049_db;", "", "aiad049");//no need anymore since JDBC API 4.0
+            conn = DriverManager.getConnection("jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad049_db;", "", "");//no need anymore since JDBC API 4.0
         } catch (SQLException ex) {
             Logger.getLogger(T4uJDBC.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Cannot connect to database:\n" + ex.getMessage());
