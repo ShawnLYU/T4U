@@ -1,0 +1,30 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 11, 2016, 2:58:06 PM
+    Author     : mengxualv2
+*/
+.footer {
+    text-align: center;
+    margin-top: 100px;
+}
+.footer p {
+    font-family: Oswald-Regular;
+    color: #FFF;
+}
+.footer h6 {
+    font-family: Oswald-Regular;
+    color: #FFF;
+}
+.footer a {
+    font-family: Oswald-Regular;
+    color: #FFF;
+    text-decoration: none;
+}
+.footer a:hover {
+    text-decoration: underline;
+	color: #190909;
+}

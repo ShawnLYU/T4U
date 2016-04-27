@@ -1,0 +1,109 @@
+.error-404 {
+	font-family: 'Lato', sans-serif;
+        padding-top: 2em;
+        min-height: 620px;
+}
+.error-404 a {
+	color: #b71a4c;
+}
+.front-indicator {
+	width: 145px;
+	margin: 5px auto 15px auto;
+	background-color: #f6f6f6;	
+	color: #adadad;
+	text-align: center;
+	padding: 3px;
+	border-radius: 5px;
+}
+.error-404 .wrapper {
+	width: 100%;
+	text-align: center;
+}
+.error-404 .container {
+	margin: 0 auto;
+        width: 100%;
+	/*text-align: left;*/
+}
+.booking-details {
+	/*float: left;*/
+	text-align: left;
+	margin-left: 15%;
+	font-size: 12px;
+	position: relative;
+	height: 300px;
+}
+.booking-details h2 {
+	margin: 25px 0 20px 0;
+	font-size: 17px;
+}
+.booking-details h3 {
+	margin: 5px 5px 0 0;
+	font-size: 14px;
+}
+div.seatCharts-cell {
+	color: #182C4E;
+	height: 1.8em;
+	width: 1.8em;
+	line-height: 2.2em;
+	font-size: 0.8em;
+}
+div.seatCharts-seat {
+	color: #FFFFFF;
+	cursor: pointer;	
+}
+div.seatCharts-row {
+	height: 2.2em;
+}
+div.seatCharts-seat.available {
+	background-color: #B9DEA0;
+
+}
+div.seatCharts-seat.available.first-class {
+/* 	background: url(vip.png); */
+	background-color: #3a78c3;
+}
+div.seatCharts-seat.focused {
+	/*background-color: #76B474;*/
+        background-color: #FDE74C;
+}
+div.seatCharts-seat.selected {
+	/*background-color: #E6CAC4;*/
+        background-color: #FA7921;
+}
+div.seatCharts-seat.sold {
+	background-color: #05668D;
+}
+div.seatCharts-seat.unavailable {
+	background-color: #472B34;
+}
+div.seatCharts-container {
+	/*border-right: 1px dotted #adadad;*/
+	width: 600px;
+	padding: 20px;
+	/*float: left;*/
+        margin: 0 auto;
+}
+div.seatCharts-legend {
+        right: 15%;
+	padding-left: 0px;
+	position: absolute;
+	top: 0px;
+}
+ul.seatCharts-legendList {
+	padding-left: 0px;
+}
+span.seatCharts-legendDescription {
+	margin-left: 5px;
+	line-height: 30px;
+}
+.checkout-button {
+	display: block;
+	margin: 10px 0;
+	font-size: 14px;
+}
+#selected-seats {
+	max-height: 130px;
+	overflow-y: scroll;
+	overflow-x: none;
+	width: 50%;
+}
