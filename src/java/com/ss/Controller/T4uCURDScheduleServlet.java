@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import javax.servlet.RequestDispatcher;
@@ -72,7 +73,7 @@ public class T4uCURDScheduleServlet extends HttpServlet {
                 String oSeats = null;
             int versionId = 0;
             int houseId = 0;
-            SimpleDateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+            SimpleDateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.US);
             Date date = null;
             java.sql.Date sqlDate = null;
             Timestamp scheduleTimeslot = null;
