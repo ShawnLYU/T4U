@@ -236,7 +236,7 @@
                                       </div>
                                     </div>
                                     
-                                    <div class="row">
+                                    <div class="row" style="width: 80%;padding-left: 25%;">
                                         <c:if test="${sessionScope.t4uUser.userGroup != 'officer'}">  
                                             <table id="example" class="table col-sm-6"width="60%">
                                                     <thead>
