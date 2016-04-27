@@ -48,11 +48,4 @@ public class T4uConstants {
     public static final String T4U_USERALLORDERS = "t4uUserAllOrders";
     public static final String T4U_ALLSCHEDULES = "t4uAllSchedules";
     public static final String T4U_ALLWAORDERS = "t4uAllWAOrders";
-    
-    //configuration
-    public static final String DBURL = "jdbc:sqlserver://w2ksa.cs.cityu.edu.hk:1433;databaseName=aiad049_db;";
-    public static final String DBUSER = "aiad049";
-    public static final String DBPWD = "aiad049";
- 
-
 }
